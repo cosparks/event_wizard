@@ -6,9 +6,12 @@ public class SimpleEventBuilder extends EventBuilder {
 
     private SimpleEvent event;
 
-    // EFFECTS: calls super constructor to initialize name, then creates show with name
     public SimpleEventBuilder() {
-        super();
+    }
+
+    // EFFECTS: calls super constructor to initialize name, then creates show with name
+    public SimpleEventBuilder(String str) {
+        super(str);
         event = new SimpleEvent(name);
     }
 
@@ -18,9 +21,13 @@ public class SimpleEventBuilder extends EventBuilder {
         return event;
     }
 
+    public void setEvent(SimpleEvent event) {
+        this.event = event;
+    }
+
     // MODIFIES: show
     // EFFECTS: displays main menu, allowing user to add details to and edit show object
-    private void runMainMenu() {
+    protected void runMainMenu() {
         String command;
 
         while (true) {
@@ -50,7 +57,7 @@ public class SimpleEventBuilder extends EventBuilder {
     }
 
     // EFFECTS: processes user input to MainMenu
-    private void processCommand(String command) {
+    protected void processCommand(String command) {
         if ("n".equals(command)) {
             promptForName(event);
         } else if ("d".equals(command)) {
@@ -62,13 +69,13 @@ public class SimpleEventBuilder extends EventBuilder {
         } else if ("i".equals(command)) {
             setImportance(event);
         } else {
-            System.out.println(UIColors.QUIT + "error: no event which corresponds to that number");
+            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
         }
     }
 
     // MODIFIES: event
     // EFFECTS: prompts user to add additional details to event
-    private void promptForDetails() {
+    protected void promptForDetails() {
         createDetail();
 
         while (true) {

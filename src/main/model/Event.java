@@ -125,6 +125,6 @@ public class Event {
 
     // EFFECTS: compares importance int of this and event parameter for Java sort method
     public int compareImportance(Event eventA) {
-        return Integer.toString(this.importance).compareTo(Integer.toString(eventA.getImportance()));
+        return Integer.toString(eventA.getImportance()).compareTo(Integer.toString(this.importance));
     }
 }

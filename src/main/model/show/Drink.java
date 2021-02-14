@@ -54,4 +54,12 @@ public class Drink {
     public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

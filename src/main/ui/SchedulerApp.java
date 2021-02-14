@@ -1,14 +1,13 @@
 package ui;
 
 import model.*;
-import model.show.*;
 import ui.tools.*;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SchedulerApp {
     private final Schedule schedule;
+    private DisplayTool displayTool;
     private Scanner input;
     private boolean displayMainMenu;
 
@@ -16,6 +15,7 @@ public class SchedulerApp {
 
     public SchedulerApp() {
         schedule = new Schedule();
+        displayTool = new DisplayTool();
         displayMainMenu = true;
         runStartMenu();
     }
@@ -93,12 +93,12 @@ public class SchedulerApp {
     }
 
     private SimpleEvent createSimpleEvent() {
-        SimpleEventBuilder seBuilder = new SimpleEventBuilder();
+        SimpleEventBuilder seBuilder = new SimpleEventBuilder("event");
         return seBuilder.buildSimpleEvent();
     }
 
     private Show createShow() {
-        ShowBuilder showBuilder = new ShowBuilder();
+        ShowBuilder showBuilder = new ShowBuilder("show");
         return showBuilder.buildShow();
     }
 
@@ -124,101 +124,16 @@ public class SchedulerApp {
             command = command.toLowerCase();
 
             if (command.equals("d")) {
-                displayEventsByDate();
+                displayTool.displayEventsByDate(schedule);
                 break;
             } else if (command.equals("i")) {
-                displayEventsByImportance();
+                displayTool.displayEventsByImportance(schedule);
                 break;
             } else if (command.equals("m")) {
                 break;
             } else {
                 System.out.println("I didn't understand your request.  Please try again:");
             }
-        }
-    }
-
-    private void displayEventsByDate() {
-        for (int i = 0; i < schedule.getSize(); i++) {
-            Event e = schedule.getEvent(i);
-            if (e instanceof Show) {
-                displayShow((Show) e);
-            } else if (e instanceof SimpleEvent) {
-                displaySimpleEvent((SimpleEvent) e);
-            }
-        }
-    }
-
-    private void displayEventsByImportance() {
-        for (Event e : schedule.getEventsByImportance()) {
-            if (e instanceof Show) {
-                displayShow((Show) e);
-            } else if (e instanceof SimpleEvent) {
-                displaySimpleEvent((SimpleEvent) e);
-            }
-        }
-    }
-
-    private void displayShow(Show show) {
-        String date = show.getStartDate().getDateForDisplay();
-        String time = show.getStartDate().getTimeForDisplay();
-        String bands = listActs(show);
-        String employees = listEmployees(show);
-        int revenue = show.calculateRevenue();
-
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + show.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + show.getLocation());
-
-        System.out.printf("%-50.50s  %-30.30s %-30ss\n", UIColors.MENU1 + "Acts:", "Working:", "Expected Revenue:");
-
-        System.out.printf("%-50.50s  %-30.30s %-30s\n", UIColors.MENU1
-                + bands, employees, UIColors.MENU2 + "$" + revenue);
-    }
-
-    // EFFECTS: generates string listing the names of all acts at show
-    private String listActs(Show show) {
-        ArrayList<Act> acts = show.getActs();
-        String bands = "";
-        for (Act a : acts) {
-            if ("".equals(bands)) {
-                bands = bands + a.getName();
-            } else {
-                bands = bands + ", " + a.getName();
-            }
-        }
-
-        if ("".equals(bands)) {
-            bands = "no acts";
-        }
-        return bands;
-    }
-
-    // EFFECTS: generates string listing the names of all employees working show
-    private String listEmployees(Show show) {
-        ArrayList<Employee> employees = show.getEmployees();
-        String names = "";
-        for (Employee e : employees) {
-            if ("".equals(names)) {
-                names = names + e.getName();
-            } else {
-                names = names + ", " + e.getName();
-            }
-        }
-
-        if ("".equals(names)) {
-            names = "";
-        }
-        return names;
-    }
-
-    private void displaySimpleEvent(SimpleEvent event) {
-        String date = event.getStartDate().getDateForDisplay();
-        String time = event.getStartDate().getTimeForDisplay();
-
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + event.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + event.getLocation());
-
-        for (int i = 0; i < event.getNumberOfDetails(); i++) {
-            System.out.printf("%-50.50s  %-50.50s\n", "", UIColors.MENU1 + event.getDetail(i));
         }
     }
 
@@ -235,7 +150,7 @@ public class SchedulerApp {
         int selection;
         int size = schedule.getSize();
 
-        displayEventsForManager();
+        displayTool.displayEventsForManager(schedule);
         System.out.println(UIColors.MENU1 + "enter the number of the event you'd like to edit:");
 
         while (true) {
@@ -265,30 +180,15 @@ public class SchedulerApp {
             SimpleEvent simpleEvent = (SimpleEvent) schedule.getEvent(index);
             editSimpleEvent(simpleEvent);
         }
+        schedule.sortEvents();
     }
 
     private void editShow(Show show) {
         new ShowEditor(show);
     }
 
-    private void editSimpleEvent(Event event) {
-    }
-
-    // EFFECTS: displays all events with (index + 1), allowing user to select event from schedule
-    private void displayEventsForManager() {
-        displayTitle("Manage events");
-
-        for (int i = 0; i < schedule.getSize(); i++) {
-            int eventNumber = i + 1;
-            Event e = schedule.getEvent(i);
-            System.out.println(UIColors.MENU1 + eventNumber + UIColors.MENU2 + "\t\t" + e.getName() + "\t\t"
-                    + e.getStartDate().getDateForDisplay() + "  " + e.getStartDate().getTimeForDisplay()
-                    + UIColors.MAIN_MENU + "\t\t" + e.getLocation());
-        }
-    }
-
-    public void displayTitle(String title) {
-        System.out.println(UIColors.TITLE + "\t\t\t\t\t\t" + title + "\t\t\t\t\t\t");
+    private void editSimpleEvent(SimpleEvent event) {
+        new SimpleEventEditor(event);
     }
 
     public static void clearScreen() {

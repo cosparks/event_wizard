@@ -12,7 +12,10 @@ class ScheduleTest {
     private ArrayList<Event> testEventList;
     private SimpleEvent eventA;
     private SimpleEvent eventB;
-    SimpleEvent eventC;
+    private SimpleEvent eventC;
+    private SimpleEvent eventD;
+    private SimpleEvent eventE;
+    private SimpleEvent eventF;
 
     @BeforeEach
     void runBefore() {
@@ -30,6 +33,18 @@ class ScheduleTest {
         eventC = new SimpleEvent("C");
         EventDate dateC = new EventDate(01, 01, 2022, 15, 30);
         eventC.setStartDate(dateC);
+
+        eventD = new SimpleEvent("D");
+        EventDate dateD = new EventDate(15, 02, 2021, 14, 30);
+        eventD.setStartDate(dateD);
+
+        eventE = new SimpleEvent("E");
+        EventDate dateE = new EventDate(15, 01, 2021, 15, 30);
+        eventE.setStartDate(dateE);
+
+        eventF = new SimpleEvent("F");
+        EventDate dateF = new EventDate(15, 02, 2021, 14, 15);
+        eventF.setStartDate(dateF);
     }
 
     @Test
@@ -45,21 +60,6 @@ class ScheduleTest {
 
     @Test
     void testAddEventMultipleWithDifferentDates() {
-        SimpleEvent eventD = new SimpleEvent("D");
-        EventDate dateD = new EventDate();
-        dateD.setDate(15, 02, 2021, 14, 30);
-        eventD.setStartDate(dateD);
-
-        SimpleEvent eventE = new SimpleEvent("E");
-        EventDate dateE = new EventDate();
-        dateE.setDate(15, 01, 2021, 15, 30);
-        eventE.setStartDate(dateE);
-
-        SimpleEvent eventF = new SimpleEvent("F");
-        EventDate dateF = new EventDate();
-        dateF.setDate(15, 02, 2021, 14, 15);
-        eventF.setStartDate(dateF);
-
         schedule.addEvent(eventA);
         schedule.addEvent(eventB);
         schedule.addEvent(eventC);
@@ -83,14 +83,40 @@ class ScheduleTest {
     @Test
     void testGetEventsByImportanceTwoEvents() {
         eventA.setImportance(3);
-        eventB.setImportance(11);
-        schedule.addEvent(eventA);
+        eventB.setImportance(9);
         schedule.addEvent(eventB);
+        schedule.addEvent(eventA);
+
+
 
         testEventList = schedule.getEventsByImportance();
 
         assertEquals(eventB, testEventList.get(0));
         assertEquals(eventA, testEventList.get(1));
+    }
+
+    @Test
+    void testGetEventsByImportanceManyEvents() {
+        eventA.setImportance(2);
+        eventB.setImportance(1);
+        eventC.setImportance(4);
+        eventD.setImportance(5);
+        eventE.setImportance(9);
+        eventF.setImportance(8);
+        schedule.addEvent(eventA);
+        schedule.addEvent(eventB);
+        schedule.addEvent(eventC);
+        schedule.addEvent(eventD);
+        schedule.addEvent(eventE);
+        schedule.addEvent(eventF);
+
+        testEventList = schedule.getEventsByImportance();
+        assertEquals(eventE, testEventList.get(0));
+        assertEquals(eventF, testEventList.get(1));
+        assertEquals(eventD, testEventList.get(2));
+        assertEquals(eventC, testEventList.get(3));
+        assertEquals(eventA, testEventList.get(4));
+        assertEquals(eventB, testEventList.get(5));
     }
 
     @Test

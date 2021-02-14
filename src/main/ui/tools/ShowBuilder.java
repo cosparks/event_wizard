@@ -8,7 +8,10 @@ public class ShowBuilder extends EventBuilder {
 
     // EFFECTS: calls super constructor to initialize name, then creates show with name
     public ShowBuilder() {
-        super();
+    }
+
+    public ShowBuilder(String str) {
+        super(str);
         show = new Show(name);
     }
 
@@ -18,9 +21,13 @@ public class ShowBuilder extends EventBuilder {
         return show;
     }
 
+    public void setShow(Show show) {
+        this.show = show;
+    }
+
     // MODIFIES: show
     // EFFECTS: displays main menu, allowing user to add details to and edit show object
-    private void runMainMenu() {
+    protected void runMainMenu() {
         String command;
 
         while (true) {
@@ -50,7 +57,7 @@ public class ShowBuilder extends EventBuilder {
     }
 
     // EFFECTS: processes user input to MainMenu
-    private void processCommand(String command) {
+    protected void processCommand(String command) {
         if ("n".equals(command)) {
             promptForName(show);
         } else if ("d".equals(command)) {
@@ -70,13 +77,13 @@ public class ShowBuilder extends EventBuilder {
         } else if ("e".equals(command)) {
             promptForEmployees();
         } else {
-            System.out.println(UIColors.QUIT + "error: no event which corresponds to that number");
+            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
         }
     }
 
     // MODIFIES: show
     // EFFECTS: prompts user to add multiple acts to show
-    private void promptForActs() {
+    protected void promptForActs() {
         createAct();
 
         while (true) {
@@ -121,9 +128,9 @@ public class ShowBuilder extends EventBuilder {
             if (answer.equals("y")) {
                 rider = promptForString("enter rider below", "rider");
                 stagePlot = promptForString("enter stageplot below", "stageplot");
-
                 act.setRider(rider);
                 act.setStagePlot(stagePlot);
+                break;
             } else if (answer.equals("n")) {
                 break;
             } else {
@@ -134,7 +141,7 @@ public class ShowBuilder extends EventBuilder {
 
     // MODIFIES: show
     // EFFECTS: prompts user to enter multiple bar items to bar
-    private void promptForBar() {
+    protected void promptForBar() {
         createDrink();
 
         while (true) {
@@ -170,7 +177,7 @@ public class ShowBuilder extends EventBuilder {
 
     // MODIFIES: show
     // EFFECTS: prompts user to enter information for tickets
-    private void promptForTickets() {
+    protected void promptForTickets() {
         int ticketPrice = promptForInteger("enter ticket price: ", "entry", 0, Integer.MAX_VALUE);
         int projectedSales = promptForInteger("enter projected ticket sales: ",
                                             "entry", 0, Integer.MAX_VALUE);
@@ -182,7 +189,7 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
-    private void setCapacity() {
+    protected void setCapacity() {
         int capacity = promptForInteger("enter max capacity of venue",
                 "entry", 0, Integer.MAX_VALUE);
         show.setCapacity(capacity);
@@ -190,7 +197,7 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
-    private void setExpenses() {
+    protected void setExpenses() {
         int expenses = promptForInteger("enter additional expenses for event",
                                         "entry", 0, Integer.MAX_VALUE);
         show.setAdditionalCost(expenses);
@@ -199,11 +206,11 @@ public class ShowBuilder extends EventBuilder {
 
     // MODIFIES: show
     // EFFECTS: prompts user to add multiple acts to show
-    private void promptForEmployees() {
+    protected void promptForEmployees() {
         createEmployee();
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "Add another employee? ");
+            System.out.println(UIColors.MENU1 + "Add another employee?  y/n");
             String answer = input.next();
 
             if (answer.equals("y")) {

@@ -13,6 +13,11 @@ public abstract class EventBuilder {
 
     public EventBuilder() {
         initialize();
+        displayMain = true;
+    }
+
+    public EventBuilder(String str) {
+        initialize();
         promptForName();
         displayMain = true;
     }
@@ -136,7 +141,8 @@ public abstract class EventBuilder {
     // MODIFIES: event
     // EFFECTS: allows user to set importance for event
     public void setImportance(Event event) {
-        int importance = promptForInteger("enter a value for importance [0,11] ", "entry",0, 11);
+        int importance = promptForInteger("enter a value for importance [1,10] ", "entry",1, 10);
+        importance--;
         event.setImportance(importance);
     }
 
@@ -158,6 +164,23 @@ public abstract class EventBuilder {
                 throwInvalidInput(type);
             } else {
                 break;
+            }
+        }
+        return str;
+    }
+
+    // REQUIRES: two desired inputs r1 and r2, and String giving instructions to user
+    // EFFECTS: returns string only if it is one of two response (for yes or no questions or similar)
+    protected String promptBinaryResponse(String r1, String r2, String prompt) {
+        String str;
+        initialize();
+        System.out.println(UIColors.MENU1 + prompt);
+        while (true) {
+            str = input.nextLine();
+            if (r1.equals(str) || r2.equals(str)) {
+                break;
+            } else {
+                throwInvalidInput("command");
             }
         }
         return str;
