@@ -2,14 +2,15 @@ package ui.tools;
 
 import model.SimpleEvent;
 
+// UI tool for building simple events
 public class SimpleEventBuilder extends EventBuilder {
-
     private SimpleEvent event;
 
+    // EFFECTS: constructs builder used for modifying existing events without prompting user to enter event name
     public SimpleEventBuilder() {
     }
 
-    // EFFECTS: calls super constructor to initialize name, then creates show with name
+    // EFFECTS: calls super constructor with dummy string to initialize name, then creates event with name
     public SimpleEventBuilder(String str) {
         super(str);
         event = new SimpleEvent(name);

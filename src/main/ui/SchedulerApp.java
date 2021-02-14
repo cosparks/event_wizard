@@ -5,14 +5,14 @@ import ui.tools.*;
 
 import java.util.Scanner;
 
+// Represents the main user interface for creating and managing events
 public class SchedulerApp {
     private final Schedule schedule;
     private DisplayTool displayTool;
     private Scanner input;
     private boolean displayMainMenu;
 
-
-
+    // EFFECTS: creates new scheduler app--runs when main is called
     public SchedulerApp() {
         schedule = new Schedule();
         displayTool = new DisplayTool();
@@ -20,6 +20,7 @@ public class SchedulerApp {
         runStartMenu();
     }
 
+    // EFFECTS: displays start menu and processes user input
     private void runStartMenu() {
         boolean runProgram = true;
         String command;
@@ -40,13 +41,15 @@ public class SchedulerApp {
             if (command.equals("q")) {
                 runProgram = false;
             } else {
-                clearScreen();
+                // clearScreen();
                 processCommand(command);
             }
         }
         System.out.println("\t\t\t\t\t\tGoodbye");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes scanner
     private void initialize() {
         input = new Scanner(System.in);
     }
@@ -57,20 +60,22 @@ public class SchedulerApp {
         System.out.println(UIColors.MENU2 + "\t[d]isplay events" + UIColors.QUIT + "    \t[q]uit");
     }
 
+    // EFFECTS: selects appropriate method to call given user input
     private void processCommand(String command) {
         if (command.equals("c")) {
             createEvent();
             displayMainMenu = true;
         } else if (command.equals("m")) {
-            manageEvents();
+            checkEventsForManager();
         } else if (command.equals("d")) {
-            runDisplayOptions();
-            displayMainMenu = true;
+            checkEventsForDisplay();
         } else {
             System.out.println(UIColors.QUIT + "\t\terror: please enter a valid selection");
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to select which type of event to create and adds event to schedule
     private void createEvent() {
         String command;
         while (true) {
@@ -92,26 +97,36 @@ public class SchedulerApp {
         }
     }
 
+    // EFFECTS: calls constructor and returns simple event
     private SimpleEvent createSimpleEvent() {
         SimpleEventBuilder seBuilder = new SimpleEventBuilder("event");
         return seBuilder.buildSimpleEvent();
     }
 
+    // EFFECTS: calls constructor and returns show
     private Show createShow() {
         ShowBuilder showBuilder = new ShowBuilder("show");
         return showBuilder.buildShow();
     }
 
+    // EFFECTS: prompts user to choose which type of event they'd like to create
     private void displayCreateEventMenu() {
         System.out.println(UIColors.MENU1 + "\tCreate Event:");
         System.out.println(UIColors.MENU2 + "\t[s]imple \t\t\t\t[a]dvanced"
                 + UIColors.MAIN_MENU + "\t\t\t\t\t\treturn to [m]ain");
     }
 
-    private void runDisplayOptions() {
-        runDisplayOptionsMenu();
+    // EFFECTS: checks whether or not a user has any events to display
+    private void checkEventsForDisplay() {
+        if (schedule.getSize() == 0) {
+            System.out.println(UIColors.QUIT + "you don't have any events. please enter another request:");
+        } else {
+            runDisplayOptionsMenu();
+            displayMainMenu = true;
+        }
     }
 
+    // EFFECTS: prompts user to select type of display, and displays events according to selection
     private void runDisplayOptionsMenu() {
         String command;
 
@@ -137,7 +152,8 @@ public class SchedulerApp {
         }
     }
 
-    private void manageEvents() {
+    // EFFECTS: verifies that the user has events to manage--calls manager if schedule contains events
+    private void checkEventsForManager() {
         if (schedule.getSize() == 0) {
             System.out.println(UIColors.QUIT + "you don't have any events. please enter another request:");
         } else {
@@ -146,6 +162,7 @@ public class SchedulerApp {
         }
     }
 
+    // EFFECTS: itemizes events and prompts user to select which event to edit
     private void runEventManager() {
         int selection;
         int size = schedule.getSize();
@@ -170,6 +187,8 @@ public class SchedulerApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: selects event by index and calls event editor--sorts event by date when complete
     private void manageEvent(int selection) {
         int index = selection - 1;
 
@@ -183,16 +202,21 @@ public class SchedulerApp {
         schedule.sortEvents();
     }
 
+    // MODIFIES: show
+    // EFFECTS: calls constructor for show editor
     private void editShow(Show show) {
         new ShowEditor(show);
     }
 
+    // MODIFIES: event
+    // EFFECTS: calls constructor for simple event editor
     private void editSimpleEvent(SimpleEvent event) {
         new SimpleEventEditor(event);
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
+//    // EFFECTS: supposed to clear console screen--but not very useful at the moment
+//    public static void clearScreen() {
+//        System.out.print("\033[H\033[2J");
+//        System.out.flush();
+//    }
 }

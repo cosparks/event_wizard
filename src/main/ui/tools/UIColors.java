@@ -1,7 +1,9 @@
 package ui.tools;
 
+// Class containing a variety of colors for display
 public class UIColors {
 
+    // EFFECTS: constructs a new ui colors class
     public UIColors() {
 
     }

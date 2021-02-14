@@ -11,11 +11,14 @@ public abstract class EventBuilder {
     protected EventDate eventDate;
     protected Boolean displayMain;
 
+    // EFFECTS: creates event builder--only to be called when editing existing events
     public EventBuilder() {
         initialize();
         displayMain = true;
     }
 
+    // EFFECTS: creates event builder and sets new name for event; dummy string is used to specify
+    //          that this constructor should run when building a new event (not editing an existing one)
     public EventBuilder(String str) {
         initialize();
         promptForName();
@@ -140,7 +143,7 @@ public abstract class EventBuilder {
 
     // MODIFIES: event
     // EFFECTS: allows user to set importance for event
-    public void setImportance(Event event) {
+    protected void setImportance(Event event) {
         int importance = promptForInteger("enter a value for importance [1,10] ", "entry",1, 10);
         importance--;
         event.setImportance(importance);

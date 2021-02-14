@@ -21,28 +21,22 @@ class ScheduleTest {
     void runBefore() {
         schedule = new Schedule();
         testEventList = new ArrayList<>();
-
-        eventA = new SimpleEvent("A");
+        eventA = new SimpleEvent("A");  // event A
         EventDate dateA = new EventDate(16, 02, 2021, 15, 30);
         eventA.setStartDate(dateA);
-
-        eventB = new SimpleEvent("B");
+        eventB = new SimpleEvent("B");  // event B
         EventDate dateB = new EventDate(15, 02, 2021, 15, 30);
         eventB.setStartDate(dateB);
-
-        eventC = new SimpleEvent("C");
+        eventC = new SimpleEvent("C");  // event C
         EventDate dateC = new EventDate(01, 01, 2022, 15, 30);
         eventC.setStartDate(dateC);
-
-        eventD = new SimpleEvent("D");
+        eventD = new SimpleEvent("D");  // event D
         EventDate dateD = new EventDate(15, 02, 2021, 14, 30);
         eventD.setStartDate(dateD);
-
-        eventE = new SimpleEvent("E");
+        eventE = new SimpleEvent("E");  // event E
         EventDate dateE = new EventDate(15, 01, 2021, 15, 30);
         eventE.setStartDate(dateE);
-
-        eventF = new SimpleEvent("F");
+        eventF = new SimpleEvent("F");  // event F
         EventDate dateF = new EventDate(15, 02, 2021, 14, 15);
         eventF.setStartDate(dateF);
     }
@@ -59,6 +53,7 @@ class ScheduleTest {
     }
 
     @Test
+    // Tests add event as well is the schedule's sort method
     void testAddEventMultipleWithDifferentDates() {
         schedule.addEvent(eventA);
         schedule.addEvent(eventB);

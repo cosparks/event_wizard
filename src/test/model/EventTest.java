@@ -69,4 +69,14 @@ public class EventTest {
         eventA.setLocation("Sandino's");
         assertEquals("Sandino's", eventA.getLocation());
     }
+
+    @Test
+    void testSetName() {
+        assertEquals("A", eventA.getName());
+
+        String newName = "New Event Name";
+        eventA.setName(newName);
+
+        assertEquals(newName, eventA.getName());
+    }
 }

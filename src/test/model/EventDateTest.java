@@ -49,4 +49,16 @@ class EventDateTest {
         assertEquals("2022-11-11-18:30", date.getDateAsString());
         assertEquals("1999-01-01-08:05", dateA.getDateAsString());
     }
+
+    @Test
+    void testGetDateForDisplay() {
+        String expectedDateForDisplayA = "14/02/2021";
+        String expectedDateForDisplayB = "01/12/2021";
+
+        dateA.setDate(14, 02, 2021, 12, 30);
+        assertEquals(expectedDateForDisplayA, dateA.getDateForDisplay());
+
+        dateA.setDate(1, 12, 2021, 0, 0);
+        assertEquals(expectedDateForDisplayB, dateA.getDateForDisplay());
+    }
 }

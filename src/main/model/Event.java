@@ -16,6 +16,7 @@ public class Event {
         importance = 0;
     }
 
+    // EFFECTS: Construct a new Event with empty fields
     public Event() {
         startDate = new EventDate();
         endDate = new EventDate();
@@ -82,11 +83,11 @@ public class Event {
     }
 
     public EventDate getStartDate() {
-        return startDate; // stub
+        return startDate;
     }
 
     public EventDate getEndDate() {
-        return endDate; // stub
+        return endDate;
     }
 
     public void setLocation(String location) {

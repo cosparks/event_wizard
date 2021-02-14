@@ -15,7 +15,7 @@ public class EventDate {
 
     }
 
-    // REQUIRES: day [1, 31], month [1, 12], year [0, 9999], hour [0, 23], minute [0, 59]
+    // REQUIRES: day [1, 31], month [1, 12], year [1000, 9999], hour [0, 23], minute [0, 59]
     // EFFECTS: Constructs a new date with assigned fields
     public EventDate(int day, int month, int year, int hour, int minute) {
         this.day = day;
@@ -25,7 +25,7 @@ public class EventDate {
         this.minute = minute;
     }
 
-    // REQUIRES: day [1, 31], month [1, 12], year [0, 9999], hour [0, 23], minute [0, 59]
+    // REQUIRES: day [1, 31], month [1, 12], year [1000, 9999], hour [0, 23], minute [0, 59]
     // EFFECTS: erases date and replaces with new values
     public void setDate(int day, int month, int year, int hour, int minute) {
         this.day = day;
@@ -51,6 +51,7 @@ public class EventDate {
         return insertA + hour + ":" + insertB + minute;
     }
 
+    // EFFECTS: returns date as string DD/MM/YYYY
     public String getDateForDisplay() {
         String insertA = (day < 10) ? "0" : "";
         String insertB = (month < 10) ? "/0" : "/";

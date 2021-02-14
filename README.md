@@ -8,9 +8,9 @@ was always talking about how terrible his booking system was.  He was licensing 
 but it was lacking basic features that would have made his job a lot easier.  
 
 Some of the basic features he wanted were:
-- to view **all** scheduled events in a calendar
-- to be able to **edit events** from the calendar window
-- the capacity to **store PDFs or JPEGs** with event info (riders and stage plots) and to view them from the calendar
+- to view **all** scheduled events in a scheduler
+- to be able to **edit events** from the scheduler window
+- the capacity to **store riders and stageplots** with info on sound specifications and stage layout for each band
 
 People who manage venues and book shows are very few, so on top of the above functionality I would also like
 to include simple features (which happen to be a subset of the features of an even-management app) so that users
@@ -30,20 +30,19 @@ their own.
 ## User Stories
 
 #### User 1:
-- I want to be able to schedule an event with date, start/end time and location
-- I want the application to tell me if I already have an event scheduled during that time
+- I want to be able to schedule an event with date, start time and location
 - I would like to be able to come back to the event to add/change information
 - I want to view the event alongside any other events that I have created
 - when I access a stored event, I want to see the date and time, so I can clearly visualize my schedule
 
 #### User 2:
-- I want to schedule a concert with a date, start/end time (and location)
+- I want to schedule a concert with a date, start time and location
 - I want to store information about the different acts, presale tickets (number and price) and who will be working
 bar/sound/lighting
 - I want to enter any information regarding expenses--how much bands and workers need to be paid, the up-front cost on
 alcohol, cost of any rentals needed for the show, etc.
 - I want the software to tally expenses and compute projected revenue for a concert
-- I want to be able to store and easily access riders and stage plots from an event entry (view PDFs and JPEGS)
+- I want to be able to store riders and stage plots from an event entry
 - I want to edit events: change dates or any other information stored in an event
 
 #### User 3:
@@ -52,7 +51,6 @@ dates, times and locations
 - I want to include any relevant contact information for each interview
 - I want to set a different level of importance for each interview
 - I want to be able to view all the different interviews ordered by importance, and also by time
-- if there is any overlap, I want the program to notify me
 
 #### User 4
 - I want to plan a party with a date, start/end time and location

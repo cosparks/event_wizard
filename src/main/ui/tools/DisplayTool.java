@@ -5,13 +5,15 @@ import model.show.*;
 
 import java.util.ArrayList;
 
-// Class for different display functions
+// Class containing different display functions for events
 public class DisplayTool {
 
+    // EFFECTS: constructs new display tool
     public DisplayTool() {
 
     }
 
+    // EFFECTS: displays all events in schedule in chronological order (adds line between each displayed event)
     public void displayEventsByDate(Schedule schedule) {
         for (int i = 0; i < schedule.getSize(); i++) {
             Event e = schedule.getEvent(i);
@@ -20,12 +22,14 @@ public class DisplayTool {
             } else if (e instanceof SimpleEvent) {
                 displaySimpleEvent((SimpleEvent) e);
             }
+            System.out.println("  ");
         }
     }
 
+    // EFFECTS: displays all events in schedule ranked in order of importance
     public void displayEventsByImportance(Schedule schedule) {
-        System.out.println(UIColors.MENU1 + "events sorted importance: ");
         for (Event e : schedule.getEventsByImportance()) {
+            System.out.println(UIColors.QUIT + e.getImportance());
             if (e instanceof Show) {
                 displayShow((Show) e);
             } else if (e instanceof SimpleEvent) {
@@ -34,68 +38,121 @@ public class DisplayTool {
         }
     }
 
+    // EFFECTS: simple title display for events--this is the first line for schedule and editor display
+    private void displayNameDateAndTime(Event event) {
+        String date = event.getStartDate().getDateForDisplay();
+        String time = event.getStartDate().getTimeForDisplay();
+        String location = (event.getLocation() == null) ? "" : event.getLocation();
+
+        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + event.getName(), UIColors.MENU2
+                + date + "  " + time, UIColors.MAIN_MENU + location);
+    }
+
+    // EFFECTS: displays name, date and time, location, acts, employees and potential revenue of show
     private void displayShow(Show show) {
-        String date = show.getStartDate().getDateForDisplay();
-        String time = show.getStartDate().getTimeForDisplay();
         String bands = listActs(show);
         String employees = listEmployees(show);
-        String location = (show.getLocation() == null) ? "" : show.getLocation();
 
         int revenue = show.calculateRevenue();
 
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + show.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + location);
-
+        displayNameDateAndTime(show);
         System.out.printf("%-50.50s  %-30.30s %-30s\n", UIColors.MENU1 + "Acts:", "Working:", "Expected Revenue:");
-
         System.out.printf("%-50.50s  %-30.30s %-30s\n", UIColors.MENU1
                 + bands, employees, UIColors.MENU2 + "$" + revenue);
-        System.out.println("  ");
     }
 
-    private void displaySimpleEvent(SimpleEvent event) {
-        String date = event.getStartDate().getDateForDisplay();
-        String time = event.getStartDate().getTimeForDisplay();
-        String location = (event.getLocation() == null) ? "" : event.getLocation();
-
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + event.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + location);
-
-        for (int i = 0; i < event.getNumberOfDetails(); i++) {
-            System.out.printf("%-30.30s %-50.50s\n", UIColors.MENU1 + "•", event.getDetail(i));
-        }
-        System.out.println("  ");
-    }
-
+    // EFFECTS: displays name, date and time, location, acts, employees, potential revenue, bar items, ticket price
+    //          and expected ticket sales of show
     public void displayShowForEditor(Show show) {
-        String date = show.getStartDate().getDateForDisplay();
-        String time = show.getStartDate().getTimeForDisplay();
-        String bands = listActs(show);
-        String employees = listEmployees(show);
-        String location = (show.getLocation() == null) ? "" : show.getLocation();
+        int projectedSales = show.getProjectedSales();
+        int ticketPrice = show.getTicketPrice();
 
-        int revenue = show.calculateRevenue();
-
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + show.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + location);
-
-        System.out.printf("%-50.50s  %-30.30s %-30s\n", UIColors.MENU1 + "Acts:", "Working:", "Expected Revenue:");
-
-        System.out.printf("%-50.50s  %-30.30s %-30s\n", UIColors.MENU1
-                + bands, employees, UIColors.MENU2 + "$" + revenue);
+        displayNameDateAndTime(show);
+        listActsForEditor(show.getActs());
+        System.out.print("\n");
+        listEmployeesForEditor(show.getEmployees());
+        System.out.print("\n");
+        listBarItems(show.getBar());
+        System.out.print("\n");
+        System.out.println(UIColors.MENU1 + "Ticket price:  " + UIColors.MENU2 + "$" + ticketPrice
+                + UIColors.MENU1 + "\tProjected ticket sales:  " + UIColors.MENU2 + projectedSales);
     }
 
-    public void displaySimpleEventForEditor(SimpleEvent event) {
-        String date = event.getStartDate().getDateForDisplay();
-        String time = event.getStartDate().getTimeForDisplay();
-        String location = (event.getLocation() == null) ? "" : event.getLocation();
-
-        System.out.printf("%-50.50s  %-40.40s %-30s\n", UIColors.PURPLE + event.getName(), UIColors.MENU2
-                + date + "  " + time, UIColors.MAIN_MENU + location);
-
-        for (int i = 0; i < event.getNumberOfDetails(); i++) {
-            System.out.printf("%-50.50s  %-50.50s\n", "", UIColors.MENU1 + event.getDetail(i));
+    // EFFECTS: lists bar items on one line for editor display
+    private void listBarItems(ArrayList<Drink> bar) {
+        boolean first = true;
+        System.out.print("bar: ");
+        for (Drink d : bar) {
+            if (first) {
+                barItemForDisplay(d, true);
+                first = false;
+            } else {
+                barItemForDisplay(d, false);
+            }
         }
+    }
+
+    // EFFECTS: lists acts on one line for editor display
+    private void listActsForEditor(ArrayList<Act> acts) {
+        boolean first = true;
+        System.out.print("acts: ");
+        for (Act a : acts) {
+            if (first) {
+                actForDisplay(a, true);
+                first = false;
+            } else {
+                actForDisplay(a, false);
+            }
+        }
+    }
+
+    // EFFECTS: lists employees on one line for editor display
+    private void listEmployeesForEditor(ArrayList<Employee> employees) {
+        boolean first = true;
+        System.out.print("employees: ");
+        for (Employee e : employees) {
+            if (first) {
+                employeeForDisplay(e, true);
+                first = false;
+            } else {
+                employeeForDisplay(e, false);
+            }
+        }
+    }
+
+    // EFFECTS: prints out act name and pay
+    private void actForDisplay(Act a, Boolean first) {
+        String insert = (first) ? "" : ", ";
+        System.out.print(UIColors.MENU1 + insert + "" + UIColors.MAIN_MENU + a.getName()
+                        + UIColors.MENU1 + "  $" + a.getPay() + UIColors.MENU1);
+    }
+
+    // EFFECTS: prints out act name and pay
+    private void employeeForDisplay(Employee e, Boolean first) {
+        String insert = (first) ? "" : ", ";
+        System.out.print(insert + UIColors.MENU1 + "" + e.getName() + "  $" + e.getPay() + "  " + e.getJob());
+    }
+
+    // EFFECTS: prints out bar item name, amount, cost and sale price
+    private void barItemForDisplay(Drink d, Boolean first) {
+        String insert = (first) ? "" : ", ";
+        System.out.print(insert + UIColors.MENU1 + "" + UIColors.MENU1 + d.getName()
+                + UIColors.MENU2 + "\t$" + d.getSalePrice()
+                + UIColors.QUIT + "\t$" + d.getCost() + UIColors.MENU1 + "\t" + d.getAmount());
+    }
+
+    // EFFECTS: displays name, date and time, location, and details of simple event
+    private void displaySimpleEvent(SimpleEvent event) {
+        displayNameDateAndTime(event);
+        for (int i = 0; i < event.getNumberOfDetails(); i++) {
+            System.out.println(UIColors.MENU1 + "• " + event.getDetail(i));
+        }
+    }
+
+    // EFFECTS: displays name, date and time, location, details and importance of simple event
+    public void displaySimpleEventForEditor(SimpleEvent event) {
+        System.out.println(UIColors.MENU1 + "importance  " + UIColors.QUIT + event.getImportance());
+        displaySimpleEvent(event);
     }
 
     // EFFECTS: generates string listing the names of all acts at show
@@ -134,7 +191,6 @@ public class DisplayTool {
         return names;
     }
 
-
     // EFFECTS: displays all events with (index + 1), allowing user to select event from schedule
     public void displayEventsForManager(Schedule schedule) {
         displayTitle("Manage events");
@@ -142,12 +198,15 @@ public class DisplayTool {
         for (int i = 0; i < schedule.getSize(); i++) {
             int eventNumber = i + 1;
             Event e = schedule.getEvent(i);
-            System.out.println(UIColors.MENU1 + eventNumber + UIColors.MENU2 + "\t\t" + e.getName() + "\t\t"
-                    + e.getStartDate().getDateForDisplay() + "  " + e.getStartDate().getTimeForDisplay()
-                    + UIColors.MAIN_MENU + "\t\t" + e.getLocation());
+            String location = (e.getLocation() == null) ? "" : e.getLocation();
+            System.out.printf("%-45.45s %-15.15s %-50.50s\n",
+                    UIColors.MENU1 + eventNumber + UIColors.MENU2 + "\t" + e.getName(),
+                    e.getStartDate().getDateForDisplay() + "  " + e.getStartDate().getTimeForDisplay(),
+                    UIColors.MAIN_MENU + "\t\t" + location);
         }
     }
 
+    // EFFECTS: displays title underlined with TITLE color from ui colors
     public void displayTitle(String title) {
         System.out.println(UIColors.TITLE + "\t\t\t\t\t\t" + title + "\t\t\t\t\t\t");
     }

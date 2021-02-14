@@ -3,10 +3,12 @@ package ui.tools;
 import model.SimpleEvent;
 import model.show.Act;
 
+// Represents UI tool for editing simple events--subclass of SimpleEventBuilder and EventBuilder
 public class SimpleEventEditor extends SimpleEventBuilder {
     SimpleEvent event;
     DisplayTool displayTool;
 
+    // EFFECTS: Constructs a simple event editor and sets this.event and super.event to event
     public SimpleEventEditor(SimpleEvent event) {
         this.event = event;
         super.setEvent(event);
@@ -17,6 +19,7 @@ public class SimpleEventEditor extends SimpleEventBuilder {
     }
 
     @Override
+    // EFFECTS: processes user input from super's main menu in order to modify this event
     protected void processCommand(String command) {
         if ("n".equals(command)) {
             promptForName(event);
@@ -31,8 +34,10 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         } else {
             System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
         }
+        redisplayEventForEditor();
     }
 
+    // EFFECTS: displays and prompts user to edit details of event
     private void promptEditDetails() {
         listDetails();
         String command = promptBinaryResponse("a", "e", "[a]dd new or [e]dit existing? ");
@@ -53,6 +58,11 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         displayMain = true;
     }
 
+    private void redisplayEventForEditor() {
+        displayTool.displaySimpleEventForEditor(event);
+    }
+
+    // EFFECTS: prompts user to select detail from list and clears that detail
     private void selectDetail() {
         int min = 1;
         int max = event.getNumberOfDetails();
@@ -61,10 +71,13 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         event.clearDetail(index);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to enter detail and adds detail to list
     private void editDetail() {
         event.addDetail(promptForString("please enter any relevant information ", "input"));
     }
 
+    // EFFECTS: displays itemized list of details for user selection
     private void listDetails() {
         int size = event.getNumberOfDetails();
         for (int i = 0; i < size; i++) {

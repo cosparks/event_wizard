@@ -6,10 +6,12 @@ import model.show.Act;
 
 import java.util.ArrayList;
 
+// UI tool for editing existing shows--subclass of EventBuilder and ShowBuilder
 public class ShowEditor extends ShowBuilder {
     protected Show show;
     DisplayTool displayTool;
 
+    // EFFECTS: Constructs a show editor and sets this.show and super.show to show
     public ShowEditor(Show show) {
         this.show = show;
         super.setShow(show);
@@ -20,6 +22,7 @@ public class ShowEditor extends ShowBuilder {
     }
 
     @Override
+    // EFFECTS: processes user input from super.runMainMenu()
     protected void processCommand(String command) {
         if ("n".equals(command)) {
             promptForName(show);
@@ -42,8 +45,15 @@ public class ShowEditor extends ShowBuilder {
         } else {
             System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
         }
+        redisplayShowForEditor();
     }
 
+    private void redisplayShowForEditor() {
+        displayTool.displayShowForEditor(show);
+    }
+
+
+    // EFFECTS: prompts user to select and edit show's acts
     private void promptEditActs() {
         listActs();
         String command = promptBinaryResponse("a", "e", "[a]dd new or [e]dit existing? ");
@@ -64,6 +74,7 @@ public class ShowEditor extends ShowBuilder {
         displayMain = true;
     }
 
+    // EFFECTS: displays itemized acts for user selection
     private void listActs() {
         ArrayList<Act> acts = show.getActs();
         int i = 1;
@@ -75,6 +86,7 @@ public class ShowEditor extends ShowBuilder {
         }
     }
 
+    // EFFECTS: returns act specified by user input
     private Act getActSelection() {
         int min = 1;
         int max = show.getActs().size();
@@ -83,6 +95,8 @@ public class ShowEditor extends ShowBuilder {
         return show.getActs().get(index);
     }
 
+    // MODIFIES: this and act
+    // EFFECTS: runs editor menu and prompts user to edit values of act
     private void editAct(Act act) {
         String command;
         String name = act.getName();
@@ -109,6 +123,8 @@ public class ShowEditor extends ShowBuilder {
         }
     }
 
+    // MODIFIES: this and employee
+    // EFFECTS: runs editor menu and prompts user to edit values of employee
     public void editEmployee(Employee employee) {
         String command;
         String name = employee.getName();
@@ -132,6 +148,7 @@ public class ShowEditor extends ShowBuilder {
         }
     }
 
+    // EFFECTS: prompts user to add to or edit events employees
     private void promptEditEmployees() {
         listEmployees();
         String command = promptBinaryResponse("a", "e", "[a]dd new or [e]dit existing? ");
@@ -152,6 +169,7 @@ public class ShowEditor extends ShowBuilder {
         displayMain = true;
     }
 
+    // EFFECTS: returns employee specified by user
     private Employee getEmployeeSelection() {
         int min = 1;
         int max = show.getEmployees().size();
@@ -160,6 +178,7 @@ public class ShowEditor extends ShowBuilder {
         return show.getEmployees().get(index);
     }
 
+    // EFFECTS: displays itemized employees for user selection
     private void listEmployees() {
         ArrayList<Employee> employees = show.getEmployees();
         int i = 1;
@@ -172,6 +191,7 @@ public class ShowEditor extends ShowBuilder {
         }
     }
 
+    // EFFECTS: prompts user to select between adding to or editing current bar items
     private void promptEditBar() {
         listDrinks();
         int drinks = show.getBar().size();
@@ -196,6 +216,8 @@ public class ShowEditor extends ShowBuilder {
         displayMain = true;
     }
 
+    // MODIFIES: this and drink
+    // EFFECTS: runs editor menu and prompts user to edit values of drink
     private void editDrink(Drink drink) {
         String name = drink.getName();
         String command = getEditDrinkCommand();
@@ -217,6 +239,7 @@ public class ShowEditor extends ShowBuilder {
         }
     }
 
+    // EFFECTS: prompts user to select which fields they want to change for drink
     private String getEditDrinkCommand() {
         String command;
         while (true) {
@@ -230,6 +253,7 @@ public class ShowEditor extends ShowBuilder {
         return command;
     }
 
+    // EFFECTS: displays itemized drinks for user selection
     private void listDrinks() {
         ArrayList<Drink> acts = show.getBar();
         int i = 1;

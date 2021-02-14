@@ -6,6 +6,7 @@ import model.show.Employee;
 
 import java.util.ArrayList;
 
+// Represents a show with acts, bar items, employees, tickets, venue capacity and additional costs
 public class Show extends Event {
     private ArrayList<Act> acts;
     private ArrayList<Employee> employees;
@@ -15,6 +16,7 @@ public class Show extends Event {
     private int ticketPrice;
     private int additionalCost;
 
+    // EFFECTS: constructs a new show with name--instantiates arrays for bar, employees and acts
     public Show(String name) {
         this.name = name;
         acts = new ArrayList<>();
@@ -23,6 +25,7 @@ public class Show extends Event {
         additionalCost = 0;
         capacity = 0;
         ticketPrice = 0;
+        importance = 8;
     }
 
     // MODIFIES: this
@@ -70,10 +73,6 @@ public class Show extends Event {
         bar.remove(index);
     }
 
-    public ArrayList<Drink> getBar() {
-        return bar;
-    }
-
     // EFFECTS: returns projected revenue from tickets minus expenses
     public int calculateRevenue() {
         int costs = additionalCost;
@@ -89,6 +88,10 @@ public class Show extends Event {
             revenue = revenue + d.calculateRevenue();
         }
         return revenue - costs;
+    }
+
+    public ArrayList<Drink> getBar() {
+        return bar;
     }
 
     public int getTicketPrice() {

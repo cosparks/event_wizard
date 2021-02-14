@@ -3,13 +3,16 @@ package ui.tools;
 import model.Show;
 import model.show.*;
 
+// Represents UI tool for creating and editing shows
 public class ShowBuilder extends EventBuilder {
     private Show show;
 
-    // EFFECTS: calls super constructor to initialize name, then creates show with name
+    // EFFECTS: creates show builder--only to be called when editing existing shows
     public ShowBuilder() {
     }
 
+    // EFFECTS: calls super constructor to initialize name, then creates show with name
+    //          (string is dummy specifier)
     public ShowBuilder(String str) {
         super(str);
         show = new Show(name);
@@ -21,11 +24,13 @@ public class ShowBuilder extends EventBuilder {
         return show;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets this.show to show
     public void setShow(Show show) {
         this.show = show;
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: displays main menu, allowing user to add details to and edit show object
     protected void runMainMenu() {
         String command;
@@ -81,7 +86,6 @@ public class ShowBuilder extends EventBuilder {
         }
     }
 
-    // MODIFIES: show
     // EFFECTS: prompts user to add multiple acts to show
     protected void promptForActs() {
         createAct();
@@ -101,7 +105,7 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: creates an act with name and pay (other info optional) and adds it to show
     private void createAct() {
         String actName = promptForString("enter name of act:", "name");
@@ -115,7 +119,7 @@ public class ShowBuilder extends EventBuilder {
                 + ", with pay: " + UIColors.MAIN_MENU + pay);
     }
 
-    // MODIFIES: act
+    // MODIFIES: this and act
     // EFFECTS: adds rider and stage plot to act
     private void promptForRiderAndStagePlot(Act act) {
         String rider;
@@ -139,7 +143,6 @@ public class ShowBuilder extends EventBuilder {
         }
     }
 
-    // MODIFIES: show
     // EFFECTS: prompts user to enter multiple bar items to bar
     protected void promptForBar() {
         createDrink();
@@ -159,7 +162,7 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: creates drink and adds it to drink list in show
     private void createDrink() {
         String name = promptForString("enter name of bar item: ", "entry");
@@ -175,7 +178,7 @@ public class ShowBuilder extends EventBuilder {
                 + UIColors.MENU1 + " per unit and sale price of " + UIColors.MAIN_MENU + salePrice);
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: prompts user to enter information for tickets
     protected void promptForTickets() {
         int ticketPrice = promptForInteger("enter ticket price: ", "entry", 0, Integer.MAX_VALUE);
@@ -189,6 +192,8 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to set capacity of venue for show
     protected void setCapacity() {
         int capacity = promptForInteger("enter max capacity of venue",
                 "entry", 0, Integer.MAX_VALUE);
@@ -197,6 +202,8 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to enter any additional expenses for this show
     protected void setExpenses() {
         int expenses = promptForInteger("enter additional expenses for event",
                                         "entry", 0, Integer.MAX_VALUE);
@@ -204,7 +211,7 @@ public class ShowBuilder extends EventBuilder {
         System.out.println(UIColors.MENU1 + "additional expenses set to: " + UIColors.MAIN_MENU + expenses);
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: prompts user to add multiple acts to show
     protected void promptForEmployees() {
         createEmployee();
@@ -224,7 +231,7 @@ public class ShowBuilder extends EventBuilder {
         displayMain = true;
     }
 
-    // MODIFIES: show
+    // MODIFIES: this
     // EFFECTS: constructs a new employee and adds them to show.employees
     private void createEmployee() {
         String employeeName = promptForString("enter name of employee:", "name");

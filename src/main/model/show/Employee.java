@@ -6,6 +6,7 @@ public class Employee {
     private String job;
     private String name;
 
+    // EFFECTS: Constructs and employee with name and pay
     public Employee(String name, int pay) {
         this.name = name;
         this.pay = pay;

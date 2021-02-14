@@ -7,13 +7,14 @@ public class Drink {
     private int cost;
     private int salePrice;
 
-
+    // EFFECTS: Constructs a drink with amount and cost
     public Drink(int amount, int cost) {
         this.amount = amount;
         this.cost = cost;
         salePrice = 0;
     }
 
+    // EFFECTS: constructs a drink with name, amount and cost
     public Drink(String name, int amount, int cost) {
         this.name = name;
         this.amount = amount;

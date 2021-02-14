@@ -2,10 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a simple event with list of additional details
 public class SimpleEvent extends Event {
 
     private ArrayList<String> details;
 
+    // EFFECTS: constructs simple event with name--instantiates detail list
     public SimpleEvent(String name) {
         this.name = name;
         importance = 0;
