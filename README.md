@@ -33,7 +33,7 @@ their own.
 - I want to be able to schedule an event with date, start time and location
 - I would like to be able to come back to the event to add/change information
 - I want to view the event alongside any other events that I have created
-- when I access a stored event, I want to see the date and time, so I can clearly visualize my schedule
+- I want to be able to save my events so I can come back and edit them later
 
 #### User 2:
 - I want to schedule a concert with a date, start time and location
@@ -42,19 +42,11 @@ bar/sound/lighting
 - I want to enter any information regarding expenses--how much bands and workers need to be paid, the up-front cost on
 alcohol, cost of any rentals needed for the show, etc.
 - I want the software to tally expenses and compute projected revenue for a concert
-- I want to be able to store riders and stage plots from an event entry
 - I want to edit events: change dates or any other information stored in an event
+- I want to be able to come back to and edit an event which I've saved in my schedule
 
 #### User 3:
-- I want to enter the date and time of 10 different upcoming job interviews with different 
+- I want to enter the date and time of a number fo different upcoming job interviews with different 
 dates, times and locations
-- I want to include any relevant contact information for each interview
 - I want to set a different level of importance for each interview
 - I want to be able to view all the different interviews ordered by importance, and also by time
-
-#### User 4
-- I want to plan a party with a date, start/end time and location
-- I want to store information about different expenses--cost of DJ, alcohol, sound system rental, venue etc.
-- I want to add an estimated number of guests along with a cover charge
-- I want to be able to view my event and check expenses, so that I can estimate an appropriate cover charge
-- I want to plan another similar party for next month and view/edit both the events that I have created

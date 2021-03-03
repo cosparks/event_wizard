@@ -132,16 +132,17 @@ public class DisplayTool {
     // EFFECTS: prints out act name and pay
     private void employeeForDisplay(Employee e, Boolean first) {
         String insert = (first) ? "" : ", ";
+        String s = "*";
         System.out.print(insert + UIColors.PURPLE + "" + e.getName()
-                + "  " + UIColors.PURPLE + e.getJob() + UIColors.MENU1 + "  $" + e.getPay());
+                + " " + UIColors.PURPLE + s + e.getJob() + s + UIColors.MENU1 + " $" + e.getPay());
     }
 
     // EFFECTS: prints out bar item name, amount, cost and sale price
     private void barItemForDisplay(Drink d, Boolean first) {
         String insert = (first) ? "" : ", ";
         System.out.print(UIColors.MENU1 + insert + UIColors.PURPLE + d.getName()
-                + UIColors.MENU2 + "  $" + d.getSalePrice()
-                + "  $" + UIColors.MENU1 +  d.getCost() + "  x" + d.getAmount());
+                + UIColors.MENU2 + " $" + d.getSalePrice()
+                +  UIColors.MENU1 + " $" + d.getCost() + " x" + d.getAmount());
     }
 
     // EFFECTS: displays name, date and time, location, and details of simple event
