@@ -4,10 +4,14 @@ import model.show.Act;
 import model.show.Drink;
 import model.show.Employee;
 
+import persistence.Writable;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 // Represents a show with acts, bar items, employees, tickets, venue capacity and additional costs
-public class Show extends Event {
+public class Show extends Event implements Writable {
     private ArrayList<Act> acts;
     private ArrayList<Employee> employees;
     private ArrayList<Drink> bar;
@@ -73,6 +77,10 @@ public class Show extends Event {
         bar.remove(index);
     }
 
+    public ArrayList<Drink> getBar() {
+        return bar;
+    }
+
     // EFFECTS: returns projected revenue from tickets minus expenses
     public int calculateRevenue() {
         int costs = additionalCost;
@@ -90,8 +98,69 @@ public class Show extends Event {
         return revenue - costs;
     }
 
-    public ArrayList<Drink> getBar() {
-        return bar;
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("type", "show");
+        json.put("capacity", capacity);
+        json.put("projected sales", projectedSales);
+        json.put("ticket price", ticketPrice);
+        json.put("additional cost", additionalCost);
+        json.put("employees", employeesToJson());
+        json.put("acts", actsToJson());
+        json.put("bar", barToJson());
+        return json;
+    }
+
+    // EFFECTS: returns list of employees as json array
+    private JSONArray employeesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Employee e : employees) {
+            jsonArray.put(e.toJson());
+        }
+        return jsonArray;
+    }
+
+    // EFFECTS: returns list of acts as json array
+    private JSONArray actsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Act a : acts) {
+            jsonArray.put(a.toJson());
+        }
+        return jsonArray;
+    }
+
+    // EFFECTS: returns list of bar items as json array
+    private JSONArray barToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Drink d : bar) {
+            jsonArray.put(d.toJson());
+        }
+        return jsonArray;
+    }
+
+    public int getNumActs() {
+        return acts.size();
+    }
+
+    public int getNumEmployees() {
+        return employees.size();
+    }
+
+    public int getNumDrinks() {
+        return bar.size();
+    }
+
+    public Drink getDrink(int index) {
+        return bar.get(index);
+    }
+
+    public Employee getEmployee(int index) {
+        return employees.get(index);
+    }
+
+    public Act getAct(int index) {
+        return acts.get(index);
     }
 
     public int getTicketPrice() {

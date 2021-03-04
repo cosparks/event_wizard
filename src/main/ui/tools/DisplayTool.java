@@ -29,7 +29,8 @@ public class DisplayTool {
     // EFFECTS: displays all events in schedule ranked in order of importance
     public void displayEventsByImportance(Schedule schedule) {
         for (Event e : schedule.getEventsByImportance()) {
-            System.out.println(UIColors.QUIT + e.getImportance());
+            int importance = e.getImportance() + 1;
+            System.out.println(UIColors.QUIT + importance);
             if (e instanceof Show) {
                 displayShow((Show) e);
             } else if (e instanceof SimpleEvent) {
@@ -155,7 +156,8 @@ public class DisplayTool {
 
     // EFFECTS: displays name, date and time, location, details and importance of simple event
     public void displaySimpleEventForEditor(SimpleEvent event) {
-        System.out.println(UIColors.MENU1 + "importance  " + UIColors.QUIT + event.getImportance());
+        int importance = event.getImportance() + 1;
+        System.out.println(UIColors.MENU1 + "importance  " + UIColors.QUIT + importance);
         displaySimpleEvent(event);
     }
 

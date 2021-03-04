@@ -1,15 +1,38 @@
 package model;
 
+import persistence.*;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 import java.util.*;
 
 // Represents a schedule with arbitrary number of Events
-public class Schedule {
-
+public class Schedule implements Writable {
     private ArrayList<Event> events;
+    private String name;
 
     // EFFECTS: creates a new empty schedule
     public Schedule() {
         events = new ArrayList<>();
+        name = "My Schedule";
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("events", eventsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns events in schedule as JSONArray
+    private JSONArray eventsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Event e : events) {
+            jsonArray.put(e.toJson());
+        }
+        return jsonArray;
     }
 
     // MODIFIES: this
@@ -47,5 +70,9 @@ public class Schedule {
 
     public int getSize() {
         return events.size();
+    }
+
+    public String getName() {
+        return name;
     }
 }

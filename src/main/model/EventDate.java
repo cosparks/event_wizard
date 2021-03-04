@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a date with day, month, year and time of day
-public class EventDate {
+public class EventDate implements Writable {
     private int day;
     private int month;
     private int year;
@@ -23,6 +26,17 @@ public class EventDate {
         this.year = year;
         this.hour = hour;
         this.minute = minute;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("day", day);
+        json.put("month", month);
+        json.put("year", year);
+        json.put("hour", hour);
+        json.put("minute", minute);
+        return json;
     }
 
     // REQUIRES: day [1, 31], month [1, 12], year [1000, 9999], hour [0, 23], minute [0, 59]

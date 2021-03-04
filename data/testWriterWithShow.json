@@ -1,0 +1,60 @@
+{
+    "name": "My Schedule",
+    "events": [{
+        "start date": {
+            "month": 3,
+            "hour": 21,
+            "year": 2021,
+            "day": 21,
+            "minute": 25
+        },
+        "bar": [
+            {
+                "amount": 1,
+                "cost": 2,
+                "name": "Beer",
+                "sale price": 3
+            },
+            {
+                "amount": 4,
+                "cost": 5,
+                "name": "Craft Beer",
+                "sale price": 6
+            }
+        ],
+        "projected sales": 245,
+        "ticket price": 22,
+        "importance": 8,
+        "name": "Chad VanGaalen with guests",
+        "location": "The Rio Theatre",
+        "type": "show",
+        "employees": [
+            {
+                "name": "John",
+                "pay": 195,
+                "job": "sound"
+            },
+            {
+                "name": "Sarah",
+                "pay": 180,
+                "job": "lighting"
+            }
+        ],
+        "acts": [
+            {
+                "stage plot": "",
+                "name": "Bratboy",
+                "pay": 300,
+                "rider": ""
+            },
+            {
+                "stage plot": "",
+                "name": "Amyl",
+                "pay": 1000,
+                "rider": ""
+            }
+        ],
+        "additional cost": 500,
+        "capacity": 300
+    }]
+}

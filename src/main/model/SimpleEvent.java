@@ -2,9 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
-// Represents a simple event with list of additional details
-public class SimpleEvent extends Event {
+import persistence.Writable;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
+// Represents a simple event with list of additional details
+public class SimpleEvent extends Event implements Writable {
     private ArrayList<String> details;
 
     // EFFECTS: constructs simple event with name--instantiates detail list
@@ -38,5 +41,22 @@ public class SimpleEvent extends Event {
     // EFFECTS: erases one detail from list of details
     public void clearDetail(int index) {
         details.remove(index);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("type", "simple event");
+        json.put("details", detailsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns list of event details as json array
+    private JSONArray detailsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (String d : details) {
+            jsonArray.put(d);
+        }
+        return jsonArray;
     }
 }

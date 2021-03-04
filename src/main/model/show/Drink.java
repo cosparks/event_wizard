@@ -1,7 +1,10 @@
 package model.show;
 
+import persistence.Writable;
+import org.json.JSONObject;
+
 // Represents a drink with name, amount, cost per unit, sale price per unit
-public class Drink {
+public class Drink implements Writable {
     private String name;
     private int amount;
     private int cost;
@@ -20,6 +23,30 @@ public class Drink {
         this.amount = amount;
         this.cost = cost;
         salePrice = 0;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("amount", amount);
+        json.put("cost", cost);
+        json.put("sale price", salePrice);
+        return json;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (getClass() != obj.getClass()) {
+            return false;
+        } else {
+            Drink drink = (Drink) obj;
+            return name.equals(drink.getName()) && amount == drink.getAmount()
+                    && cost == drink.getCost() && salePrice == drink.getSalePrice();
+        }
     }
 
     // EFFECTS: returns the cost of all units at given unit price
