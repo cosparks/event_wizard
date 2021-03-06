@@ -1,0 +1,41 @@
+{
+    "name": "My Schedule",
+    "events": [
+        {
+            "start date": {
+                "month": 5,
+                "hour": 9,
+                "year": 2021,
+                "day": 15,
+                "minute": 0
+            },
+            "importance": 5,
+            "name": "Appointment 52",
+            "location": "250 fatcat lane",
+            "details": [
+                "detail 1",
+                "detail 2",
+                "detail 3"
+            ],
+            "type": "simple event"
+        },
+        {
+            "start date": {
+                "month": 7,
+                "hour": 15,
+                "year": 2021,
+                "day": 17,
+                "minute": 30
+            },
+            "importance": 9,
+            "name": "Surfing in Tofino",
+            "location": "333 Beach Avenue",
+            "details": [
+                "surfing detail 1",
+                "surfing detail 2",
+                "surfing detail 3"
+            ],
+            "type": "simple event"
+        }
+    ]
+}

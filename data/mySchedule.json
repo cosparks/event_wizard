@@ -1,2 +1,17 @@
 {
+    "name": "My Schedule",
+    "events": [{
+        "start date": {
+            "month": 0,
+            "hour": 0,
+            "year": 0,
+            "day": 0,
+            "minute": 0
+        },
+        "importance": 0,
+        "name": "Bonanza",
+        "location": "",
+        "details": [],
+        "type": "simple event"
+    }]
 }

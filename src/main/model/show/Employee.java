@@ -13,6 +13,7 @@ public class Employee implements Writable {
     public Employee(String name, int pay) {
         this.name = name;
         this.pay = pay;
+        job = "";
     }
 
     public JSONObject toJson() {

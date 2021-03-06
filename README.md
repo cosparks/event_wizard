@@ -29,13 +29,13 @@ their own.
 
 ## User Stories
 
-#### User 1:
-- I want to be able to schedule an event with date, start time and location
-- I would like to be able to come back to the event to add/change information
+#### Simple User:
+- I want to keep track of a number of different upcoming events with dates, times and locations
+- I want to set a different level of importance for each event
 - I want to view the event alongside any other events that I have created
-- I want to be able to save my events so I can come back and edit them later
+- If I've made any new changes to my events, I want the program to ask me if I want to save before quitting
 
-#### User 2:
+#### User (concert promoter/venue manager):
 - I want to schedule a concert with a date, start time and location
 - I want to store information about the different acts, presale tickets (number and price) and who will be working
 bar/sound/lighting
@@ -43,10 +43,4 @@ bar/sound/lighting
 alcohol, cost of any rentals needed for the show, etc.
 - I want the software to tally expenses and compute projected revenue for a concert
 - I want to edit events: change dates or any other information stored in an event
-- I want to be able to come back to and edit an event which I've saved in my schedule
-
-#### User 3:
-- I want to enter the date and time of a number fo different upcoming job interviews with different 
-dates, times and locations
-- I want to set a different level of importance for each interview
-- I want to be able to view all the different interviews ordered by importance, and also by time
+- I want to be able to save my shows so I can come back and edit them at a later time

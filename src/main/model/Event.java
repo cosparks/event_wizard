@@ -17,6 +17,7 @@ public abstract class Event implements Writable {
     public Event() {
         startDate = new EventDate();
         importance = 0;
+        location = "";
     }
 
     // MODIFIES: this
@@ -89,7 +90,7 @@ public abstract class Event implements Writable {
     }
 
 //    // Code GraveYard for endDate methods (saving in case program will incorporate end dates)
-
+//
 //    // EFFECTS: Produce new event with given name
 //    public Event(String name) {
 //        this.name = name;

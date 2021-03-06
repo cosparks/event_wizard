@@ -12,6 +12,8 @@ import model.show.Employee;
 import org.json.*;
 
 // Represents a reader that reads schedule from JSON data stored in file
+// CITATION: code copied and modified from JsonReader class in JsonSerializationDemo
+//           GitHub: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonReader {
     private String source;
 
@@ -20,13 +22,13 @@ public class JsonReader {
         this.source = source;
     }
 
+    // EFFECTS: reads data from json object and returns schedule
     public Schedule read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseSchedule(jsonObject);
     }
 
-    // TODO read up on this method to understand what it does
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -37,13 +39,14 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: parses serialized json data and returns schedule
     private Schedule parseSchedule(JSONObject jsonObject) {
-        // String name = jsonObject.getString("name");
         Schedule schedule = new Schedule();
         addEvents(schedule, jsonObject);
         return schedule;
     }
 
+    // EFFECTS: parses JsonArray representing events and calls method to parse and add events
     private void addEvents(Schedule schedule, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("events");
         for (Object json : jsonArray) {
@@ -57,7 +60,8 @@ public class JsonReader {
         }
     }
 
-    // EFFECTS: parses show details from json object and adds them to new show
+    // MODIFIES: schedule
+    // EFFECTS: parses show details from json object and adds show to schedule
     private void addShow(Schedule schedule, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Show show = new Show(name);
@@ -73,7 +77,8 @@ public class JsonReader {
         schedule.addEvent(show);
     }
 
-
+    // MODIFIES: schedule
+    // EFFECTS: parses details of simple event from json object and adds event to schedule
     private void addSimpleEvent(Schedule schedule, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         SimpleEvent event = new SimpleEvent(name);
@@ -83,7 +88,8 @@ public class JsonReader {
         schedule.addEvent(event);
     }
 
-
+    // MODIFIES: event
+    // EFFECTS: parses json array of notes/details and adds them to simple event
     private void addSimpleEventDetails(SimpleEvent event, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("details");
         for (Object json : jsonArray) {
@@ -92,6 +98,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: show
+    // EFFECTS: parses json array representing employees and adds employees to show
     private void addEmployees(Show show, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("employees");
         for (Object json : jsonArray) {
@@ -100,6 +108,7 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: parses json object representing employee and returns employee
     private Employee getEmployee(JSONObject nextEmployee) {
         String name = nextEmployee.getString("name");
         int pay = nextEmployee.getInt("pay");
@@ -110,6 +119,8 @@ public class JsonReader {
         return employee;
     }
 
+    // MODIFIES: show
+    // EFFECTS: parses json array representing employees and adds employees to show
     private void addActs(Show show, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("acts");
         for (Object json : jsonArray) {
@@ -118,6 +129,7 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: returns act parsed from json object
     private Act getAct(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int pay = jsonObject.getInt("pay");
@@ -129,6 +141,8 @@ public class JsonReader {
         return act;
     }
 
+    // MODIFIES: show
+    // EFFECTS: parses json array representing list of bar items and adds bar items to show
     private void addBar(Show show, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("bar");
         for (Object json : jsonArray) {
@@ -137,6 +151,7 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: returns drink parsed from json object
     private Drink getDrink(JSONObject nextDrink) {
         String name = nextDrink.getString("name");
         int amount = nextDrink.getInt("amount");
@@ -148,7 +163,7 @@ public class JsonReader {
         return drink;
     }
 
-
+    // MODIFIES: event
     // EFFECTS: parses event details from json object and adds them to event
     private void addBasicEventDetails(Event event, JSONObject jsonObject) {
         int importance = jsonObject.getInt("importance");
@@ -160,6 +175,7 @@ public class JsonReader {
         event.setStartDate(startDate);
     }
 
+    // EFFECTS: returns EventDate parsed from json object
     private EventDate getDate(Object json) {
         JSONObject jsonDate = (JSONObject) json;
         int day = jsonDate.getInt("day");

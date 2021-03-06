@@ -1,5 +1,6 @@
 package model;
 
+import model.show.Act;
 import model.show.Drink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,5 +42,31 @@ public class DrinkTest {
         assertEquals("Blue Scotch", drinkB.getName());
         assertEquals(200, drinkB.getAmount());
         assertEquals(3, drinkB.getCost());
+    }
+
+    @Test
+    void testEqualsSameObject() {
+        Drink drinkB = drinkA;
+        assertTrue(drinkA.equals(drinkB));
+    }
+
+    @Test
+    void testEqualsNullObject() {
+        Drink drinkB  = null;
+        assertFalse(drinkA.equals(drinkB));
+    }
+
+    @Test
+    void testEqualsDifferentTypeOfObject() {
+        Act actA = new Act("Ramones", 1500);
+        assertFalse(drinkA.equals(actA));
+    }
+
+    @Test
+    void testEqualsDifferentObjectSameValues() {
+        Drink drinkB = new Drink("scotch", amount, cost);
+        assertFalse(drinkA.equals(drinkB));
+        drinkA.setName("scotch");
+        assertTrue(drinkA.equals(drinkB));
     }
 }

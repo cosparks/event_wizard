@@ -10,8 +10,9 @@ public class Drink implements Writable {
     private int cost;
     private int salePrice;
 
-    // EFFECTS: Constructs a drink with amount and cost
+    // EFFECTS: Constructs a drink with amount and cost, automatically setting name to drink (for display)
     public Drink(int amount, int cost) {
+        name = "drink";
         this.amount = amount;
         this.cost = cost;
         salePrice = 0;
