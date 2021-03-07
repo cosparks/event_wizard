@@ -53,10 +53,44 @@ class ActTest {
     }
 
     @Test
-    void testEqualsDifferentObjectSameValues() {
-        Act actB = new Act("Beanie Man", 1500);
-        assertFalse(actA.equals(actB));
-        actB.setName("Ramones");
+    void testEqualsAllSameObjectAllPossibleDifferentValues() {
+        actA.setStagePlot("A");
+        actA.setRider("B");
+        Act actB = new Act("Beanie Man", 1400);
+        actB.setStagePlot("C");
+        actB.setRider("D");
+
+        int j = 0;
+        int k = 0;
+        for (int i = 0; i < 15; i++) {
+            if (i > 0 && i % 4 == 0) {
+                k++;
+            }
+            if (i > 0 && i % 8 == 0) {
+                actB.setName("Ramones");
+            }
+            if (i > 0 && i % 2 == 0) {
+                j++;
+            }
+
+            if (k % 2 == 0) {
+                actB.setPay(1400);
+            } else if (k % 2 == 1) {
+                actB.setPay(1500);
+            }
+            if (j % 2 == 0) {
+                actB.setRider("D");
+            } else if (j % 2 == 1) {
+                actB.setRider("B");
+            }
+            if (i % 2 == 0) {
+                actB.setStagePlot("C");
+            } else if (i % 2 == 1) {
+                actB.setStagePlot("A");
+            }
+            assertFalse(actA.equals(actB));
+        }
+        actB.setStagePlot("A");
         assertTrue(actA.equals(actB));
     }
 }

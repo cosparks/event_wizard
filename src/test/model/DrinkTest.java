@@ -63,10 +63,42 @@ public class DrinkTest {
     }
 
     @Test
-    void testEqualsDifferentObjectSameValues() {
-        Drink drinkB = new Drink("scotch", amount, cost);
-        assertFalse(drinkA.equals(drinkB));
-        drinkA.setName("scotch");
+    void testEqualsAllSameObjectAllPossibleDifferentValues() {
+        Drink drinkB = new Drink("scotch", 50, 3);
+        drinkB.setSalePrice(6);
+        drinkA.setName("beer");
+        drinkA.setSalePrice(salePrice);
+
+        int j = 0;
+        int k = 0;
+        for (int i = 0; i < 15; i++) {
+            if (i > 0 && i % 4 == 0) {
+                k++;
+            }
+            if (i > 0 && i % 8 == 0) {
+                drinkB.setName("beer");
+            }
+            if (i > 0 && i % 2 == 0) {
+                j++;
+            }
+
+            if (k % 2 == 0) {
+                drinkB.setAmount(50);
+            } else if (k % 2 == 1) {
+                drinkB.setAmount(amount);
+            }
+            if (j % 2 == 0) {
+                drinkB.setCost(3);
+            } else if (j % 2 == 1) {
+                drinkB.setCost(cost);
+            }
+            if (i % 2 == 0) {
+                drinkB.setSalePrice(6);
+            } else if (i % 2 == 1) {
+                drinkB.setSalePrice(salePrice);
+            }
+        }
+        drinkB.setSalePrice(salePrice);
         assertTrue(drinkA.equals(drinkB));
     }
 }

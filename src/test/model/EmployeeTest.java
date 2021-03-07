@@ -52,11 +52,33 @@ public class EmployeeTest {
     }
 
     @Test
-    void testEqualsDifferentObjectSameValues() {
-        Employee employeeB = new Employee("Frank", 111);
-        assertFalse(employeeA.equals(employeeB));
-        employeeB.setName("Jared");
+    void testEqualsAllSameObjectAllPossibleDifferentValues() {
+        Employee employeeB = new Employee("Frank", 180);
         employeeB.setJob("bartender");
+        employeeA.setJob("sound");
+
+        int j = 0;
+        for (int i = 0; i < 7; i++) {
+            if (i > 0 && i % 4 == 0) {
+                employeeB.setName("Jared");
+            }
+            if (i > 0 && i % 2 == 0) {
+                j++;
+            }
+
+            if (j % 2 == 0) {
+                employeeB.setPay(180);
+            } else if (j % 2 == 1) {
+                employeeB.setPay(111);
+            }
+            if (i % 2 == 0) {
+                employeeB.setJob("bartender");
+            } else if (i % 2 == 1) {
+                employeeB.setJob("sound");
+            }
+            assertFalse(employeeA.equals(employeeB));
+        }
+        employeeB.setJob("sound");
         assertTrue(employeeA.equals(employeeB));
     }
 }
