@@ -75,11 +75,11 @@ public class DrinkTest {
             if (i > 0 && i % 4 == 0) {
                 k++;
             }
-            if (i > 0 && i % 8 == 0) {
-                drinkB.setName("beer");
-            }
             if (i > 0 && i % 2 == 0) {
                 j++;
+            }
+            if (i > 0 && i % 8 == 0) {
+                drinkB.setName("beer");
             }
 
             if (k % 2 == 0) {
@@ -97,6 +97,7 @@ public class DrinkTest {
             } else if (i % 2 == 1) {
                 drinkB.setSalePrice(salePrice);
             }
+            assertFalse(drinkA.equals(drinkB));
         }
         drinkB.setSalePrice(salePrice);
         assertTrue(drinkA.equals(drinkB));
