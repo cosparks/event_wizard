@@ -1,7 +1,6 @@
 package ui.tools;
 
 import model.SimpleEvent;
-import model.show.Act;
 
 // Represents UI tool for editing simple events--subclass of SimpleEventBuilder and EventBuilder
 public class SimpleEventEditor extends SimpleEventBuilder {
@@ -32,7 +31,7 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         } else if ("i".equals(command)) {
             setImportance(event);
         } else {
-            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
+            System.out.println(TextColors.QUIT + "error: no option which corresponds to that command");
         }
         redisplayEventForEditor();
     }
@@ -44,7 +43,7 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         if ("a".equals(command)) {
             createDetail();
         } else if (event.getNumberOfDetails() == 0) {
-            System.out.println(UIColors.QUIT + "there are no details to edit");
+            System.out.println(TextColors.QUIT + "there are no details to edit");
         } else {
             selectDetail();
             while (true) {
@@ -82,7 +81,7 @@ public class SimpleEventEditor extends SimpleEventBuilder {
         int size = event.getNumberOfDetails();
         for (int i = 0; i < size; i++) {
             int num = i + 1;
-            System.out.println(UIColors.MENU1 + num + "  " + event.getDetail(i));
+            System.out.println(TextColors.MENU1 + num + "  " + event.getDetail(i));
         }
     }
 }

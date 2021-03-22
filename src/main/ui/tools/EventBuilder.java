@@ -30,7 +30,7 @@ public abstract class EventBuilder {
     protected void promptForName() {
         String command;
 
-        System.out.println(UIColors.MENU1 + "enter event name: ");
+        System.out.println(TextColors.MENU1 + "enter event name: ");
         while (true) {
             command = input.nextLine();
 
@@ -49,7 +49,7 @@ public abstract class EventBuilder {
         String command;
         initialize();
 
-        System.out.println(UIColors.MENU1 + "enter event name: ");
+        System.out.println(TextColors.MENU1 + "enter event name: ");
         while (true) {
             command = input.nextLine();
 
@@ -80,7 +80,7 @@ public abstract class EventBuilder {
         String timeDisplay = eventDate.getTimeForDisplay();
 
         event.setStartDate(eventDate);
-        System.out.println("Date has been set to " + UIColors.PURPLE + dateDisplay + "  " + timeDisplay);
+        System.out.println("Date has been set to " + TextColors.PURPLE + dateDisplay + "  " + timeDisplay);
         displayMain = true;
     }
 
@@ -112,14 +112,14 @@ public abstract class EventBuilder {
 
         while (invalid) {
             initialize();
-            System.out.println(UIColors.MENU1 + "enter event " + type + ": ");
+            System.out.println(TextColors.MENU1 + "enter event " + type + ": ");
             try {
                 dateValue = input.nextInt();
             } catch (Exception e) {
                 dateValue = min - 1;
             }
             if (dateValue < min || dateValue > max) {
-                System.out.println(UIColors.QUIT + "invalid entry");
+                System.out.println(TextColors.QUIT + "invalid entry");
             } else {
                 invalid = false;
             }
@@ -135,7 +135,7 @@ public abstract class EventBuilder {
         String command;
         initialize();
 
-        System.out.println(UIColors.MENU1 + "enter location: ");
+        System.out.println(TextColors.MENU1 + "enter location: ");
         command = input.nextLine();
         event.setLocation(command);
         displayMain = true;
@@ -160,7 +160,7 @@ public abstract class EventBuilder {
         String str;
         initialize();
 
-        System.out.println(UIColors.MENU1 + prompt);
+        System.out.println(TextColors.MENU1 + prompt);
         while (true) {
             str = input.nextLine();
             if (str == null || str.isEmpty()) {
@@ -177,7 +177,7 @@ public abstract class EventBuilder {
     protected String promptBinaryResponse(String r1, String r2, String prompt) {
         String str;
         initialize();
-        System.out.println(UIColors.MENU1 + prompt);
+        System.out.println(TextColors.MENU1 + prompt);
         while (true) {
             str = input.nextLine();
             if (r1.equals(str) || r2.equals(str)) {
@@ -193,7 +193,7 @@ public abstract class EventBuilder {
     // EFFECTS: prompts user to enter int between min and max; returns user input int
     protected Integer promptForInteger(String prompt, String type, int min, int max) {
         int i;
-        System.out.println(UIColors.MENU1 + prompt);
+        System.out.println(TextColors.MENU1 + prompt);
         while (true) {
             initialize();
             try {
@@ -212,6 +212,6 @@ public abstract class EventBuilder {
 
     // EFFECTS: warns user they have entered an invalid input of type defined by parameter
     public void throwInvalidInput(String type) {
-        System.out.println(UIColors.QUIT + "please enter a valid " + type);
+        System.out.println(TextColors.QUIT + "please enter a valid " + type);
     }
 }

@@ -37,11 +37,11 @@ public class ShowBuilder extends EventBuilder {
 
         while (true) {
             if (displayMain) {
-                System.out.println(UIColors.TITLE + "\t\t\t\t\t" + name + "\t\t\t\t\t");
+                System.out.println(TextColors.TITLE + "\t\t\t\t\t" + name + "\t\t\t\t\t");
                 displayOptions();
                 displayMain = false;
             }
-            System.out.println(UIColors.MENU1 + "select details to add");
+            System.out.println(TextColors.MENU1 + "select details to add");
             command = input.next();
             command = command.toLowerCase();
 
@@ -55,9 +55,9 @@ public class ShowBuilder extends EventBuilder {
 
     // EFFECTS: displays show-builder main menu
     private void displayOptions() {
-        System.out.println(UIColors.MENU2 + "\t[n]ame\t\t[d]ate\t\t[v]enue\t\t\t[a]cts\t\t\t[b]ar");
+        System.out.println(TextColors.MENU2 + "\t[n]ame\t\t[d]ate\t\t[v]enue\t\t\t[a]cts\t\t\t[b]ar");
         System.out.println("\t[t]ickets\t[c]apacity\te[x]penses\t\t[e]mployees"
-                + UIColors.MAIN_MENU + "\t\t[s]ave and return to main");
+                + TextColors.MAIN_MENU + "\t\t[s]ave and return to main");
 
     }
 
@@ -82,7 +82,7 @@ public class ShowBuilder extends EventBuilder {
         } else if ("e".equals(command)) {
             promptForEmployees();
         } else {
-            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
+            System.out.println(TextColors.QUIT + "error: no option which corresponds to that command");
         }
     }
 
@@ -91,7 +91,7 @@ public class ShowBuilder extends EventBuilder {
         createAct();
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "Add another act?  y/n");
+            System.out.println(TextColors.MENU1 + "Add another act?  y/n");
             String answer = input.next();
 
             if (answer.equals("y")) {
@@ -115,8 +115,8 @@ public class ShowBuilder extends EventBuilder {
 
         promptForRiderAndStagePlot(act);
         show.addAct(act);
-        System.out.println(UIColors.MENU1 + "Added new act: " + UIColors.MAIN_MENU + actName + UIColors.MENU1
-                + ", with pay: " + UIColors.MAIN_MENU + pay);
+        System.out.println(TextColors.MENU1 + "Added new act: " + TextColors.MAIN_MENU + actName + TextColors.MENU1
+                + ", with pay: " + TextColors.MAIN_MENU + pay);
     }
 
     // MODIFIES: this and act
@@ -125,7 +125,7 @@ public class ShowBuilder extends EventBuilder {
         String rider;
         String stagePlot;
 
-        System.out.println(UIColors.MENU1 + "Add rider and stage plot?  y/n");
+        System.out.println(TextColors.MENU1 + "Add rider and stage plot?  y/n");
         while (true) {
             initialize();
             String answer = input.nextLine();
@@ -148,7 +148,7 @@ public class ShowBuilder extends EventBuilder {
         createDrink();
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "Add another bar item?  y/n");
+            System.out.println(TextColors.MENU1 + "Add another bar item?  y/n");
             String answer = input.next();
 
             if (answer.equals("y")) {
@@ -173,9 +173,9 @@ public class ShowBuilder extends EventBuilder {
         Drink drink = new Drink(name, amount, cost);
         drink.setSalePrice(salePrice);
         show.addDrink(drink);
-        System.out.println(UIColors.MENU1 + "Added " + UIColors.MAIN_MENU + amount + UIColors.MENU1 + " units of "
-                + UIColors.MAIN_MENU + name + UIColors.MENU1 + " to bar at cost of " + UIColors.MAIN_MENU + cost
-                + UIColors.MENU1 + " per unit and sale price of " + UIColors.MAIN_MENU + salePrice);
+        System.out.println(TextColors.MENU1 + "Added " + TextColors.MAIN_MENU + amount + TextColors.MENU1 + " units of "
+                + TextColors.MAIN_MENU + name + TextColors.MENU1 + " to bar at cost of " + TextColors.MAIN_MENU + cost
+                + TextColors.MENU1 + " per unit and sale price of " + TextColors.MAIN_MENU + salePrice);
     }
 
     // MODIFIES: this
@@ -187,8 +187,8 @@ public class ShowBuilder extends EventBuilder {
 
         show.setTicketPrice(ticketPrice);
         show.setProjectedSales(projectedSales);
-        System.out.println(UIColors.MENU1 + "ticket price set to " + UIColors.MAIN_MENU + ticketPrice
-                + UIColors.MENU1 + " and projected sales to " + UIColors.MAIN_MENU + projectedSales);
+        System.out.println(TextColors.MENU1 + "ticket price set to " + TextColors.MAIN_MENU + ticketPrice
+                + TextColors.MENU1 + " and projected sales to " + TextColors.MAIN_MENU + projectedSales);
         displayMain = true;
     }
 
@@ -198,7 +198,7 @@ public class ShowBuilder extends EventBuilder {
         int capacity = promptForInteger("enter max capacity of venue",
                 "entry", 0, Integer.MAX_VALUE);
         show.setCapacity(capacity);
-        System.out.println(UIColors.MENU1 + "venue capacity set to: " + UIColors.MAIN_MENU + capacity);
+        System.out.println(TextColors.MENU1 + "venue capacity set to: " + TextColors.MAIN_MENU + capacity);
         displayMain = true;
     }
 
@@ -208,7 +208,7 @@ public class ShowBuilder extends EventBuilder {
         int expenses = promptForInteger("enter additional expenses for event",
                                         "entry", 0, Integer.MAX_VALUE);
         show.setAdditionalCost(expenses);
-        System.out.println(UIColors.MENU1 + "additional expenses set to: " + UIColors.MAIN_MENU + expenses);
+        System.out.println(TextColors.MENU1 + "additional expenses set to: " + TextColors.MAIN_MENU + expenses);
     }
 
     // MODIFIES: this
@@ -217,7 +217,7 @@ public class ShowBuilder extends EventBuilder {
         createEmployee();
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "Add another employee?  y/n");
+            System.out.println(TextColors.MENU1 + "Add another employee?  y/n");
             String answer = input.next();
 
             if (answer.equals("y")) {
@@ -244,8 +244,8 @@ public class ShowBuilder extends EventBuilder {
 
         show.addEmployee(employee);
 
-        System.out.println(UIColors.MENU1 + "Added new employee " + UIColors.MAIN_MENU + employeeName
-                    + UIColors.MENU1 + " working " + UIColors.MAIN_MENU + employee.getJob()
-                    + UIColors.MENU1 + " for " + UIColors.MAIN_MENU + pay);
+        System.out.println(TextColors.MENU1 + "Added new employee " + TextColors.MAIN_MENU + employeeName
+                    + TextColors.MENU1 + " working " + TextColors.MAIN_MENU + employee.getJob()
+                    + TextColors.MENU1 + " for " + TextColors.MAIN_MENU + pay);
     }
 }

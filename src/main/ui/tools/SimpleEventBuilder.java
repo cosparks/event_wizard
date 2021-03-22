@@ -33,11 +33,11 @@ public class SimpleEventBuilder extends EventBuilder {
 
         while (true) {
             if (displayMain) {
-                System.out.println(UIColors.TITLE + "\t\t\t\t\t" + name + "\t\t\t\t\t");
+                System.out.println(TextColors.TITLE + "\t\t\t\t\t" + name + "\t\t\t\t\t");
                 displayOptions();
                 displayMain = false;
             }
-            System.out.println(UIColors.MENU1 + "select details to add");
+            System.out.println(TextColors.MENU1 + "select details to add");
             command = input.next();
             command = command.toLowerCase();
 
@@ -51,9 +51,9 @@ public class SimpleEventBuilder extends EventBuilder {
 
     // EFFECTS: Displays selection menu for simple events
     private void displayOptions() {
-        System.out.println(UIColors.MENU2 + "\t[n]ame\t\t[d]ate\t\t[l]ocation\t\t[a]dd details");
-        System.out.println(UIColors.MENU2 + "\t[i]mportance"
-                + UIColors.MAIN_MENU + "\t\t\t\t\t\t\t\t\t\t\t[s]ave and return to main");
+        System.out.println(TextColors.MENU2 + "\t[n]ame\t\t[d]ate\t\t[l]ocation\t\t[a]dd details");
+        System.out.println(TextColors.MENU2 + "\t[i]mportance"
+                + TextColors.MAIN_MENU + "\t\t\t\t\t\t\t\t\t\t\t[s]ave and return to main");
 
     }
 
@@ -70,7 +70,7 @@ public class SimpleEventBuilder extends EventBuilder {
         } else if ("i".equals(command)) {
             setImportance(event);
         } else {
-            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
+            System.out.println(TextColors.QUIT + "error: no option which corresponds to that command");
         }
     }
 
@@ -80,7 +80,7 @@ public class SimpleEventBuilder extends EventBuilder {
         createDetail();
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "Add more information to event?  y/n");
+            System.out.println(TextColors.MENU1 + "Add more information to event?  y/n");
             String answer = input.next();
 
             if (answer.equals("y")) {

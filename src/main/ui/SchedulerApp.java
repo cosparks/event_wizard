@@ -11,10 +11,10 @@ import java.util.Scanner;
 // Represents the main user interface for creating and managing events
 public class SchedulerApp {
     private static final String JSON_STORE = "./data/mySchedule.json";
+    private Scanner input;
 
     private Schedule schedule;
     private DisplayTool displayTool;
-    private Scanner input;
     private boolean displayMainMenu;
     private boolean newChangesSaved;
 
@@ -34,7 +34,7 @@ public class SchedulerApp {
 
         initialize();
 
-        System.out.println(UIColors.TITLE + "\t\t\t\t\t\teManager\t\t\t\t\t\t");
+        System.out.println(TextColors.TITLE + "\t\t\t\t\t\teManager\t\t\t\t\t\t");
 
         while (runProgram) {
             if (displayMainMenu) {
@@ -55,7 +55,7 @@ public class SchedulerApp {
                 processCommand(command);
             }
         }
-        System.out.println(UIColors.MAIN_MENU + "\t\t\t\t\t\tGoodbye");
+        System.out.println(TextColors.MAIN_MENU + "\t\t\t\t\t\tGoodbye");
     }
 
     // MODIFIES: this
@@ -65,11 +65,11 @@ public class SchedulerApp {
     }
 
     private void displayMenu() {
-        System.out.println(UIColors.MENU1 + "\tMain Menu:");
-        System.out.println(UIColors.MENU2 + "\t[c]reate new event \t\t\t[m]anage events");
-        System.out.println(UIColors.MENU2 + "\t[d]isplay events" + UIColors.MAIN_MENU + "\t\t\t[s]ave"
-                + UIColors.MENU1 + " | " + UIColors.MAIN_MENU + "[l]oad");
-        System.out.println(UIColors.QUIT + "\t[q]uit");
+        System.out.println(TextColors.MENU1 + "\tMain Menu:");
+        System.out.println(TextColors.MENU2 + "\t[c]reate new event \t\t\t[m]anage events");
+        System.out.println(TextColors.MENU2 + "\t[d]isplay events" + TextColors.MAIN_MENU + "\t\t\t[s]ave"
+                + TextColors.MENU1 + " | " + TextColors.MAIN_MENU + "[l]oad");
+        System.out.println(TextColors.QUIT + "\t[q]uit");
     }
 
     // EFFECTS: selects appropriate method to call given user input
@@ -86,7 +86,7 @@ public class SchedulerApp {
         } else if (command.equals("l")) {
             loadSchedule();
         } else {
-            System.out.println(UIColors.QUIT + "\t\terror: please enter a valid selection");
+            System.out.println(TextColors.QUIT + "\t\terror: please enter a valid selection");
         }
     }
 
@@ -110,7 +110,7 @@ public class SchedulerApp {
             } else if (command.equals("m")) {
                 break;
             } else {
-                System.out.println(UIColors.QUIT + "\t\terror: please enter a valid selection");
+                System.out.println(TextColors.QUIT + "\t\terror: please enter a valid selection");
             }
         }
     }
@@ -129,15 +129,15 @@ public class SchedulerApp {
 
     // EFFECTS: prompts user to choose which type of event they'd like to create
     private void displayCreateEventMenu() {
-        System.out.println(UIColors.MENU1 + "\tCreate Event:");
-        System.out.println(UIColors.MENU2 + "\t[s]imple \t\t\t\t[a]dvanced"
-                + UIColors.MAIN_MENU + "\t\t\t\t\t\treturn to [m]ain");
+        System.out.println(TextColors.MENU1 + "\tCreate Event:");
+        System.out.println(TextColors.MENU2 + "\t[s]imple \t\t\t\t[a]dvanced"
+                + TextColors.MAIN_MENU + "\t\t\t\t\t\treturn to [m]ain");
     }
 
     // EFFECTS: checks whether or not a user has any events to display
     private void checkEventsForDisplay() {
         if (schedule.getSize() == 0) {
-            System.out.println(UIColors.QUIT + "you don't have any events. please enter another request:");
+            System.out.println(TextColors.QUIT + "you don't have any events. please enter another request:");
         } else {
             runDisplayOptionsMenu();
             displayMainMenu = true;
@@ -149,9 +149,9 @@ public class SchedulerApp {
         String command;
 
         while (true) {
-            System.out.println(UIColors.MENU1 + "\tView Events listed by:");
-            System.out.println(UIColors.MENU2 + "\t[d]ate \t\t\t[i]mportance"
-                    + UIColors.MAIN_MENU + "\t\treturn to [m]ain");
+            System.out.println(TextColors.MENU1 + "\tView Events listed by:");
+            System.out.println(TextColors.MENU2 + "\t[d]ate \t\t\t[i]mportance"
+                    + TextColors.MAIN_MENU + "\t\treturn to [m]ain");
 
             command = input.next();
             command = command.toLowerCase();
@@ -173,7 +173,7 @@ public class SchedulerApp {
     // EFFECTS: verifies that the user has events to manage--calls manager if schedule contains events
     private void checkEventsForManager() {
         if (schedule.getSize() == 0) {
-            System.out.println(UIColors.QUIT + "you don't have any events. please enter another request:");
+            System.out.println(TextColors.QUIT + "you don't have any events. please enter another request:");
         } else {
             runEventManager();
             newChangesSaved = false;
@@ -187,7 +187,7 @@ public class SchedulerApp {
         int size = schedule.getSize();
 
         displayTool.displayEventsForManager(schedule);
-        System.out.println(UIColors.MENU1 + "enter the number of the event you'd like to edit:");
+        System.out.println(TextColors.MENU1 + "enter the number of the event you'd like to edit:");
 
         while (true) {
             initialize();
@@ -201,7 +201,7 @@ public class SchedulerApp {
                 manageEvent(selection);
                 break;
             } else {
-                System.out.println(UIColors.QUIT + "error: please enter a valid number [1, " + size + "]");
+                System.out.println(TextColors.QUIT + "error: please enter a valid number [1, " + size + "]");
             }
         }
     }
@@ -234,7 +234,7 @@ public class SchedulerApp {
             } else if (command.equals("n")) {
                 break;
             } else {
-                System.out.println(UIColors.MENU1 + "Invalid command. Please enter valid input");
+                System.out.println(TextColors.MENU1 + "Invalid command. Please enter valid input");
             }
         }
     }
@@ -246,10 +246,10 @@ public class SchedulerApp {
             writer.open();
             writer.write(schedule);
             writer.close();
-            System.out.println(UIColors.MENU1 + "saved mySchedule to " + JSON_STORE);
+            System.out.println(TextColors.MENU1 + "saved mySchedule to " + JSON_STORE);
             newChangesSaved = true;
         } catch (FileNotFoundException e) {
-            System.out.println(UIColors.QUIT + "Error: bad pathway, destination folder not found");
+            System.out.println(TextColors.QUIT + "Error: bad pathway, destination folder not found");
         }
     }
 
@@ -259,9 +259,9 @@ public class SchedulerApp {
         JsonReader reader = new JsonReader(JSON_STORE);
         try {
             schedule = reader.read();
-            System.out.println(UIColors.MENU1 + "mySchedule successfully loaded from " + JSON_STORE);
+            System.out.println(TextColors.MENU1 + "mySchedule successfully loaded from " + JSON_STORE);
         } catch (IOException e) {
-            System.out.println(UIColors.QUIT + "Error: source file not found.  Unable to retrieve source");
+            System.out.println(TextColors.QUIT + "Error: source file not found.  Unable to retrieve source");
         }
     }
 

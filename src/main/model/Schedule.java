@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.SameNameException;
 import persistence.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -15,6 +16,11 @@ public class Schedule implements Writable {
     public Schedule() {
         events = new ArrayList<>();
         name = "My Schedule";
+    }
+
+    public Schedule(String name) {
+        events = new ArrayList<>();
+        this.name = name;
     }
 
     @Override

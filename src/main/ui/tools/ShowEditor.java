@@ -43,7 +43,7 @@ public class ShowEditor extends ShowBuilder {
         } else if ("e".equals(command)) {
             promptEditEmployees();
         } else {
-            System.out.println(UIColors.QUIT + "error: no option which corresponds to that command");
+            System.out.println(TextColors.QUIT + "error: no option which corresponds to that command");
         }
         redisplayShowForEditor();
     }
@@ -60,7 +60,7 @@ public class ShowEditor extends ShowBuilder {
         if ("a".equals(command)) {
             promptForActs();
         } else if (show.getActs().isEmpty()) {
-            System.out.println(UIColors.QUIT + "there are no acts to edit");
+            System.out.println(TextColors.QUIT + "there are no acts to edit");
         } else {
             Act act = getActSelection();
             while (true) {
@@ -80,8 +80,8 @@ public class ShowEditor extends ShowBuilder {
         int i = 1;
         for (Act a : acts) {
             System.out.printf("%-50.50s %-50.50s\n",
-                    UIColors.MENU1 + i + "  " + UIColors.MENU2 + a.getName(),
-                    UIColors.PURPLE + a.getPay());
+                    TextColors.MENU1 + i + "  " + TextColors.MENU2 + a.getName(),
+                    TextColors.PURPLE + a.getPay());
             i++;
         }
     }
@@ -155,7 +155,7 @@ public class ShowEditor extends ShowBuilder {
         if ("a".equals(command)) {
             promptForEmployees();
         } else if (show.getEmployees().isEmpty()) {
-            System.out.println(UIColors.QUIT + "there are no employees to edit");
+            System.out.println(TextColors.QUIT + "there are no employees to edit");
         } else {
             Employee employee = getEmployeeSelection();
             while (true) {
@@ -184,8 +184,8 @@ public class ShowEditor extends ShowBuilder {
         int i = 1;
         for (Employee e : employees) {
             System.out.printf("%-30.30s %-30.30s %-30.30s\n",
-                    UIColors.MENU1 + i + "  " + UIColors.MENU2 + e.getName(),
-                    UIColors.PURPLE + e.getPay(),
+                    TextColors.MENU1 + i + "  " + TextColors.MENU2 + e.getName(),
+                    TextColors.PURPLE + e.getPay(),
                     e.getJob());
             i++;
         }
@@ -200,7 +200,7 @@ public class ShowEditor extends ShowBuilder {
         if ("a".equals(command)) {
             promptForBar();
         } else if (drinks == 0) {
-            System.out.println(UIColors.QUIT + "there are no drinks to edit");
+            System.out.println(TextColors.QUIT + "there are no drinks to edit");
         } else {
             int selection = promptForInteger("select one of the above", "selection", 1, drinks);
             int index = selection - 1;
@@ -259,10 +259,10 @@ public class ShowEditor extends ShowBuilder {
         int i = 1;
         for (Drink d : acts) {
             System.out.printf("%-40.40s %-20.20s %-20.20s %-20.20s\n",
-                    UIColors.MENU1 + i + " " + UIColors.MENU2 + d.getName(),
-                    UIColors.PURPLE + d.getAmount(),
-                    UIColors.QUIT + "$" + d.getCost(),
-                    UIColors.MENU2 + "$" + d.getSalePrice());
+                    TextColors.MENU1 + i + " " + TextColors.MENU2 + d.getName(),
+                    TextColors.PURPLE + d.getAmount(),
+                    TextColors.QUIT + "$" + d.getCost(),
+                    TextColors.MENU2 + "$" + d.getSalePrice());
             i++;
         }
     }
