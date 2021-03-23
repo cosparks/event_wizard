@@ -20,12 +20,13 @@ import java.util.Objects;
 
 public class StartWindow extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 550;
-    private static final int FRAME_HEIGHT = 550;
+    private static final int FRAME_HEIGHT = 250;
+    private static final int MENU_WIDTH = 375;
+    private static final int MENU_HEIGHT = 150;
+    private static final int PADDING = 25;
 
     private JFrame errorFrame;
-    private JFrame newScheduleFrame;
-    private JFrame loadScheduleFrame;
-    private JPanel loadSchedulePanel;
+    private JPanel menuPanel;
     private JTextField field;
     private JList fileList;
 
@@ -45,6 +46,7 @@ public class StartWindow extends JFrame implements ActionListener {
         add(label);
 
         initializeStartButtons();
+        initializeMenuPanel();
 
         displayFrame(this);
     }
@@ -63,7 +65,8 @@ public class StartWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "loadButton":
-                startLoadScheduleWindow();
+                resetMenuPanel();
+                displayLoadOptions();
                 break;
             case "quitButton":
                 closeFrame(this);
@@ -72,7 +75,8 @@ public class StartWindow extends JFrame implements ActionListener {
                 closeFrame(errorFrame);
                 break;
             case "createNewButton":
-                startCreateNewScheduleWindow();
+                resetMenuPanel();
+                displayCreateNewOptions();
                 break;
             case "create":
                 initializeNewSchedule();
@@ -90,7 +94,6 @@ public class StartWindow extends JFrame implements ActionListener {
             try {
                 checkFileName(scheduleName);
                 schedule = new Schedule(scheduleName);
-                closeFrame(newScheduleFrame);
                 closeFrame(this);
                 new MainFrame(schedule); // TODO: start working on MainFrame display
             } catch (SameNameException e) {
@@ -129,41 +132,68 @@ public class StartWindow extends JFrame implements ActionListener {
         return fileNames.toArray(stringArray);
     }
 
-    private void startCreateNewScheduleWindow() {
-        newScheduleFrame = initializeFrame("New Schedule");
-        newScheduleFrame.setPreferredSize(new Dimension(325, 100));
-
-        JLabel label = createLabel("Enter name: ");
-        JButton createBtn = createBtn("create", "create");
-
-        newScheduleFrame.add(label);
-        newScheduleFrame.add(field);
-        newScheduleFrame.add(createBtn);
-
-        displayFrame(newScheduleFrame);
+    private void initializeMenuPanel() {
+        menuPanel = initializePanel();
+        add(menuPanel, BorderLayout.SOUTH);
     }
 
-    private void startLoadScheduleWindow() {
-        loadScheduleFrame = initializeFrame("Load Schedule");
+    private void resetMenuPanel() {
+        menuPanel.removeAll();
+        menuPanel.revalidate();
+        menuPanel.repaint();
+    }
 
-        // JUST MESSING AROUND
-        // loadSchedulePanel = initializePanel();  // remove this later
-
+    private void displayLoadOptions() {
         JLabel label = createLabel("select existing");
         JButton createBtn =  createBtn("open", "open");
-
         String[] fileNames = getFileNames();
         initializeFileList(fileNames);
 
-        loadScheduleFrame.add(label);
-        loadScheduleFrame.add(fileList);
-        loadScheduleFrame.add(createBtn);
+        fillMenuPanel(label, fileList, createBtn);
 
-        displayFrame(loadScheduleFrame);
+        pack();
+    }
 
-        // JUST MESSING AROUND
-        // add(loadSchedulePanel);
-        // displayFrame(this);
+    private void fillMenuPanel(JComponent leftComponent, JComponent center, JComponent rightComponent) {
+        JPanel grid = new JPanel();
+
+        JPanel rightPanel = initializePanelForMenu();
+        JPanel leftPanel = initializePanelForMenu();
+
+        grid.setLayout(new GridLayout());
+        grid.setPreferredSize(new Dimension(MENU_WIDTH - PADDING, MENU_HEIGHT - PADDING));
+        grid.setBackground(UIColors.MENU_BACKGROUND);
+
+        leftPanel.add(leftComponent);
+        rightPanel.add(rightComponent);
+
+        grid.add(leftPanel);
+        grid.add(center);
+        grid.add(rightPanel);
+
+        menuPanel.add(grid, BorderLayout.CENTER);
+    }
+
+    private JPanel initializePanelForMenu() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
+        panel.setBackground(UIColors.BUTTON_GREY);
+        panel.setBackground(UIColors.MENU_BACKGROUND);
+        return panel;
+    }
+
+    private void displayCreateNewOptions() {
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(4, 1));
+        fieldPanel.add(field);
+        fieldPanel.setBackground(UIColors.MENU_BACKGROUND);
+
+        JLabel label = createLabel("enter name: ");
+        JButton createBtn = createBtn("create", "create");
+
+        fillMenuPanel(label, fieldPanel, createBtn);
+
+        pack();
     }
 
     private JFrame initializeFrame(String title) {
@@ -177,9 +207,8 @@ public class StartWindow extends JFrame implements ActionListener {
 
     private JPanel initializePanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(UIColors.GREY_BACKGROUND);
-        panel.setBackground(UIColors.GREY_BACKGROUND);
-        panel.setBorder(new EmptyBorder(13, 13, 13, 13));
+        panel.setBackground(UIColors.MENU_BACKGROUND);
+        panel.setPreferredSize(new Dimension(MENU_WIDTH, MENU_HEIGHT));
         panel.setLayout(new FlowLayout());
         return panel;
     }
@@ -222,10 +251,9 @@ public class StartWindow extends JFrame implements ActionListener {
             String source = getSelectedSource();
             loadSchedule(source);
             new MainFrame(schedule); // TODO: start working on MainFrame display
-            closeFrame(loadScheduleFrame);
             closeFrame(this);
         } catch (FileNotFoundException e) {
-            displayError("Error", "Please make valid selection", 300, 90);
+            displayError("Error", "Please make valid selection", 250, 110);
         }
     }
 
