@@ -1,4 +1,4 @@
-package ui.tools;
+package ui.texttools;
 
 // Class containing a variety of colors for display
 public class TextColors {

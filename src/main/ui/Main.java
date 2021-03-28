@@ -1,5 +1,7 @@
 package ui;
 
+import ui.text.SchedulerApp;
+
 public class Main {
 
     // Constructs a scheduler app to start program

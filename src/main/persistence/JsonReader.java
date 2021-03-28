@@ -165,7 +165,7 @@ public class JsonReader {
 
     // MODIFIES: event
     // EFFECTS: parses event details from json object and adds them to event
-    private void addBasicEventDetails(Event event, JSONObject jsonObject) {
+    private void addBasicEventDetails(ScheduleEvent event, JSONObject jsonObject) {
         int importance = jsonObject.getInt("importance");
         String location = jsonObject.getString("location");
         EventDate startDate = getDate(jsonObject.get("start date"));

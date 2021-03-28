@@ -1,8 +1,8 @@
-package ui.tools;
+package ui.texttools;
 
 import java.util.Scanner;
 import model.EventDate;
-import model.Event;
+import model.ScheduleEvent;
 
 // Abstract class for constructing events
 public abstract class EventBuilder {
@@ -45,7 +45,7 @@ public abstract class EventBuilder {
 
     // MODIFIES: this (name field is assigned to Event in subclasses)
     // EFFECTS: initializes input, prompts user to input event name and assigns new name to event
-    protected void promptForName(Event event) {
+    protected void promptForName(ScheduleEvent event) {
         String command;
         initialize();
 
@@ -66,7 +66,7 @@ public abstract class EventBuilder {
 
     // MODIFIES: event (show or simpleEvent)
     // EFFECTS: prompts user to enter date and time, then sets date and time of event
-    protected void setDate(Event event) {
+    protected void setDate(ScheduleEvent event) {
         String date = datePrompt();
         String time = timePrompt();
         int day = Integer.parseInt(date.substring(0,2));
@@ -131,7 +131,7 @@ public abstract class EventBuilder {
 
     // MODIFIES: event
     // EFFECTS: allows user to set location for event
-    protected void promptForLocation(Event event) {
+    protected void promptForLocation(ScheduleEvent event) {
         String command;
         initialize();
 
@@ -143,7 +143,7 @@ public abstract class EventBuilder {
 
     // MODIFIES: event
     // EFFECTS: allows user to set importance for event
-    protected void setImportance(Event event) {
+    protected void setImportance(ScheduleEvent event) {
         int importance = promptForInteger("enter a value for importance [1,10] ", "entry",1, 10);
         importance--;
         event.setImportance(importance);

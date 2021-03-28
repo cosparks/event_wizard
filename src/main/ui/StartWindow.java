@@ -2,8 +2,9 @@ package ui;
 
 import exceptions.SameNameException;
 import model.Schedule;
-import ui.tools.PersistenceTool;
-import ui.tools.UIColors;
+import ui.swingtools.SwingTool;
+import ui.texttools.PersistenceTool;
+import ui.swingtools.UIData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,30 +32,32 @@ public class StartWindow extends JFrame implements ActionListener {
     private JList fileList;
 
     private Schedule schedule;
+    private SwingTool st;
 
     public StartWindow() {
         super("Start");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        st = new SwingTool(this);
+
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setLayout(new FlowLayout());
-        setBackground(UIColors.GREY_BACKGROUND);
-        getContentPane().setBackground(UIColors.GREY_BACKGROUND);
+        setBackground(UIData.GREY_BACKGROUND);
+        getContentPane().setBackground(UIData.GREY_BACKGROUND);
 
         field = new JTextField(8);
-        JLabel label = createLabel("please select:");
+        JLabel label = st.createLabel("please select:");
         add(label);
 
         initializeStartButtons();
         initializeMenuPanel();
 
-        displayFrame(this);
+        st.displayFrame(this);
     }
 
     private void initializeStartButtons() {
-        JButton createNewBtn = createBtn("create new", "createNewButton");
-        JButton loadBtn = createBtn("load", "loadButton");
-        JButton quitBtn = createBtn("quit", "quitButton");
+        JButton createNewBtn = st.createBtn("create new", "createNewButton");
+        JButton loadBtn = st.createBtn("load", "loadButton");
+        JButton quitBtn = st.createBtn("quit", "quitButton");
 
         add(createNewBtn);
         add(loadBtn);
@@ -65,17 +68,17 @@ public class StartWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "loadButton":
-                resetMenuPanel();
+                st.resetPanel(menuPanel);
                 displayLoadOptions();
                 break;
             case "quitButton":
-                closeFrame(this);
+                st.closeFrame(this);
                 break;
             case "returnButton":
-                closeFrame(errorFrame);
+                st.closeFrame(errorFrame);
                 break;
             case "createNewButton":
-                resetMenuPanel();
+                st.resetPanel(menuPanel);
                 displayCreateNewOptions();
                 break;
             case "create":
@@ -94,8 +97,9 @@ public class StartWindow extends JFrame implements ActionListener {
             try {
                 checkFileName(scheduleName);
                 schedule = new Schedule(scheduleName);
-                closeFrame(this);
-                new MainFrame(schedule); // TODO: start working on MainFrame display
+                String filePath = generateFilePath(scheduleName);
+                st.closeFrame(this);
+                new MainFrame(schedule, filePath);
             } catch (SameNameException e) {
                 displayError("Name Already in Use", "Schedule named "
                         + scheduleName + " already exists. Please enter valid name", 450, 120);
@@ -110,6 +114,10 @@ public class StartWindow extends JFrame implements ActionListener {
                 throw new SameNameException();
             }
         }
+    }
+
+    private String generateFilePath(String name) {
+        return PersistenceTool.JSON_STORE + name + ".json";
     }
 
     private File[] getFiles() {
@@ -137,15 +145,31 @@ public class StartWindow extends JFrame implements ActionListener {
         add(menuPanel, BorderLayout.SOUTH);
     }
 
-    private void resetMenuPanel() {
-        menuPanel.removeAll();
-        menuPanel.revalidate();
-        menuPanel.repaint();
+    private JPanel initializePanelForMenu() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
+        panel.setBackground(UIData.BUTTON_GREY);
+        panel.setBackground(UIData.MENU_BACKGROUND);
+        return panel;
+    }
+
+    private void displayCreateNewOptions() {
+        JPanel fieldPanel = new JPanel();
+        fieldPanel.setLayout(new GridLayout(4, 1));
+        fieldPanel.add(field);
+        fieldPanel.setBackground(UIData.MENU_BACKGROUND);
+
+        JLabel label = st.createLabel("enter name: ");
+        JButton createBtn = st.createBtn("create", "create");
+
+        fillMenuPanel(label, fieldPanel, createBtn);
+
+        pack();
     }
 
     private void displayLoadOptions() {
-        JLabel label = createLabel("select existing");
-        JButton createBtn =  createBtn("open", "open");
+        JLabel label = st.createLabel("select existing");
+        JButton createBtn =  st.createBtn("open", "open");
         String[] fileNames = getFileNames();
         initializeFileList(fileNames);
 
@@ -162,7 +186,7 @@ public class StartWindow extends JFrame implements ActionListener {
 
         grid.setLayout(new GridLayout());
         grid.setPreferredSize(new Dimension(MENU_WIDTH - PADDING, MENU_HEIGHT - PADDING));
-        grid.setBackground(UIColors.MENU_BACKGROUND);
+        grid.setBackground(UIData.MENU_BACKGROUND);
 
         leftPanel.add(leftComponent);
         rightPanel.add(rightComponent);
@@ -171,35 +195,13 @@ public class StartWindow extends JFrame implements ActionListener {
         grid.add(center);
         grid.add(rightPanel);
 
-        menuPanel.add(grid, BorderLayout.CENTER);
-    }
-
-    private JPanel initializePanelForMenu() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
-        panel.setBackground(UIColors.BUTTON_GREY);
-        panel.setBackground(UIColors.MENU_BACKGROUND);
-        return panel;
-    }
-
-    private void displayCreateNewOptions() {
-        JPanel fieldPanel = new JPanel();
-        fieldPanel.setLayout(new GridLayout(4, 1));
-        fieldPanel.add(field);
-        fieldPanel.setBackground(UIColors.MENU_BACKGROUND);
-
-        JLabel label = createLabel("enter name: ");
-        JButton createBtn = createBtn("create", "create");
-
-        fillMenuPanel(label, fieldPanel, createBtn);
-
-        pack();
+        menuPanel.add(grid);
     }
 
     private JFrame initializeFrame(String title) {
         JFrame frame = new JFrame(title);
-        frame.setBackground(UIColors.GREY_BACKGROUND);
-        frame.getContentPane().setBackground(UIColors.GREY_BACKGROUND);
+        frame.setBackground(UIData.GREY_BACKGROUND);
+        frame.getContentPane().setBackground(UIData.GREY_BACKGROUND);
         ((JPanel) frame.getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         frame.setLayout(new FlowLayout());
         return frame;
@@ -207,42 +209,17 @@ public class StartWindow extends JFrame implements ActionListener {
 
     private JPanel initializePanel() {
         JPanel panel = new JPanel();
-        panel.setBackground(UIColors.MENU_BACKGROUND);
+        panel.setBackground(UIData.MENU_BACKGROUND);
         panel.setPreferredSize(new Dimension(MENU_WIDTH, MENU_HEIGHT));
         panel.setLayout(new FlowLayout());
         return panel;
     }
 
-    private JButton createBtn(String text, String actionCommand) {
-        JButton btn = new JButton(text);
-        btn.setActionCommand(actionCommand);
-        btn.addActionListener(this);
-
-        btn.setForeground(UIColors.GREY_BACKGROUND);
-        btn.setBackground(UIColors.GREY_BACKGROUND);
-        btn.setOpaque(true);
-
-        return btn;
-    }
-
-    private JLabel createLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setForeground(UIColors.GREY_TEXT);
-        return label;
-    }
-
-    private void displayFrame(JFrame frame) {
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.setResizable(false);
-    }
-
     private void initializeFileList(String[] fileNames) {
         fileList = new JList(fileNames);
         fileList.setPreferredSize(new Dimension(130, 80));
-        fileList.setBackground(UIColors.BUTTON_GREY);
-        fileList.setForeground(UIColors.GREY_TEXT);
+        fileList.setBackground(UIData.BUTTON_GREY);
+        fileList.setForeground(UIData.GREY_TEXT);
         fileList.setBorder(new EtchedBorder());
     }
 
@@ -250,8 +227,8 @@ public class StartWindow extends JFrame implements ActionListener {
         try {
             String source = getSelectedSource();
             loadSchedule(source);
-            new MainFrame(schedule); // TODO: start working on MainFrame display
-            closeFrame(this);
+            new MainFrame(schedule, source);
+            st.closeFrame(this);
         } catch (FileNotFoundException e) {
             displayError("Error", "Please make valid selection", 250, 110);
         }
@@ -275,30 +252,17 @@ public class StartWindow extends JFrame implements ActionListener {
         }
     }
 
-    private void saveSchedule(String destination) {
-        PersistenceTool pt = new PersistenceTool();
-        try {
-            pt.saveSchedule(schedule, destination);
-        } catch (FileNotFoundException e) {
-            displayError("Error", "File folder not found", 300, 90);
-        }
-    }
-
     private void displayError(String title, String text, int width, int height) {
         errorFrame = initializeFrame(title);
         errorFrame.setPreferredSize(new Dimension(width, height));
 
-        JLabel label = createLabel(text);
-        JButton returnBtn = createBtn("return", "returnButton");
+        JLabel label = st.createLabel(text);
+        JButton returnBtn = st.createBtn("return", "returnButton");
 
         errorFrame.add(label);
         errorFrame.add(returnBtn);
 
-        displayFrame(errorFrame);
-    }
-
-    private void closeFrame(JFrame frame) {
-        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        st.displayFrame(errorFrame);
     }
 
     public static void main(String[] args) {

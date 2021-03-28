@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class JsonTest {
 
-    protected void checkEvent(SimpleEvent eventA, Event eventFromReader) {
+    protected void checkEvent(SimpleEvent eventA, ScheduleEvent eventFromReader) {
         SimpleEvent eventB = (SimpleEvent) eventFromReader;
         checkBasicDetails(eventA, eventB);
         for (int i = 0; i < eventA.getNumberOfDetails(); i++) {
@@ -17,7 +17,7 @@ public abstract class JsonTest {
         }
     }
 
-    protected void checkEvent(Show showA, Event eventFromReader) {
+    protected void checkEvent(Show showA, ScheduleEvent eventFromReader) {
         Show showB = (Show) eventFromReader;
         checkBasicDetails(showA, showB);
         assertEquals(showA.getCapacity(), showB.getCapacity());
@@ -37,14 +37,14 @@ public abstract class JsonTest {
         }
     }
 
-    protected void checkBasicDetails(Event eventA, Event eventB) {
+    protected void checkBasicDetails(ScheduleEvent eventA, ScheduleEvent eventB) {
         assertEquals(eventA.getName(), eventB.getName());
         assertEquals(eventA.getLocation(), eventB.getLocation());
         assertEquals(eventA.getImportance(), eventB.getImportance());
         checkEventDates(eventA, eventB);
     }
 
-    protected void checkEventDates(Event eventA, Event eventB) {
+    protected void checkEventDates(ScheduleEvent eventA, ScheduleEvent eventB) {
         String dateA = eventA.getStartDate().getDateAsString();
         String dateB = eventB.getStartDate().getDateAsString();
         assertTrue(dateA.equals(dateB));

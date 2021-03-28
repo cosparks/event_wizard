@@ -2,11 +2,10 @@ package model;
 
 import persistence.*;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 
 // abstract representation of an event with date, start/end time and location
-public abstract class Event implements Writable {
+public abstract class ScheduleEvent implements Writable {
     protected String name;
     protected EventDate startDate;
     protected String location;
@@ -14,7 +13,7 @@ public abstract class Event implements Writable {
     // protected EventDate endDate;
 
     // Default constructor
-    public Event() {
+    public ScheduleEvent() {
         startDate = new EventDate();
         importance = 0;
         location = "";
@@ -80,12 +79,12 @@ public abstract class Event implements Writable {
     }
 
     // EFFECTS: compares date of this and event parameter for Java sort method
-    public int compareDates(Event eventA) {
+    public int compareDates(ScheduleEvent eventA) {
         return startDate.getDateAsString().compareTo(eventA.startDate.getDateAsString());
     }
 
     // EFFECTS: compares importance int of this and event parameter for Java sort method
-    public int compareImportance(Event eventA) {
+    public int compareImportance(ScheduleEvent eventA) {
         return Integer.toString(eventA.getImportance()).compareTo(Integer.toString(this.importance));
     }
 

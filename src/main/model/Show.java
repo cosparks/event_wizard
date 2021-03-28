@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 // Represents a show with acts, bar items, employees, tickets, venue capacity and additional costs
-public class Show extends Event implements Writable {
+public class Show extends ScheduleEvent implements Writable {
     private ArrayList<Act> acts;
     private ArrayList<Employee> employees;
     private ArrayList<Drink> bar;

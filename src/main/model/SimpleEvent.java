@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 // Represents a simple event with list of additional details
-public class SimpleEvent extends Event implements Writable {
+public class SimpleEvent extends ScheduleEvent implements Writable {
     private ArrayList<String> details;
 
     // EFFECTS: constructs simple event with name--instantiates detail list

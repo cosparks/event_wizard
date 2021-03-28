@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScheduleTest {
     private Schedule schedule;
-    private ArrayList<Event> testEventList;
+    private ArrayList<ScheduleEvent> testEventList;
     private SimpleEvent eventA;
     private SimpleEvent eventB;
     private SimpleEvent eventC;
@@ -69,8 +69,8 @@ class ScheduleTest {
         testEventList.add(eventC);
 
         for (int i = 0; i < testEventList.size(); i++) {
-            Event e1 = testEventList.get(i);
-            Event e2 = schedule.getEvent(i);
+            ScheduleEvent e1 = testEventList.get(i);
+            ScheduleEvent e2 = schedule.getEvent(i);
             assertEquals(e1, e2);
         }
     }
@@ -127,8 +127,8 @@ class ScheduleTest {
         schedule.sortEvents();
 
         for (int i = 0; i < schedule.getSize(); i++) {
-            Event e1 = testEventList.get(i);
-            Event e2 = schedule.getEvent(i);
+            ScheduleEvent e1 = testEventList.get(i);
+            ScheduleEvent e2 = schedule.getEvent(i);
             assertEquals(e1, e2);
         }
     }
@@ -144,8 +144,8 @@ class ScheduleTest {
         schedule.removeEvent(0);
 
         for (int i = 0; i < schedule.getSize(); i++) {
-            Event e1 = testEventList.get(i);
-            Event e2 = schedule.getEvent(i);
+            ScheduleEvent e1 = testEventList.get(i);
+            ScheduleEvent e2 = schedule.getEvent(i);
             assertEquals(e1, e2);
         }
     }

@@ -1,4 +1,4 @@
-package ui.tools;
+package ui.texttools;
 
 import model.*;
 import model.show.*;
@@ -16,7 +16,7 @@ public class DisplayTool {
     // EFFECTS: displays all events in schedule in chronological order (adds line between each displayed event)
     public void displayEventsByDate(Schedule schedule) {
         for (int i = 0; i < schedule.getSize(); i++) {
-            Event e = schedule.getEvent(i);
+            ScheduleEvent e = schedule.getEvent(i);
             if (e instanceof Show) {
                 displayShow((Show) e);
             } else if (e instanceof SimpleEvent) {
@@ -28,7 +28,7 @@ public class DisplayTool {
 
     // EFFECTS: displays all events in schedule ranked in order of importance
     public void displayEventsByImportance(Schedule schedule) {
-        for (Event e : schedule.getEventsByImportance()) {
+        for (ScheduleEvent e : schedule.getEventsByImportance()) {
             int importance = e.getImportance() + 1;
             System.out.println(TextColors.QUIT + importance);
             if (e instanceof Show) {
@@ -40,7 +40,7 @@ public class DisplayTool {
     }
 
     // EFFECTS: simple title display for events--this is the first line for schedule and editor display
-    private void displayNameDateAndTime(Event event) {
+    private void displayNameDateAndTime(ScheduleEvent event) {
         String date = event.getStartDate().getDateForDisplay();
         String time = event.getStartDate().getTimeForDisplay();
         String location = (event.getLocation() == null) ? "" : event.getLocation();
@@ -203,7 +203,7 @@ public class DisplayTool {
 
         for (int i = 0; i < schedule.getSize(); i++) {
             int eventNumber = i + 1;
-            Event e = schedule.getEvent(i);
+            ScheduleEvent e = schedule.getEvent(i);
             String location = (e.getLocation() == null) ? "" : e.getLocation();
             System.out.printf("%-45.45s %-30.30s %-50.50s\n",
                     TextColors.MENU1 + eventNumber + TextColors.MENU2 + "\t" + e.getName(),

@@ -3,11 +3,11 @@
     "events": [
         {
             "start date": {
-                "month": 0,
-                "hour": 0,
-                "year": 0,
-                "day": 0,
-                "minute": 0
+                "month": 6,
+                "hour": 19,
+                "year": 2021,
+                "day": 7,
+                "minute": 30
             },
             "importance": 0,
             "name": "Bonanza",
@@ -17,20 +17,94 @@
         },
         {
             "start date": {
-                "month": 12,
-                "hour": 7,
+                "month": 7,
+                "hour": 19,
                 "year": 2021,
-                "day": 15,
+                "day": 31,
                 "minute": 30
             },
             "importance": 0,
-            "name": "MATH 101 sucks",
+            "name": "Parquet Courts album release w/ guests",
             "location": "",
             "details": [
                 "what a great time",
                 "just can't wait to go back"
             ],
             "type": "simple event"
+        },
+        {
+            "start date": {
+                "month": 12,
+                "hour": 18,
+                "year": 2021,
+                "day": 31,
+                "minute": 15
+            },
+            "bar": [
+                {
+                    "amount": 200,
+                    "cost": 2,
+                    "name": "craft beer",
+                    "sale price": 5
+                },
+                {
+                    "amount": 150,
+                    "cost": 2,
+                    "name": "pabst tall cans",
+                    "sale price": 6
+                },
+                {
+                    "amount": 20,
+                    "cost": 15,
+                    "name": "wine",
+                    "sale price": 35
+                }
+            ],
+            "projected sales": 150,
+            "ticket price": 15,
+            "importance": 8,
+            "name": "End of year GreenPeace fundraiser w/ guests",
+            "location": "Fortune Sound Lounge",
+            "type": "show",
+            "employees": [
+                {
+                    "name": "John",
+                    "pay": 200,
+                    "job": "sound"
+                },
+                {
+                    "name": "Sarah",
+                    "pay": 200,
+                    "job": "lighting"
+                },
+                {
+                    "name": "Teagan",
+                    "pay": 11,
+                    "job": "bar"
+                }
+            ],
+            "acts": [
+                {
+                    "stage plot": "",
+                    "name": "Melancholy Roy",
+                    "pay": 200,
+                    "rider": ""
+                },
+                {
+                    "stage plot": "",
+                    "name": "Sigfried's Revenge",
+                    "pay": 300,
+                    "rider": ""
+                },
+                {
+                    "stage plot": "",
+                    "name": "One more band",
+                    "pay": 300,
+                    "rider": ""
+                }
+            ],
+            "additional cost": 400,
+            "capacity": 200
         }
     ]
 }

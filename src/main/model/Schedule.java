@@ -1,6 +1,5 @@
 package model;
 
-import exceptions.SameNameException;
 import persistence.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -9,7 +8,7 @@ import java.util.*;
 
 // Represents a schedule with arbitrary number of Events
 public class Schedule implements Writable {
-    private ArrayList<Event> events;
+    private ArrayList<ScheduleEvent> events;
     private String name;
 
     // EFFECTS: creates a new empty schedule
@@ -35,7 +34,7 @@ public class Schedule implements Writable {
     private JSONArray eventsToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Event e : events) {
+        for (ScheduleEvent e : events) {
             jsonArray.put(e.toJson());
         }
         return jsonArray;
@@ -43,7 +42,7 @@ public class Schedule implements Writable {
 
     // MODIFIES: this
     // EFFECTS: adds event to schedule at appropriate chronological position
-    public void addEvent(Event event) {
+    public void addEvent(ScheduleEvent event) {
         events.add(event);
         sortEvents();
     }
@@ -54,14 +53,14 @@ public class Schedule implements Writable {
         events.remove(events.get(index));
     }
 
-    public Event getEvent(int index) {
+    public ScheduleEvent getEvent(int index) {
         return events.get(index);
     }
 
     // EFFECTS: returns list of events sorted by importance
-    public ArrayList<Event> getEventsByImportance() {
-        ArrayList<Event> sortedEvents = new ArrayList<>();
-        for (Event e : events) {
+    public ArrayList<ScheduleEvent> getEventsByImportance() {
+        ArrayList<ScheduleEvent> sortedEvents = new ArrayList<>();
+        for (ScheduleEvent e : events) {
             sortedEvents.add(e);
         }
         sortedEvents.sort((e1, e2) -> e1.compareImportance(e2));

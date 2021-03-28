@@ -1,8 +1,8 @@
-package ui;
+package ui.text;
 
 import model.*;
 import persistence.*;
-import ui.tools.*;
+import ui.texttools.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 // Represents the main user interface for creating and managing events
 public class SchedulerApp {
-    private static final String JSON_STORE = "./data/mySchedule.json";
+    private static final String JSON_STORE = "./data/mySchedules/mySchedule.json";
     private Scanner input;
 
     private Schedule schedule;

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
-    Event eventA;
+    ScheduleEvent eventA;
     EventDate date1;
 
     @BeforeEach

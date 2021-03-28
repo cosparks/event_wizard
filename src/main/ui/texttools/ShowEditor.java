@@ -1,4 +1,4 @@
-package ui.tools;
+package ui.texttools;
 
 import model.*;
 import model.show.*;
