@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleEventTest {
@@ -38,5 +40,16 @@ class SimpleEventTest {
         eventA.addDetail("and beer");
         eventA.clearDetail(0);
         assertEquals("and beer", eventA.getDetail(0));
+    }
+
+    @Test
+    void testGetAllDetails() {
+        eventA.addDetail("winning");
+        eventA.addDetail("not losing");
+        ArrayList<String> details = eventA.getDetails();
+
+        assertEquals("bring sauce", details.get(0));
+        assertEquals("winning", details.get(1));
+        assertEquals("not losing", details.get(2));
     }
 }

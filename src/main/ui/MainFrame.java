@@ -2,14 +2,18 @@ package ui;
 
 import exceptions.InvalidSourceException;
 import model.*;
+import ui.audio.SoundObject;
 import ui.swingtools.*;
 import ui.texttools.PersistenceTool;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -42,6 +46,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     private EventDetailTool eventDetailTool;
     private SwingTool st;
     private Subject subject;
+    private SoundObject soundObject;
 
     private JFrame errorFrame;
     private JPanel topPanel;
@@ -64,6 +69,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         editingDate = false;
         editingName = false;
         editingLocation = false;
+        initializeSoundObject();
 
         addMouseListener(this);
 
@@ -116,6 +122,19 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         topButtons.add(addNewButton);
         topButtons.add(saveButton);
         topButtons.add(quitButton);
+    }
+
+    private void initializeSoundObject() {
+        try {
+            soundObject = new SoundObject("openMainEditor.aif");
+            soundObject.play();
+        } catch (IOException e) {
+            System.out.println("IO exception has occurred");
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Caught UnsupportedAudioFileException");
+        } catch (LineUnavailableException e) {
+            System.out.println("Caught LineUnavailableException");
+        }
     }
 
     private void updateEventList() {
@@ -213,6 +232,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
             case "load":
                 break;
             case "save":
+                soundObject.play("saveSound.aif");
                 saveSchedule();
                 break;
             case "edit":
@@ -220,6 +240,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
                 startEditor();
                 break;
             case "addNew":
+                soundObject.play("createNewEvent.aif");
                 createNewEvent();
                 break;
             case "return":

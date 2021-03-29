@@ -164,4 +164,10 @@ class ScheduleTest {
         assertTrue(schedule.getEvent(0) instanceof Show);
         assertTrue(schedule.getEvent(1) instanceof SimpleEvent);
     }
+
+    @Test
+    void testOverloadedConstructor() {
+        Schedule schedule = new Schedule("My Schedule Name");
+        assertEquals("My Schedule Name", schedule.getName());
+    }
 }

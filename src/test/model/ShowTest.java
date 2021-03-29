@@ -62,8 +62,8 @@ public class ShowTest {
         int cost = 300 + 1000 + (200 * 4) + expense1 + expense2;
         int revenue = 5 * 200 + 10 * 175;
 
-        assertEquals(expense1 + expense2, showA.getAdditionalCost());
-        assertEquals(revenue - cost, showA.calculateRevenue());
+        assertEquals(expense2, showA.getAdditionalCost());
+        assertEquals(350, showA.calculateRevenue());
     }
 
     @Test

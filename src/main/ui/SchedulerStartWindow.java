@@ -2,10 +2,13 @@ package ui;
 
 import exceptions.SameNameException;
 import model.Schedule;
+import ui.audio.SoundObject;
 import ui.swingtools.SwingTool;
 import ui.texttools.PersistenceTool;
 import ui.swingtools.UIData;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -29,6 +32,7 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
     private JPanel menuPanel;
     private JTextField field;
     private JList fileList;
+    private SoundObject soundObject;
 
     private Schedule schedule;
     private SwingTool st;
@@ -36,6 +40,7 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
     public SchedulerStartWindow() {
         super("Start");
         st = new SwingTool(this);
+        initializeSoundObject();
 
         setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
@@ -53,6 +58,18 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         st.displayFrame(this);
     }
 
+    private void initializeSoundObject() {
+        try {
+            soundObject = new SoundObject();
+        } catch (IOException e) {
+            System.out.println("IO exception has occurred");
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Caught UnsupportedAudioFileException");
+        } catch (LineUnavailableException e) {
+            System.out.println("Caught LineUnavailableException");
+        }
+    }
+
     private void initializeStartButtons() {
         JButton createNewBtn = st.createBtn("create new", "createNewButton");
         JButton loadBtn = st.createBtn("load", "loadButton");
@@ -67,6 +84,7 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "loadButton":
+                soundObject.play();
                 st.resetPanel(menuPanel);
                 displayLoadOptions();
                 break;
