@@ -10,10 +10,10 @@ import java.util.Objects;
 
 public abstract class EditingTool extends JPanel implements Observer, ActionListener {
     public static final int TITLE_HEIGHT = 25;
-    protected static final int DISPLAY_HEIGHT = MainFrame.TOOL_HEIGHT + 20;
-    protected static final int BUTTON_WIDTH = MainFrame.TOOL_WIDTH / 4;
-    protected static final Color POPUP_MENU_BACKGROUND = UIData.GREY_BACKGROUND;
-    protected static final Color TOOL_LIST_TEXT_COLOUR = UIData.GREY_TEXT;
+    public static final int DISPLAY_HEIGHT = MainFrame.TOOL_HEIGHT + 20;
+    public static final int BUTTON_WIDTH = MainFrame.TOOL_WIDTH / 4;
+    public static final Color POPUP_MENU_BACKGROUND = UIData.GREY_BACKGROUND;
+    public static final Color TOOL_LIST_TEXT_COLOUR = UIData.GREY_TEXT;
 
     protected MainFrame mainFrame;
 
@@ -69,7 +69,7 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
         add(bottom, BorderLayout.SOUTH);
     }
 
-    private void initializeMainButtons() {
+    protected void initializeMainButtons() {
         JButton editButton = st.createBoxButton("edit", "edit");
         JButton addNewButton = st.createBoxButton("add new", "addNew");
         JButton removeButton = st.createBoxButton("remove", "remove");

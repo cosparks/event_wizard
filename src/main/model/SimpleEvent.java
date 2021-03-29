@@ -27,6 +27,10 @@ public class SimpleEvent extends ScheduleEvent implements Writable {
         return details.get(index);
     }
 
+    public ArrayList<String> getDetails() {
+        return details;
+    }
+
     public int getNumberOfDetails() {
         return details.size();
     }

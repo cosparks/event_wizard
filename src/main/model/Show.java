@@ -180,7 +180,7 @@ public class Show extends ScheduleEvent implements Writable {
     }
 
     public void setAdditionalCost(int cost) {
-        additionalCost = additionalCost + cost;
+        this.additionalCost = cost;
     }
 
     public int getAdditionalCost() {

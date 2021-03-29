@@ -12,19 +12,18 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class StartWindow extends JFrame implements ActionListener {
-    private static final int FRAME_WIDTH = 550;
-    private static final int FRAME_HEIGHT = 250;
-    private static final int MENU_WIDTH = 375;
-    private static final int MENU_HEIGHT = 150;
-    private static final int PADDING = 25;
+public class SchedulerStartWindow extends JFrame implements ActionListener {
+    public static final int FRAME_WIDTH = 550;
+    public static final int FRAME_HEIGHT = 250;
+    public static final int MENU_WIDTH = 375;
+    public static final int MENU_HEIGHT = 150;
+    public static final int PADDING = 25;
 
     private JFrame errorFrame;
     private JPanel menuPanel;
@@ -34,7 +33,7 @@ public class StartWindow extends JFrame implements ActionListener {
     private Schedule schedule;
     private SwingTool st;
 
-    public StartWindow() {
+    public SchedulerStartWindow() {
         super("Start");
         st = new SwingTool(this);
 
@@ -266,6 +265,6 @@ public class StartWindow extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new StartWindow();
+        new SchedulerStartWindow();
     }
 }

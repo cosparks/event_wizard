@@ -8,14 +8,12 @@ import ui.texttools.PersistenceTool;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, MouseListener, KeyListener {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 650;
     public static final int PADDING = 5;
@@ -31,11 +29,17 @@ public class MainFrame extends JFrame implements ActionListener {
     public static final int TOOL_HEIGHT = TOOL_WINDOW_HEIGHT / 4 - (PADDING * 2);
 
     private String saveDestination;
+    private boolean editingDate;
+    private boolean editingName;
+    private boolean editingLocation;
+    private ScheduleEvent eventToEdit;
 
     private Schedule schedule;
     private ActTool actTool;
     private EmployeeTool employeeTool;
     private BarTool barTool;
+    private ShowDetailTool showDetailTool;
+    private EventDetailTool eventDetailTool;
     private SwingTool st;
     private Subject subject;
 
@@ -44,7 +48,12 @@ public class MainFrame extends JFrame implements ActionListener {
     private JPanel topButtons;
     private JPanel calendar;
     private JPanel editorPanel;
+    private JPanel header;
     private JList eventList;
+    private JLabel date;
+    private JLabel eventName;
+    private JLabel eventLocation;
+    private JTextField headerTextField;
 
     public MainFrame(Schedule schedule, String filePath) {
         super("eManager");
@@ -52,12 +61,17 @@ public class MainFrame extends JFrame implements ActionListener {
         st = new SwingTool(this);
         subject = new Subject();
         saveDestination = filePath;
+        editingDate = false;
+        editingName = false;
+        editingLocation = false;
+
+        addMouseListener(this);
+
+        topPanel = new JPanel();
 
         initializeFrame();
         initializeTopPanel();
         initializeEditorPanel();
-
-        JLabel label = st.createLabel("Events");
 
         add(topPanel, BorderLayout.NORTH);
         add(editorPanel, BorderLayout.SOUTH);
@@ -74,7 +88,6 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     private void initializeTopPanel() {
-        topPanel = new JPanel();
         topPanel.setBackground(UIData.MENU_BACKGROUND);
         topPanel.setPreferredSize(new Dimension(WIDTH, TOP_DISPLAY_HEIGHT));
         topPanel.setLayout(new FlowLayout());
@@ -146,7 +159,6 @@ public class MainFrame extends JFrame implements ActionListener {
         toolPanel.setPreferredSize(new Dimension(WIDTH - PADDING, TOOL_WINDOW_HEIGHT - PADDING));
 
         JPanel topToolRow = generateToolRow();
-
         JPanel middleToolRow = generateToolRow();
 
         actTool = new ActTool(this, show.getActs());
@@ -161,14 +173,30 @@ public class MainFrame extends JFrame implements ActionListener {
         middleToolRow.add(barTool, BorderLayout.WEST);
         subject.addObserver(barTool);
 
+        showDetailTool = new ShowDetailTool(this, show);
+        middleToolRow.add(showDetailTool, BorderLayout.EAST);
+        subject.addObserver(showDetailTool);
+
         toolPanel.add(topToolRow);
         toolPanel.add(middleToolRow);
-
         editorPanel.add(toolPanel, BorderLayout.SOUTH);
     }
 
     private void initializeTools(SimpleEvent event) {
+        JPanel toolPanel = new JPanel();
+        toolPanel.setLayout(new FlowLayout());
+        toolPanel.setBackground(UIData.DARK_GREY);
+        toolPanel.setPreferredSize(new Dimension(WIDTH - PADDING, TOOL_WINDOW_HEIGHT - PADDING));
 
+        JPanel topToolRow = generateToolRow();
+        JPanel middleToolRow = generateToolRow();
+
+        eventDetailTool = new EventDetailTool(this, event.getDetails());
+        topToolRow.add(eventDetailTool);
+
+        toolPanel.add(topToolRow);
+        toolPanel.add(middleToolRow);
+        editorPanel.add(toolPanel, BorderLayout.SOUTH);
     }
 
     private JPanel generateToolRow() {
@@ -192,6 +220,7 @@ public class MainFrame extends JFrame implements ActionListener {
                 startEditor();
                 break;
             case "addNew":
+                createNewEvent();
                 break;
             case "return":
                 st.closeFrame(errorFrame);
@@ -201,10 +230,143 @@ public class MainFrame extends JFrame implements ActionListener {
         }
     }
 
+    private void createNewEvent() {
+        new EventCreator(this);
+    }
+
+    public void addNewEventAndInitializeEditor(ScheduleEvent event) {
+        if (!Objects.isNull(event)) {
+            schedule.addEvent(event);
+            eventToEdit = event;
+
+            st.resetPanel(topPanel);
+            initializeTopPanel();
+
+            selectAndRunEditor();
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+            if (0 < e.getX() && e.getX() < 85 && 165 < e.getY() && e.getY() < 205) {
+                editDate();
+            } else if (300 < e.getX() && e.getX() < 450 && 165 < e.getY() && e.getY() < 205) {
+                editName();
+            } else if (650 < e.getX() && e.getX() < 800 && 165 < e.getY() && e.getY() < 205) {
+                editLocation();
+            }
+        } else if ((editingDate || editingName || editingLocation) && isClickOutsideOfField(e)) {
+            stopEditingHeader();
+        }
+    }
+
+    private void stopEditingHeader() {
+        st.resetPanel(header);
+        editingDate = false;
+        editingName = false;
+        editingLocation = false;
+        updateHeader(date, eventName, eventLocation);
+        pack();
+    }
+
+    private boolean isClickOutsideOfField(MouseEvent e) {
+        return (e.getY() > 205 || e.getY() < 165) || (e.getX() > 85 && e.getX() < 300)
+                || (e.getX() < 660 && e.getX() > 450);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (editingDate && e.getKeyCode() == 10) {
+            try {
+                updateDate();
+            } catch (NumberFormatException nfe) {
+                displayErrorMessage("please enter date as DD/MM/YYYY");
+            }
+        } else if ((editingName || editingLocation) && e.getKeyCode() == 10) {
+            updateNameAndLocation();
+        }
+    }
+
+    private void updateDate() throws NumberFormatException {
+        String dateText = headerTextField.getText();
+        int day = Integer.parseInt(dateText.substring(0, 2));
+        int month = Integer.parseInt(dateText.substring(3, 5));
+        int year = Integer.parseInt(dateText.substring(6, 10));
+        int hour = eventToEdit.getStartDate().getHour();
+        int minute = eventToEdit.getStartDate().getMinute();
+
+        editingDate = false;
+        EventDate newDate = new EventDate(day, month, year, hour, minute);
+        eventToEdit.setStartDate(newDate);
+        date.setText(eventToEdit.getStartDate().getDateForDisplay());
+        st.resetPanel(header);
+        updateHeader(date, eventName, eventLocation);
+        pack();
+    }
+
+    private void updateNameAndLocation() {
+        String newText = headerTextField.getText();
+        if (editingName) {
+            eventName.setText(newText);
+            eventToEdit.setName(newText);
+            editingName = false;
+        } else if (editingLocation) {
+            eventLocation.setText(newText);
+            eventToEdit.setLocation(newText);
+            editingLocation = false;
+        }
+        st.resetPanel(header);
+        updateHeader(date, eventName, eventLocation);
+        pack();
+    }
+
+    private void editDate() {
+        editingLocation = false;
+        editingName = false;
+
+        st.resetPanel(header);
+        editingDate = true;
+        headerTextField = new JTextField(date.getText());
+        headerTextField.setMaximumSize(new Dimension(85, 35));
+        headerTextField.addKeyListener(this);
+
+        updateHeader(headerTextField, eventName, eventLocation);
+        pack();
+    }
+
+    private void editName() {
+        editingLocation = false;
+        editingDate = false;
+
+        st.resetPanel(header);
+        editingName = true;
+        headerTextField = new JTextField(eventName.getText());
+        headerTextField.setMaximumSize(new Dimension(150, 35));
+        headerTextField.addKeyListener(this);
+
+        updateHeader(date, headerTextField, eventLocation);
+        pack();
+    }
+
+    private void editLocation() {
+        editingDate = false;
+        editingName = false;
+
+        st.resetPanel(header);
+        editingLocation = true;
+        headerTextField = new JTextField(eventLocation.getText());
+        headerTextField.setMaximumSize(new Dimension(150, 35));
+        headerTextField.addKeyListener(this);
+
+        updateHeader(date, eventName, headerTextField);
+        pack();
+    }
+
     private void startEditor() {
         try {
             String eventName = extractEventName();
-            ScheduleEvent eventToEdit = null;
+            eventToEdit = null;
 
             for (int i = 0; i < schedule.getSize(); i++) {
                 ScheduleEvent e = schedule.getEvent(i);
@@ -212,28 +374,43 @@ public class MainFrame extends JFrame implements ActionListener {
                     eventToEdit = e;
                 }
             }
-            if (eventToEdit instanceof Show) {
-                Show show = (Show) eventToEdit;
-                runShowEditor(show);
-            } else if (eventToEdit instanceof SimpleEvent) {
-                SimpleEvent event = (SimpleEvent) eventToEdit;
-                runSimpleEventEditor(event);
-            }
+            selectAndRunEditor();
         } catch (InvalidSourceException ise) {
             displayErrorMessage();
         }
+    }
 
+    private void selectAndRunEditor() {
+        if (eventToEdit instanceof Show) {
+            Show show = (Show) eventToEdit;
+            runShowEditor(show);
+        } else if (eventToEdit instanceof SimpleEvent) {
+            SimpleEvent event = (SimpleEvent) eventToEdit;
+            runSimpleEventEditor(event);
+        }
     }
 
     private void runShowEditor(Show show) {
         setHeader(show);
         initializeTools(show);
-
         pack();
     }
 
     private void setHeader(ScheduleEvent event) {
-        JPanel header = new JPanel();
+        header = new JPanel();
+
+        date = st.createLabel(event.getStartDate().getDateForDisplay());
+        eventName = st.createLabel(event.getName());
+        eventLocation = st.createLabel(event.getLocation());
+        date.setForeground(UIData.GREY_TEXT);
+        eventName.setForeground(UIData.GREY_TEXT);
+        eventLocation.setForeground(UIData.GREY_TEXT);
+
+        updateHeader(date, eventName, eventLocation);
+        editorPanel.add(header, BorderLayout.NORTH);
+    }
+
+    private void updateHeader(JComponent date, JComponent name, JComponent location) {
         header.setBackground(UIData.DARK_GREY);
         header.setMaximumSize(new Dimension(WIDTH - PADDING * 2, HEADER_HEIGHT));
         header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
@@ -243,27 +420,19 @@ public class MainFrame extends JFrame implements ActionListener {
         box.setBackground(UIData.DARK_GREY);
         box.setPreferredSize(new Dimension(WIDTH - PADDING * 2, HEADER_HEIGHT));
 
-        JLabel date = st.createLabel(event.getStartDate().getDateForDisplay());
-        JLabel eventName = st.createLabel(event.getName());
-        JLabel eventLocation = st.createLabel(event.getLocation());
-        date.setForeground(UIData.GREY_TEXT);
-        eventName.setForeground(UIData.GREY_TEXT);
-        eventLocation.setForeground(UIData.GREY_TEXT);
-
         box.add(date);
         box.add(Box.createGlue());
-        box.add(eventName);
+        box.add(name);
         box.add(Box.createGlue());
-        box.add(eventLocation);
+        box.add(location);
 
         header.add(box);
-
-        editorPanel.add(header, BorderLayout.NORTH);
     }
 
     private void runSimpleEventEditor(SimpleEvent event) {
         setHeader(event);
         initializeTools(event);
+        pack();
     }
 
     private String extractEventName() throws InvalidSourceException {
@@ -272,17 +441,6 @@ public class MainFrame extends JFrame implements ActionListener {
         }
         String eventDisplayString = eventList.getSelectedValue().toString();
         return eventDisplayString.substring(19);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: retrieves and parses json object from source
-    private void loadSchedule(String source) {
-        PersistenceTool pt = new PersistenceTool();
-        try {
-            schedule = pt.loadSchedule(source);
-        } catch (IOException e) {
-            // do something;
-        }
     }
 
     private void saveSchedule() {
@@ -305,5 +463,38 @@ public class MainFrame extends JFrame implements ActionListener {
         JButton btn = st.createBtn("return", "return");
         errorFrame = st.displayErrorMessage("Error", message, btn, 300, 90);
         st.displayFrame(errorFrame);
+    }
+
+
+    // Unused methods for MouseListener and KeyListener implementation
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

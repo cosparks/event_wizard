@@ -18,26 +18,9 @@
         {
             "start date": {
                 "month": 7,
-                "hour": 19,
-                "year": 2021,
-                "day": 31,
-                "minute": 30
-            },
-            "importance": 0,
-            "name": "Parquet Courts album release w/ guests",
-            "location": "",
-            "details": [
-                "what a great time",
-                "just can't wait to go back"
-            ],
-            "type": "simple event"
-        },
-        {
-            "start date": {
-                "month": 12,
                 "hour": 18,
                 "year": 2021,
-                "day": 31,
+                "day": 8,
                 "minute": 15
             },
             "bar": [
@@ -60,11 +43,11 @@
                     "sale price": 35
                 }
             ],
-            "projected sales": 150,
+            "projected sales": 155,
             "ticket price": 15,
             "importance": 8,
-            "name": "End of year GreenPeace fundraiser w/ guests",
-            "location": "Fortune Sound Lounge",
+            "name": "Event to go to this summer",
+            "location": "bella's house",
             "type": "show",
             "employees": [
                 {
@@ -103,8 +86,45 @@
                     "rider": ""
                 }
             ],
-            "additional cost": 400,
-            "capacity": 200
+            "additional cost": 300,
+            "capacity": 123
+        },
+        {
+            "start date": {
+                "month": 7,
+                "hour": 19,
+                "year": 2021,
+                "day": 31,
+                "minute": 30
+            },
+            "importance": 0,
+            "name": "Parquet Courts album release w/ guests",
+            "location": "",
+            "details": [
+                "there is a room underneath the house where everyone lives",
+                "where all the people live"
+            ],
+            "type": "simple event"
+        },
+        {
+            "start date": {
+                "month": 12,
+                "hour": 12,
+                "year": 2021,
+                "day": 19,
+                "minute": 0
+            },
+            "bar": [],
+            "projected sales": 0,
+            "ticket price": 0,
+            "importance": 8,
+            "name": "That last one",
+            "location": "The Lido",
+            "type": "show",
+            "employees": [],
+            "acts": [],
+            "additional cost": 0,
+            "capacity": 0
         }
     ]
 }
