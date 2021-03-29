@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
 
-
+// Represents a tool for editing a list of acts
 public class ActTool extends EditingTool {
     private List<Act> acts;
     private Act actToEdit;
@@ -19,6 +19,7 @@ public class ActTool extends EditingTool {
     private JPanel editorButtonPanel;
     private JTextField payField;
 
+    // EFFECTS: constructs a new ActTool with mainframe and list of acts
     public ActTool(MainFrame mf, List<Act> acts) {
         super(mf, "acts");
         this.acts = acts;
@@ -29,6 +30,8 @@ public class ActTool extends EditingTool {
         initializeDisplay();
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates JList to include any newly edited or added acts
     @Override
     protected void updateJList() {
         ArrayList<String> names = new ArrayList<>();
@@ -47,10 +50,8 @@ public class ActTool extends EditingTool {
         jlist.setForeground(TOOL_LIST_TEXT_COLOUR);
     }
 
-    @Override
-    public void update(String actionCommand) {
-    }
-
+    // MODIFIES: this
+    // EFFECTS: starts editor display
     @Override
     protected void startEdit() {
         try {
@@ -63,6 +64,7 @@ public class ActTool extends EditingTool {
         }
     }
 
+    // EFFECTS: searches for and returns act with name matching selectedString
     private Act getActToEdit() {
         Act actToEdit = null;
         for (Act a : acts) {
@@ -73,6 +75,8 @@ public class ActTool extends EditingTool {
         return actToEdit;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes event display
     private void initializeEditDisplay() {
         actToEdit = getActToEdit();
         String name = actToEdit.getName();
@@ -83,6 +87,8 @@ public class ActTool extends EditingTool {
         setEditPanel(name, pay, btn);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets values for new or existing act to be saved
     private void saveAct() {
         try {
             actToEdit.setPay(Integer.parseInt(payField.getText()));
@@ -93,17 +99,20 @@ public class ActTool extends EditingTool {
         }
     }
 
+    // EFFECTS: calls appropriate methods to start initializing act creator display
     private void startAddNewPanel() {
         st.resetPanel(this);
         initializeCreatorDisplay();
     }
 
+    // EFFECTS: calls appropriate methods to initialize act creator display
     private void initializeCreatorDisplay() {
         JButton createNewButton = st.createBoxButton("create", "create");
-
         setEditPanel("name", "pay", createNewButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a new act with values specified in payField and nameField
     private void createAndAddAct() {
         int pay;
         String name;
@@ -118,6 +127,8 @@ public class ActTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes selected act from list of acts
     private void removeSelected() {
         try {
             setSelectedString();
@@ -129,6 +140,8 @@ public class ActTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets edit panel to display fields where user can modify an existing act
     private void setEditPanel(String fieldA, String fieldB, JButton button) {
         JPanel editPanel = new JPanel();
         editPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -174,5 +187,10 @@ public class ActTool extends EditingTool {
             case "create":
                 createAndAddAct();
         }
+    }
+
+    // was supposed to be used for Observer pattern, but wound up not being useful
+    @Override
+    public void update(String actionCommand) {
     }
 }

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+// Represents an abstract class of event editing tools
 public abstract class EditingTool extends JPanel implements Observer, ActionListener {
     public static final int TITLE_HEIGHT = 25;
     public static final int DISPLAY_HEIGHT = MainFrame.TOOL_HEIGHT + 20;
@@ -27,6 +28,7 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
     protected final int width;
     protected final int height;
 
+    // EFFECTS: creates new editing tool with main frame and string for its subclass' type
     public EditingTool(MainFrame mainFrame, String type) {
         this.mainFrame = mainFrame;
         this.width = MainFrame.TOOL_WIDTH;
@@ -38,6 +40,8 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
         setPreferredSize(new Dimension(width, height));
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes main display panel
     protected void initializeDisplay() {
         JPanel top = new JPanel();
         top.setBackground(UIData.MENU_BACKGROUND);
@@ -69,6 +73,8 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
         add(bottom, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes main editor buttons for panel on right hand side
     protected void initializeMainButtons() {
         JButton editButton = st.createBoxButton("edit", "edit");
         JButton addNewButton = st.createBoxButton("add new", "addNew");
@@ -84,6 +90,9 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
         buttonPanel.add(removeButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets string value from currently item in JList and sets selected string
+    //          throws InvalidSourceException if nothing is selected
     protected void setSelectedString() throws InvalidSourceException {
         if (Objects.isNull(jlist.getSelectedValue())) {
             throw new InvalidSourceException();
@@ -91,12 +100,15 @@ public abstract class EditingTool extends JPanel implements Observer, ActionList
         selectedString = jlist.getSelectedValue().toString();
     }
 
+    // EFFECTS: abstract method to update subclass' JList
     abstract void updateJList();
 
+    // EFFECTS: called by children when editing an item in JList
     protected void startEdit() throws InvalidSourceException {
         setSelectedString();
     }
 
+    // EFFECTS: resets and reinitializes display
     protected void resetToolPanel() {
         st.resetPanel(this);
         updateJList();

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+// Represents a start window with options to create new or open existing schedule
 public class SchedulerStartWindow extends JFrame implements ActionListener {
     public static final int FRAME_WIDTH = 550;
     public static final int FRAME_HEIGHT = 250;
@@ -37,6 +38,7 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
     private Schedule schedule;
     private SwingTool st;
 
+    // EFFECTS: Constructs and opens start window
     public SchedulerStartWindow() {
         super("Start");
         st = new SwingTool(this);
@@ -58,6 +60,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         st.displayFrame(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates new sound object
     private void initializeSoundObject() {
         try {
             soundObject = new SoundObject();
@@ -70,6 +74,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates and adds buttons to main JFrame panel
     private void initializeStartButtons() {
         JButton createNewBtn = st.createBtn("create new", "createNewButton");
         JButton loadBtn = st.createBtn("load", "loadButton");
@@ -80,7 +86,10 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         add(quitBtn);
     }
 
-    //This is the method that is called when the the JButton btn is clicked
+    // MODIFIES: this
+    // EFFECTS: processes button action commands and calls appropriate methods
+    //          plays audio clip when user saves or creates a new event
+    //          closes error frames when user presses return
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "loadButton":
@@ -106,6 +115,9 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: checks text field and displays error frame if name of new schedule is already in use,
+    //          makes call to MainFrame with new schedule otherwise
     private void initializeNewSchedule() {
         String scheduleName = field.getText();
         if (Objects.isNull(scheduleName) || scheduleName.equals("")) {
@@ -124,6 +136,7 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: iterates through all filenames in ./data/mySchedules and throws excetion if name already in use
     private void checkFileName(String name) throws SameNameException {
         File[] array = getFiles();
         for (File f : array) {
@@ -133,14 +146,17 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: creates new file path with name in ./data/mySchedules directory
     private String generateFilePath(String name) {
         return PersistenceTool.JSON_STORE + name + ".json";
     }
 
+    // EFFECTS: returns file array of all files in ./data/mySchedules
     private File[] getFiles() {
         return new File(PersistenceTool.JSON_STORE).listFiles();
     }
 
+    // EFFECTS: returns string array of all file names in ./data/mySchedules
     private String[] getFileNames() {
         File[] files = new File(PersistenceTool.JSON_STORE).listFiles();
         ArrayList<String> fileNames = new ArrayList<>();
@@ -157,11 +173,15 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         return fileNames.toArray(stringArray);
     }
 
+    // MODIFIES: this
+    // EFFECTS: gets and adds menuPanel to this JFrame
     private void initializeMenuPanel() {
         menuPanel = initializePanel();
         add(menuPanel, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates and returns jpanel for menu
     private JPanel initializePanelForMenu() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 1));
@@ -170,6 +190,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays menu where user can enter in data to create new schedule
     private void displayCreateNewOptions() {
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new GridLayout(4, 1));
@@ -184,6 +206,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: builds and displays menu options for user to select from list of currently saved schedules
     private void displayLoadOptions() {
         JLabel label = st.createLabel("select existing");
         JButton createBtn =  st.createBtn("open", "open");
@@ -195,6 +219,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: abstract method to fill menu panel with components
     private void fillMenuPanel(JComponent leftComponent, JComponent center, JComponent rightComponent) {
         JPanel grid = new JPanel();
 
@@ -215,6 +241,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         menuPanel.add(grid);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes and returns main display frame
     private JFrame initializeFrame(String title) {
         JFrame frame = new JFrame(title);
         frame.setBackground(UIData.GREY_BACKGROUND);
@@ -224,6 +252,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         return frame;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes and returns main display panel
     private JPanel initializePanel() {
         JPanel panel = new JPanel();
         panel.setBackground(UIData.MENU_BACKGROUND);
@@ -232,6 +262,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets JList to display all file names in ./data/mySchedules/
     private void initializeFileList(String[] fileNames) {
         fileList = new JList(fileNames);
         fileList.setPreferredSize(new Dimension(130, 80));
@@ -240,6 +272,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         fileList.setBorder(new EtchedBorder());
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens schedule in new MainFrame and closes this window
     private void openLoadedSchedule() {
         try {
             String source = getSelectedSource();
@@ -251,6 +285,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: gets and returns string for currently selected item in JList, throws FileNotFoundException if
+    //          selected value is null
     private String getSelectedSource() throws FileNotFoundException {
         if (Objects.isNull(fileList.getSelectedValue())) {
             throw new FileNotFoundException();
@@ -269,6 +305,8 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays a custom error message with title, width and height
     private void displayError(String title, String text, int width, int height) {
         errorFrame = initializeFrame(title);
         errorFrame.setPreferredSize(new Dimension(width, height));
@@ -280,9 +318,5 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
         errorFrame.add(returnBtn);
 
         st.displayFrame(errorFrame);
-    }
-
-    public static void main(String[] args) {
-        new SchedulerStartWindow();
     }
 }

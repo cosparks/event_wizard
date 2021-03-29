@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+// represents an editor frame where users can modify a schedule
 public class MainFrame extends JFrame implements ActionListener, MouseListener, KeyListener {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 650;
@@ -60,6 +61,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     private JLabel eventLocation;
     private JTextField headerTextField;
 
+    // EFFECTS: creates a new frame with a schedule
     public MainFrame(Schedule schedule, String filePath) {
         super("eManager");
         this.schedule = schedule;
@@ -85,6 +87,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         st.displayFrame(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets size, colour and default close operation for this JFrame
     private void initializeFrame() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -93,6 +97,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         getContentPane().setBackground(UIData.GREY_BACKGROUND);
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates the initial state of the top display panel of MainFrame
     private void initializeTopPanel() {
         topPanel.setBackground(UIData.MENU_BACKGROUND);
         topPanel.setPreferredSize(new Dimension(WIDTH, TOP_DISPLAY_HEIGHT));
@@ -107,6 +113,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         topPanel.add(topButtons);
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates the buttons which are located in the top right part of MainFrame
     private void initializeTopButtons() {
         topButtons = new JPanel();
         topButtons.setPreferredSize(new Dimension(TOP_BUTTON_WIDTH - PADDING, TOP_DISPLAY_HEIGHT - PADDING));
@@ -124,6 +132,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         topButtons.add(quitButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates sound object and plays 'openMainEditor' audio clip
     private void initializeSoundObject() {
         try {
             soundObject = new SoundObject("openMainEditor.aif");
@@ -137,6 +147,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates event list display in top center panel of MainFrame
     private void updateEventList() {
         ArrayList<String> events = new ArrayList<>();
 
@@ -157,12 +169,17 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         eventList.setForeground(UIData.GREY_TEXT);
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates panel where calendar will eventually go
+    //          part of functionality outside of that specified in user stories
     private void initializeCalendar() {
         calendar = new JPanel();
         calendar.setBackground(UIData.MENU_BACKGROUND);
         calendar.setPreferredSize(new Dimension(CALENDAR_WIDTH - PADDING, TOP_DISPLAY_HEIGHT - PADDING));
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates empty editor panel below event list and header
     private void initializeEditorPanel() {
         editorPanel = new JPanel();
         editorPanel.setBackground(UIData.MENU_BACKGROUND);
@@ -171,6 +188,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         editorPanel.setLayout(new BorderLayout());
     }
 
+    // MODIFIES: this
+    // EFFECTS: fills editor panel with tools to edit show event
     private void initializeTools(Show show) {
         JPanel toolPanel = new JPanel();
         toolPanel.setLayout(new FlowLayout());
@@ -201,6 +220,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         editorPanel.add(toolPanel, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: fills editor panel with tools to edit simple event
     private void initializeTools(SimpleEvent event) {
         JPanel toolPanel = new JPanel();
         toolPanel.setLayout(new FlowLayout());
@@ -218,6 +239,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         editorPanel.add(toolPanel, BorderLayout.SOUTH);
     }
 
+    // EFFECTS: instantiates and returns a panel into which event tools are added
     private JPanel generateToolRow() {
         JPanel topToolRow = new JPanel();
         topToolRow.setBackground(UIData.MENU_BACKGROUND);
@@ -226,6 +248,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         return topToolRow;
     }
 
+    // EFFECTS: processes button action commands and calls appropriate methods
+    //          plays audio clip when user saves or creates a new event
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -251,10 +275,13 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // EFFECTS: instantiates event creator, opening frame for event creation
     private void createNewEvent() {
         new EventCreator(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds newly created event to schedule and resets top panel to display it in list
     public void addNewEventAndInitializeEditor(ScheduleEvent event) {
         if (!Objects.isNull(event)) {
             schedule.addEvent(event);
@@ -267,6 +294,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // EFFECTS: processes mouse clicks--if user double clicks on the date, event name or location
+    //          in the header panel, opens text field to edit each, respectively.  If user clicks outside
+    //          of header, then text fields are closed
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
@@ -282,6 +312,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: closes any currently active field in header and sets editing bools to false,
+    //          then resets header to update display
     private void stopEditingHeader() {
         st.resetPanel(header);
         editingDate = false;
@@ -291,11 +324,16 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // EFFECTS: returns true if mouse click occurs outside of date, name and location labels in header
     private boolean isClickOutsideOfField(MouseEvent e) {
         return (e.getY() > 205 || e.getY() < 165) || (e.getX() > 85 && e.getX() < 300)
                 || (e.getX() < 660 && e.getX() > 450);
     }
 
+    // MODIFIES: this
+    // EFFECTS: deals with key events
+    //          calls appropriate methods if user presses enter while editing date, name or location
+    //          displays error message if date format isn't acceptable
     @Override
     public void keyPressed(KeyEvent e) {
         if (editingDate && e.getKeyCode() == 10) {
@@ -309,6 +347,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates date in header with new date entered in text field and sets editingDate to false
+    //          if date string isn't in acceptable format, throws NumberFormatException
     private void updateDate() throws NumberFormatException {
         String dateText = headerTextField.getText();
         int day = Integer.parseInt(dateText.substring(0, 2));
@@ -316,8 +357,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         int year = Integer.parseInt(dateText.substring(6, 10));
         int hour = eventToEdit.getStartDate().getHour();
         int minute = eventToEdit.getStartDate().getMinute();
-
         editingDate = false;
+
         EventDate newDate = new EventDate(day, month, year, hour, minute);
         eventToEdit.setStartDate(newDate);
         date.setText(eventToEdit.getStartDate().getDateForDisplay());
@@ -326,6 +367,10 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates name of eventToEdit and updates event name in header if editingName is true
+    //          updates location of eventToEdit and updates location in header if editingLocation is true
+    //          sets editingName and editingLocation to false
     private void updateNameAndLocation() {
         String newText = headerTextField.getText();
         if (editingName) {
@@ -342,6 +387,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens text field in header so user can enter new event date
     private void editDate() {
         editingLocation = false;
         editingName = false;
@@ -356,6 +403,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens text field in header so user can enter new event name
     private void editName() {
         editingLocation = false;
         editingDate = false;
@@ -370,6 +419,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: opens text field in header so user can enter new event location
     private void editLocation() {
         editingDate = false;
         editingName = false;
@@ -384,9 +435,12 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: iterates through schedule to find currently selected event in event list panel
+    //          runs editor if event is found, displays an error message otherwise
     private void startEditor() {
         try {
-            String eventName = extractEventName();
+            String eventName = getEventNameFromJList();
             eventToEdit = null;
 
             for (int i = 0; i < schedule.getSize(); i++) {
@@ -401,6 +455,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: casts eventToEdit to either simple event or show then calls appropriate editor
     private void selectAndRunEditor() {
         if (eventToEdit instanceof Show) {
             Show show = (Show) eventToEdit;
@@ -411,15 +467,17 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         }
     }
 
+    // EFFECTS: calls methods necessary to display and start editing an event
     private void runShowEditor(Show show) {
-        setHeader(show);
+        getEventDetailsForHeader(show);
         initializeTools(show);
         pack();
     }
 
-    private void setHeader(ScheduleEvent event) {
+    // MODIFIES: this
+    // EFFECTS: gets and sets date, name and location labels from event to be displayed in editor
+    private void getEventDetailsForHeader(ScheduleEvent event) {
         header = new JPanel();
-
         date = st.createLabel(event.getStartDate().getDateForDisplay());
         eventName = st.createLabel(event.getName());
         eventLocation = st.createLabel(event.getLocation());
@@ -431,6 +489,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         editorPanel.add(header, BorderLayout.NORTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates header with date, name and location of event currently being edited
     private void updateHeader(JComponent date, JComponent name, JComponent location) {
         header.setBackground(UIData.DARK_GREY);
         header.setMaximumSize(new Dimension(WIDTH - PADDING * 2, HEADER_HEIGHT));
@@ -450,13 +510,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         header.add(box);
     }
 
+    // EFFECTS: calls methods to start simple event editor
     private void runSimpleEventEditor(SimpleEvent event) {
-        setHeader(event);
+        getEventDetailsForHeader(event);
         initializeTools(event);
         pack();
     }
 
-    private String extractEventName() throws InvalidSourceException {
+    // EFFECTS: returns event name currently selected item in JList, throws InvalidSourceException if nothing selected
+    private String getEventNameFromJList() throws InvalidSourceException {
         if (Objects.isNull(eventList.getSelectedValue())) {
             throw new InvalidSourceException();
         }
@@ -464,15 +526,18 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         return eventDisplayString.substring(19);
     }
 
+    // EFFECTS: saves schedule to json format--displays error frame if file path not found
     private void saveSchedule() {
         PersistenceTool pt = new PersistenceTool();
         try {
             pt.saveSchedule(schedule, saveDestination);
         } catch (FileNotFoundException e) {
-            // do something
+            displayErrorMessage("invalid file path");
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays a generic error message with a return button
     public void displayErrorMessage() {
         JButton btn = st.createBtn("return", "return");
         String text = "please make a valid selection";
@@ -480,6 +545,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         st.displayFrame(errorFrame);
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays a customizable error message with a return button
     public void displayErrorMessage(String message) {
         JButton btn = st.createBtn("return", "return");
         errorFrame = st.displayErrorMessage("Error", message, btn, 300, 90);
