@@ -169,6 +169,7 @@ public class ActTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // EFFECTS: processes user input and calls appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {

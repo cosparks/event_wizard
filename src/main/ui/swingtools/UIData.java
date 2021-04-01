@@ -2,6 +2,7 @@ package ui.swingtools;
 
 import java.awt.*;
 
+// represents a set of graphical data (colors and sizes) for swing ui
 public class UIData {
     public static final Color GREY_BACKGROUND = new Color(0x393939);
     public static final Color MENU_BACKGROUND = new Color(0x343434);

@@ -458,6 +458,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     // MODIFIES: this
     // EFFECTS: casts eventToEdit to either simple event or show then calls appropriate editor
     private void selectAndRunEditor() {
+        st.resetPanel(editorPanel);
+
         if (eventToEdit instanceof Show) {
             Show show = (Show) eventToEdit;
             runShowEditor(show);
@@ -506,6 +508,9 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         box.add(name);
         box.add(Box.createGlue());
         box.add(location);
+
+        st.resetPanel(topPanel);
+        initializeTopPanel();
 
         header.add(box);
     }

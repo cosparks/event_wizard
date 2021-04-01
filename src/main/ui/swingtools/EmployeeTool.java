@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a tool for editing a list of employees
 public class EmployeeTool extends EditingTool {
     private List<Employee> employees;
     private Employee employeeToEdit;
@@ -19,6 +20,7 @@ public class EmployeeTool extends EditingTool {
     private JTextField payField;
     private JTextField jobField;
 
+    // EFFECTS: constructs a new EmployeeTool with mainframe and list of employees
     public EmployeeTool(MainFrame mf, List<Employee> employees) {
         super(mf, "employees");
         setLayout(new BorderLayout(UIData.BORDER_HGAP, UIData.BORDER_VGAP));
@@ -28,6 +30,9 @@ public class EmployeeTool extends EditingTool {
         initializeDisplay();
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets this, calls method to initialize edit mode and packs mainframe
+    //          catches InvalidSourceException from super.startEditor()
     @Override
     public void startEdit() {
         try {
@@ -40,6 +45,8 @@ public class EmployeeTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays fields and button to edit existing employee
     private void initializeEditDisplay() {
         employeeToEdit = getEmployeeToEdit();
 
@@ -52,11 +59,13 @@ public class EmployeeTool extends EditingTool {
         setEditPanel(name, pay, job, btn);
     }
 
+    // EFFECTS: calls method to reset this and initialize creator display
     private void startAddNewPanel() {
         st.resetPanel(this);
         initializeCreatorDisplay();
     }
 
+    // EFFECTS: initializes new button and calls method to fill editor panel
     private void initializeCreatorDisplay() {
         JButton createNewButton = st.createBtn("create", "create");
         createNewButton.setMaximumSize(new Dimension(BUTTON_WIDTH, MainFrame.BUTTON_HEIGHT));
@@ -64,6 +73,8 @@ public class EmployeeTool extends EditingTool {
         setEditPanel("name", "pay", "job", createNewButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates and displays employee editing panel with three fields and button
     private void setEditPanel(String fieldA, String fieldB, String fieldC, JButton button) {
         JPanel editPanel = initializeEditPanel();
         nameField = new JTextField(fieldA, 0);
@@ -93,6 +104,8 @@ public class EmployeeTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // MODIFIES: this, button
+    // EFFECTS: sets button graphics for button
     private void initializeEditorButtonPanel(JButton button) {
         editorButtonPanel = new JPanel();
         editorButtonPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -100,6 +113,7 @@ public class EmployeeTool extends EditingTool {
         editorButtonPanel.add(button);
     }
 
+    // EFFECTS: returns JPanel to be used as the main editing panel
     private JPanel initializeEditPanel() {
         JPanel editPanel = new JPanel();
         editPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -108,6 +122,7 @@ public class EmployeeTool extends EditingTool {
         return editPanel;
     }
 
+    // EFFECTS: returns employee currently selected in JList
     private Employee getEmployeeToEdit() {
         Employee employeeToEdit = null;
         for (Employee e : employees) {
@@ -118,6 +133,9 @@ public class EmployeeTool extends EditingTool {
         return employeeToEdit;
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves new values for employeeToEdit and calls reset tool panel; displays error if
+    //          user has entered invalid input into any of the employee's fields
     private void saveEmployee() {
         try {
             employeeToEdit.setPay(Integer.parseInt(payField.getText()));
@@ -129,6 +147,9 @@ public class EmployeeTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates new employee with values specified in fields, then adds it to employees;
+    //          displays error message if any field input is invalid
     private void createAndAddEmployee() {
         int pay;
         String name;
@@ -148,6 +169,8 @@ public class EmployeeTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes employee currently selected in JList from list of employees
     private void removeSelected() {
         try {
             setSelectedString();
@@ -159,6 +182,7 @@ public class EmployeeTool extends EditingTool {
         }
     }
 
+    // specified in superclass
     @Override
     protected void updateJList() {
         ArrayList<String> names = new ArrayList<>();
@@ -177,10 +201,7 @@ public class EmployeeTool extends EditingTool {
         jlist.setForeground(TOOL_LIST_TEXT_COLOUR);
     }
 
-    @Override
-    public void update(String actionCommand) {
-    }
-
+    // EFFECTS: processes user input and calls appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -199,5 +220,10 @@ public class EmployeeTool extends EditingTool {
             case "create":
                 createAndAddEmployee();
         }
+    }
+
+    // was supposed to be used for Observer pattern, but wound up not being useful
+    @Override
+    public void update(String actionCommand) {
     }
 }

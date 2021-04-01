@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+// represents a tool for editing details of a simple event
 public class EventDetailTool extends EditingTool {
     public static final int DETAIL_WIDTH = MainFrame.TOOL_WIDTH * 2 - BUTTON_WIDTH + 5;
 
@@ -17,7 +18,7 @@ public class EventDetailTool extends EditingTool {
     private JPanel editorButtonPanel;
     private boolean editingDetail;
 
-
+    // EFFECTS: constructs new event detail tool with mainframe and string list of details from simple event
     public EventDetailTool(MainFrame mainFrame, ArrayList<String> details) {
         super(mainFrame, " details");
         this.details = details;
@@ -30,6 +31,8 @@ public class EventDetailTool extends EditingTool {
         initializeDisplay();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates jpanels to display event details and editing buttons, then adds them to this JPanel
     @Override
     protected void initializeDisplay() {
         JPanel top = new JPanel();
@@ -62,6 +65,9 @@ public class EventDetailTool extends EditingTool {
         add(bottom, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes editor panel, displaying JField containing text of detail and button for updating detail
+    //          once the user is finished editing; packs mainframe
     private void setEditPanel(String fieldA, JButton button) {
         JPanel editPanel = new JPanel();
         editPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -89,6 +95,8 @@ public class EventDetailTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets selected string to empty and calls methods to reset panel and display editor mode for new detail
     private void startAddNewPanel() {
         selectedString = "";
         st.resetPanel(this);
@@ -96,6 +104,9 @@ public class EventDetailTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: calls methods to edit detail currently selected in JList; catches InvalidSourceException and displays
+    //          error message if nothing is currently selected
     @Override
     protected void startEdit() {
         try {
@@ -108,6 +119,9 @@ public class EventDetailTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes currently selected detail from list and adds new/edited in its place, at the same index;
+    //          resets panel
     private void saveDetail() {
         if (editingDetail) {
             int index = details.indexOf(selectedString);
@@ -121,6 +135,9 @@ public class EventDetailTool extends EditingTool {
         resetPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets selected string to the one currently selected in JList and removes it from details; catches
+    //          InvalidSourceException and displays error message if user hasn't selected anything
     private void removeSelected() {
         try {
             setSelectedString();
@@ -132,6 +149,8 @@ public class EventDetailTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: calls methods to reset this JPanel, update JList, initialize display and packs mainframe
     private void resetPanel() {
         st.resetPanel(this);
         updateJList();
@@ -139,12 +158,15 @@ public class EventDetailTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes save button and calls method to edit currently selected string
     private void initializeEditDisplay() {
         String detail = selectedString;
         JButton btn = st.createBoxButton("save", "save");
         setEditPanel(detail, btn);
     }
 
+    // specified in superclass
     @Override
     void updateJList() {
         String[] detailArray = new String[details.size()];
@@ -153,6 +175,8 @@ public class EventDetailTool extends EditingTool {
         jlist.setForeground(TOOL_LIST_TEXT_COLOUR);
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input, sets editingDetail and selects appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -173,6 +197,7 @@ public class EventDetailTool extends EditingTool {
         }
     }
 
+    // unused method for observer pattern
     @Override
     public void update(String actionCommand) {
 

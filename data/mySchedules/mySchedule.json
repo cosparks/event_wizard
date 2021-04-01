@@ -10,7 +10,7 @@
                 "minute": 30
             },
             "importance": 0,
-            "name": "Bonanza",
+            "name": "Event With new Date",
             "location": "",
             "details": [],
             "type": "simple event"
@@ -20,7 +20,7 @@
                 "month": 7,
                 "hour": 18,
                 "year": 2021,
-                "day": 8,
+                "day": 7,
                 "minute": 15
             },
             "bar": [
@@ -43,11 +43,11 @@
                     "sale price": 35
                 }
             ],
-            "projected sales": 155,
-            "ticket price": 15,
+            "projected sales": 115,
+            "ticket price": 20,
             "importance": 8,
-            "name": "Event to go to this summer",
-            "location": "bella's house",
+            "name": "The Happening",
+            "location": "Good ol' KW Studios ",
             "type": "show",
             "employees": [
                 {
@@ -56,55 +56,38 @@
                     "job": "sound"
                 },
                 {
-                    "name": "Sarah",
+                    "name": "Julie Leeeee",
                     "pay": 200,
                     "job": "lighting"
                 },
                 {
-                    "name": "Teagan",
-                    "pay": 11,
+                    "name": "Leafy Adams",
+                    "pay": 115,
                     "job": "bar"
                 }
             ],
             "acts": [
                 {
                     "stage plot": "",
-                    "name": "Melancholy Roy",
-                    "pay": 200,
-                    "rider": ""
-                },
-                {
-                    "stage plot": "",
                     "name": "Sigfried's Revenge",
-                    "pay": 300,
+                    "pay": 150,
                     "rider": ""
                 },
                 {
                     "stage plot": "",
-                    "name": "One more band",
-                    "pay": 300,
+                    "name": "Traipesin' Through the Sunflowers",
+                    "pay": 150,
+                    "rider": ""
+                },
+                {
+                    "stage plot": "",
+                    "name": "Melancholy Roy",
+                    "pay": 0,
                     "rider": ""
                 }
             ],
-            "additional cost": 300,
-            "capacity": 123
-        },
-        {
-            "start date": {
-                "month": 7,
-                "hour": 19,
-                "year": 2021,
-                "day": 31,
-                "minute": 30
-            },
-            "importance": 0,
-            "name": "Parquet Courts album release w/ guests",
-            "location": "",
-            "details": [
-                "there is a room underneath the house where everyone lives",
-                "where all the people live"
-            ],
-            "type": "simple event"
+            "additional cost": 150,
+            "capacity": 300
         },
         {
             "start date": {
@@ -118,13 +101,34 @@
             "projected sales": 0,
             "ticket price": 0,
             "importance": 8,
-            "name": "That last one",
+            "name": "Beseiged Astronauticus w/ Guests",
             "location": "The Lido",
             "type": "show",
-            "employees": [],
+            "employees": [{
+                "name": "John",
+                "pay": 300,
+                "job": "sound"
+            }],
             "acts": [],
             "additional cost": 0,
             "capacity": 0
+        },
+        {
+            "start date": {
+                "month": 4,
+                "hour": 19,
+                "year": 2021,
+                "day": 7,
+                "minute": 30
+            },
+            "importance": 0,
+            "name": "Phase 3 of project due",
+            "location": "CPSC 210",
+            "details": [
+                "there is a room underneath the house where everyone lives",
+                "where all the people live"
+            ],
+            "type": "simple event"
         }
     ]
 }

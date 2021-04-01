@@ -1,36 +1,36 @@
 {
-  "name": "My Schedule",
-  "events": [
-    {
-      "start date": {
-        "month": 0,
-        "hour": 0,
-        "year": 0,
-        "day": 0,
-        "minute": 0
-      },
-      "importance": 0,
-      "name": "Bonanza",
-      "location": "",
-      "details": [],
-      "type": "simple event"
-    },
-    {
-      "start date": {
-        "month": 12,
-        "hour": 7,
-        "year": 2021,
-        "day": 15,
-        "minute": 30
-      },
-      "importance": 0,
-      "name": "MATH 101 sucks",
-      "location": "",
-      "details": [
-        "what a great time",
-        "just can't wait to go back"
-      ],
-      "type": "simple event"
-    }
-  ]
+    "name": "My Schedule",
+    "events": [
+        {
+            "start date": {
+                "month": 0,
+                "hour": 0,
+                "year": 0,
+                "day": 0,
+                "minute": 0
+            },
+            "importance": 0,
+            "name": "Bonanza",
+            "location": "",
+            "details": [],
+            "type": "simple event"
+        },
+        {
+            "start date": {
+                "month": 4,
+                "hour": 7,
+                "year": 2021,
+                "day": 7,
+                "minute": 30
+            },
+            "importance": 0,
+            "name": "Phase 4 of project due",
+            "location": "CPSC 210",
+            "details": [
+                "what a great time",
+                "just can't wait to go back"
+            ],
+            "type": "simple event"
+        }
+    ]
 }

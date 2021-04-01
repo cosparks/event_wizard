@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// represents a tool for creating new events
 public class EventCreator extends JFrame implements ActionListener {
     private static final int WIDTH = 350;
     private static final int HEIGHT = 200;
@@ -26,6 +27,8 @@ public class EventCreator extends JFrame implements ActionListener {
     private JRadioButton radioB;
     private JButton createBtn;
 
+    // EFFECTS: constructs a new EventCreator with mainframe and calls methods to initialize
+    //          all display panels, fields and buttons
     public EventCreator(MainFrame mainFrame) {
         super("Create New");
         this.mainFrame = mainFrame;
@@ -38,6 +41,8 @@ public class EventCreator extends JFrame implements ActionListener {
         st.displayFrame(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes this JFrame with size and graphics
     private void initializeMainFrame() {
         setLayout(new GridLayout(5, 1));
         setBackground(UIData.GREY_BACKGROUND);
@@ -46,6 +51,8 @@ public class EventCreator extends JFrame implements ActionListener {
         setPreferredSize((new Dimension(WIDTH, HEIGHT)));
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds panels, fields and buttons to this JFrame
     private void initializeContents() {
         JPanel namePanel = getBorderPanel();
         JPanel locationPanel = getBorderPanel();
@@ -69,6 +76,7 @@ public class EventCreator extends JFrame implements ActionListener {
         add(bottom);
     }
 
+    // EFFECTS: initializes a new JPanel with border layout
     private JPanel getBorderPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(UIData.MENU_BACKGROUND);
@@ -76,6 +84,7 @@ public class EventCreator extends JFrame implements ActionListener {
         return panel;
     }
 
+    // EFFECTS: initializes and returns new panel with box layout and jcomponents partA and partB added
     private JPanel createBox(JComponent partA, JComponent partB) {
         JPanel panel = new JPanel();
         panel.setBackground(UIData.MENU_BACKGROUND);
@@ -94,6 +103,8 @@ public class EventCreator extends JFrame implements ActionListener {
         return panel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes name, date, location and time JFields with appropriate size and text
     private void setFields() {
         nameField = new JTextField("enter name", 15);
         locationField = new JTextField("location", 15);
@@ -101,6 +112,8 @@ public class EventCreator extends JFrame implements ActionListener {
         timeField = new JTextField("12:00", 5);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons with appropriate graphics and labels
     private void setButtons() {
         createBtn = st.createBoxButton("create", "create");
 
@@ -116,6 +129,8 @@ public class EventCreator extends JFrame implements ActionListener {
         radioB.setForeground(UIData.GREY_TEXT);
     }
 
+    // EFFECTS: creates and returns new EventDate with values specified in date and time fields
+    //          throws NumberFormatException if jfield text cannot be converted to int
     private EventDate getEventDate() throws NumberFormatException {
         String dateText = dateField.getText();
         int day = Integer.parseInt(dateText.substring(0, 2));
@@ -129,6 +144,7 @@ public class EventCreator extends JFrame implements ActionListener {
         return new EventDate(day, month, year, hour, minute);
     }
 
+    // EFFECTS: processes user input and calls appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -143,6 +159,8 @@ public class EventCreator extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: calls method to create and add event (using current values in fields); displays error message if
+    //          InvalidNameException or NumberFormatException are caught
     private void runCreateEvent() {
         try {
             createAndAddEvent();
@@ -153,6 +171,10 @@ public class EventCreator extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates new Show or SimpleEvent (depending on radio button selected) with name, start date and location
+    //          specified in JFields; if date input is invalid, throws NumberFormatException, and throws
+    //          InvalidNameException if name field is empty
     private void createAndAddEvent() throws NumberFormatException, InvalidNameException {
         String name = nameField.getText();
         String location = locationField.getText();

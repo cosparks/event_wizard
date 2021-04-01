@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+// represents a tool for editing additional details of Show
 public class ShowDetailTool extends JPanel implements ActionListener, Observer {
     private final int width;
     private final int height;
@@ -27,6 +28,7 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
     private JLabel additionalCost;
     private JLabel revenue;
 
+    // EFFECTS: constructs a ShowDetailTool with mainframe and show
     public ShowDetailTool(MainFrame mainFrame, Show show) {
         this.show = show;
         this.mainFrame = mainFrame;
@@ -42,6 +44,8 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         initializeDisplay();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets all JLabels to display appropriate text, and calls set revenue method to display revenue
     private void initializeLabels() {
         capacity = st.createLabel("capacity: ");
         ticketPrice = st.createLabel("door: ");
@@ -51,6 +55,8 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         setRevenue();
     }
 
+    // EFFECTS: initializes labels to display appropriate numerical values from show, and calls methods to generate
+    //          main display panels
     private void initializeDisplay() {
         JLabel capacityValue = st.createLabel(Integer.toString(show.getCapacity()));
         JLabel ticketPriceValue = st.createLabel("$" + show.getTicketPrice());
@@ -71,6 +77,9 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         setDisplay(topGrid, middleGrid, bottomGrid);
     }
 
+    // MODIFIES: this
+    // EFFECTS: calls methods to reset panel set revenue and JFields for editor, then creates and adds display panels
+    //          to main display
     private void startEditMode() {
         st.resetPanel(this);
         setRevenue();
@@ -89,6 +98,8 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         mainFrame.pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds 3 input panels to main editor panel, then adds editor panel to this
     private void setDisplay(JPanel topGrid, JPanel middleGrid, JPanel bottomGrid) {
         JPanel top = setTitle();
 
@@ -102,11 +113,15 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         add(editorPanel, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets revenue label to display current projected revenue for show
     public void setRevenue() {
         int i = show.calculateRevenue();
         revenue.setText("revenue: $" + i);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets all JFields to display numerical values from this show
     private void setFieldsForEditor() {
         capacityField = new JTextField(Integer.toString(show.getCapacity()));
         ticketPriceField = new JTextField(Integer.toString(show.getTicketPrice()));
@@ -114,6 +129,8 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         additionalCostField = new JTextField(Integer.toString(show.getAdditionalCost()));
     }
 
+    // MODIFIES: this, btn
+    // EFFECTS: sets graphics for btn and adds it to buttonPanel
     private void setButtonPanel(JButton btn) {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(UIData.GREY_BACKGROUND);
@@ -121,6 +138,7 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         buttonPanel.add(btn);
     }
 
+    // EFFECTS: sets graphics for, adds title label and returns top-most JPanel
     private JPanel setTitle() {
         JPanel top = new JPanel();
         top.setBackground(UIData.MENU_BACKGROUND);
@@ -134,6 +152,8 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         return top;
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets editorPanel with display graphics
     private void initializeEditorPanel() {
         editorPanel = new JPanel();
         editorPanel.setBackground(UIData.MENU_BACKGROUND);
@@ -141,12 +161,15 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         editorPanel.setPreferredSize(new Dimension(MainFrame.TOOL_WIDTH, EditingTool.DISPLAY_HEIGHT));
     }
 
+    // MODIFIES: this
+    // EFFECTS: calls methods to reset editor panel, and packs mainFrame
     private void resetEditorPanel() {
         st.resetPanel(this);
         initializeDisplay();
         mainFrame.pack();
     }
 
+    // EFFECTS: initializes and returns JPanel with grid layout with 1 row and 4 columns; adds four JComponents
     private JPanel createFourColumnGrid(JComponent a, JComponent b, JComponent c, JComponent d) {
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(1, 4));
@@ -160,6 +183,7 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         return gridPanel;
     }
 
+    // EFFECTS: initializes and returns JPanel with grid layout with 1 row and 4 columns; adds three JComponents
     private JPanel createThreeColumnGrid(JComponent a, JComponent b, JComponent c) {
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(1, 3));
@@ -172,6 +196,9 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         return gridPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets show details to those specified in JFields and calls method to reset display; displays error
+    //          message if NumberFormatException is caught
     private void setAdditionalDetails() {
         try {
             show.setCapacity(Integer.parseInt(capacityField.getText()));
@@ -184,6 +211,7 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         }
     }
 
+    // EFFECTS: processes user input and calls appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -195,6 +223,7 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
         }
     }
 
+    // unused method for observer pattern
     @Override
     public void update(String actionCommand) {
 

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a tool for editing a list of Drinks
 public class BarTool extends EditingTool {
     private List<Drink> drinks;
     private Drink drinkToEdit;
@@ -20,6 +21,8 @@ public class BarTool extends EditingTool {
     private JTextField amountField;
     private JTextField salePriceField;
 
+
+    // EFFECTS: constructs a new BarTool with mainframe and list of acts
     public BarTool(MainFrame mf, List<Drink> drinks) {
         super(mf, "bar");
         this.drinks = drinks;
@@ -30,6 +33,9 @@ public class BarTool extends EditingTool {
         initializeDisplay();
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets this, calls method to initialize edit mode and packs mainframe
+    //          catches InvalidSourceException from super.startEditor()
     @Override
     public void startEdit() {
         try {
@@ -42,6 +48,8 @@ public class BarTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays fields and button to edit existing drink
     private void initializeEditDisplay() {
         drinkToEdit = getDrinkToEdit();
 
@@ -55,6 +63,8 @@ public class BarTool extends EditingTool {
         setEditPanel(name, amount, cost, salePrice, btn);
     }
 
+    // MODIFIES: this
+    // EFFECTS: resets this and initializes button and fields for add new drink menu
     private void initializeAddNewDrink() {
         st.resetPanel(this);
         JButton createNewButton = st.createBtn("create", "create");
@@ -63,6 +73,8 @@ public class BarTool extends EditingTool {
         setEditPanel("name", "cost", "amount", "sale price", createNewButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: generates and displays drink editing panel with four fields and button
     private void setEditPanel(String fieldA, String fieldB, String fieldC, String fieldD, JButton button) {
         nameField = new JTextField(fieldA, 0);
         costField = new JTextField(fieldB, 0);
@@ -94,6 +106,8 @@ public class BarTool extends EditingTool {
         mainFrame.pack();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes portion of editor panel which contains all the fields
     private JPanel initializeFieldPanel() {
         JPanel firstGridPanel = new JPanel();
         firstGridPanel.setLayout(new GridLayout(1, 2));
@@ -101,6 +115,8 @@ public class BarTool extends EditingTool {
         return firstGridPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes portion of editor panel which contains the button
     private void initializeEditorButtonPanel(JButton button) {
         editorButtonPanel = new JPanel();
         editorButtonPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -108,6 +124,8 @@ public class BarTool extends EditingTool {
         editorButtonPanel.add(button);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes main editor panel
     private JPanel initializeEditPanel() {
         JPanel editPanel = new JPanel();
         editPanel.setBackground(POPUP_MENU_BACKGROUND);
@@ -116,6 +134,9 @@ public class BarTool extends EditingTool {
         return editPanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves new values for drinkToEdit and calls reset tool panel; displays error if
+    //          user has entered invalid input into any of the drink's fields
     private void saveDrink() {
         try {
             drinkToEdit.setAmount(Integer.parseInt(amountField.getText()));
@@ -128,6 +149,9 @@ public class BarTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes drink selected in JList from list of drinks; displays error message if
+    //          selection invalid
     private void removeSelected() {
         try {
             setSelectedString();
@@ -139,6 +163,9 @@ public class BarTool extends EditingTool {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: instantiates new drink with values specified in fields, then adds drink to drinks
+    //          displays error message if any field input is invalid
     private void createAndAddDrink() {
         int cost;
         int amount;
@@ -159,6 +186,7 @@ public class BarTool extends EditingTool {
         }
     }
 
+    // EFFECTS: returns drink currently selected in JList
     private Drink getDrinkToEdit() {
         Drink drinkToEdit = null;
         for (Drink d : drinks) {
@@ -169,6 +197,7 @@ public class BarTool extends EditingTool {
         return drinkToEdit;
     }
 
+    // specified in superclass
     @Override
     protected void updateJList() {
         ArrayList<String> names = new ArrayList<>();
@@ -187,11 +216,7 @@ public class BarTool extends EditingTool {
         jlist.setForeground(TOOL_LIST_TEXT_COLOUR);
     }
 
-    @Override
-    public void update(String actionCommand) {
-        System.out.println("Just received action command: " + actionCommand);
-    }
-
+    // EFFECTS: processes user input and calls appropriate methods
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -210,5 +235,11 @@ public class BarTool extends EditingTool {
             case "create":
                 createAndAddDrink();
         }
+    }
+
+    // was supposed to be used for Observer pattern, but wound up not being useful
+    @Override
+    public void update(String actionCommand) {
+        System.out.println("Just received action command: " + actionCommand);
     }
 }
