@@ -118,8 +118,8 @@
                 "minute": 0
             },
             "bar": [],
-            "projected sales": 0,
-            "ticket price": 0,
+            "projected sales": 225,
+            "ticket price": 15,
             "importance": 8,
             "name": "Beseiged Astronauticus w/ Guests",
             "location": "The Lido",
@@ -129,9 +129,14 @@
                 "pay": 300,
                 "job": "sound"
             }],
-            "acts": [],
-            "additional cost": 0,
-            "capacity": 0
+            "acts": [{
+                "stage plot": "",
+                "name": "Beseiged Astronauticus",
+                "pay": 500,
+                "rider": ""
+            }],
+            "additional cost": 500,
+            "capacity": 300
         }
     ]
 }

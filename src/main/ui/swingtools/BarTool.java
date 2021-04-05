@@ -236,10 +236,4 @@ public class BarTool extends EditingTool {
                 createAndAddDrink();
         }
     }
-
-    // was supposed to be used for Observer pattern, but wound up not being useful
-    @Override
-    public void update(String actionCommand) {
-        System.out.println("Just received action command: " + actionCommand);
-    }
 }

@@ -9,24 +9,25 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 // Represents an abstract class of event editing tools
-public abstract class EditingTool extends JPanel implements Observer, ActionListener {
+public abstract class EditingTool extends JPanel implements ActionListener {
     public static final int TITLE_HEIGHT = 25;
     public static final int DISPLAY_HEIGHT = MainFrame.TOOL_HEIGHT + 20;
     public static final int BUTTON_WIDTH = MainFrame.TOOL_WIDTH / 4;
     public static final Color POPUP_MENU_BACKGROUND = UIData.GREY_BACKGROUND;
     public static final Color TOOL_LIST_TEXT_COLOUR = UIData.GREY_TEXT;
 
-    protected MainFrame mainFrame;
-
+    protected final int width;
+    protected final int height;
     protected String type;
     protected String selectedString;
+    protected MainFrame mainFrame;
     protected SwingTool st;
+
     protected JList jlist;
     protected JPanel buttonPanel;
     protected JPanel leftDisplay;
 
-    protected final int width;
-    protected final int height;
+
 
     // EFFECTS: creates new editing tool with main frame and string for its subclass' type
     public EditingTool(MainFrame mainFrame, String type) {

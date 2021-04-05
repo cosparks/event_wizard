@@ -174,7 +174,7 @@ public class JsonReader {
             EventDate startDate = getDate(jsonObject.get("start date"));
             event.setStartDate(startDate);
         } catch (DateFormatException dfe) {
-            System.out.println(TextColors.QUIT + "Error: DateFormatException. " + event.getName() + "'s date unreadable");
+            System.out.println(TextColors.QUIT + "Error: DateFormatException. Date unreadable");
         }
         event.setImportance(importance);
         event.setLocation(location);

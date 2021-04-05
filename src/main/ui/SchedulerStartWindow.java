@@ -4,7 +4,7 @@ import exceptions.SameNameException;
 import model.Schedule;
 import ui.audio.SoundObject;
 import ui.swingtools.SwingTool;
-import ui.texttools.PersistenceTool;
+import persistence.PersistenceTool;
 import ui.swingtools.UIData;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -33,10 +33,10 @@ public class SchedulerStartWindow extends JFrame implements ActionListener {
     private JPanel menuPanel;
     private JTextField field;
     private JList fileList;
-    private SoundObject soundObject;
 
     private Schedule schedule;
     private SwingTool st;
+    private SoundObject soundObject;
 
     // EFFECTS: Constructs and opens start window
     public SchedulerStartWindow() {

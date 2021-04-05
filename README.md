@@ -50,3 +50,16 @@ Phase 4: Task 2
 EventDate class is now robust.  Any method in this class involved with setting or modifying a date will now
 throw DateFormatException if any of the new date values are invalid (if user tries to set the month value to 13 
 or day to 0 etc..).  This is achieved using the method verifyDateValues in the EventDate class.
+
+Phase 4: Task 3
+I wish I'd drawn out a UML diagram sooner, as it would have given me a much better idea of how to improve
+the coupling of my project, and might have saved me from writing so much redundant code.
+
+Changes I would make/Refactoring I would do:
+• create super class (or class to be used as field) for SchedulerStartWindow and MainFrame which contains all
+of their common associations/dependencies: SoundObject, Schedule, SwingTool, PersistenceTool 
+• create super class for Act, Drink and Employee--they all have very similar fields, and all methods that operate
+on them do very similar if not identical things
+• draw association between EditingTool and Show (as opposed to ActTool and Act, EmployeeTool and Employee, etc.)
+• make SwingTool a static class with only static methods, and pass ActionListener as a parameter in any method that
+requires it

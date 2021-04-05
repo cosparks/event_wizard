@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 // represents a tool for editing additional details of Show
-public class ShowDetailTool extends JPanel implements ActionListener, Observer {
+public class ShowDetailTool extends JPanel implements ActionListener {
     private final int width;
     private final int height;
 
@@ -221,11 +221,5 @@ public class ShowDetailTool extends JPanel implements ActionListener, Observer {
             case "save":
                 setAdditionalDetails();
         }
-    }
-
-    // unused method for observer pattern
-    @Override
-    public void update(String actionCommand) {
-
     }
 }

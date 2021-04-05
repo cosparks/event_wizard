@@ -196,10 +196,4 @@ public class EventDetailTool extends EditingTool {
                 saveDetail();
         }
     }
-
-    // unused method for observer pattern
-    @Override
-    public void update(String actionCommand) {
-
-    }
 }

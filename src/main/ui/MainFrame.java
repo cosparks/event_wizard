@@ -5,7 +5,7 @@ import exceptions.InvalidSourceException;
 import model.*;
 import ui.audio.SoundObject;
 import ui.swingtools.*;
-import ui.texttools.PersistenceTool;
+import persistence.PersistenceTool;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -38,8 +38,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     private boolean editingDate;
     private boolean editingName;
     private boolean editingLocation;
-    private ScheduleEvent eventToEdit;
 
+    private ScheduleEvent eventToEdit;
     private Schedule schedule;
     private ActTool actTool;
     private EmployeeTool employeeTool;
@@ -47,7 +47,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     private ShowDetailTool showDetailTool;
     private EventDetailTool eventDetailTool;
     private SwingTool st;
-    private Subject subject;
     private SoundObject soundObject;
 
     private JFrame errorFrame;
@@ -67,7 +66,6 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
         super("eManager");
         this.schedule = schedule;
         st = new SwingTool(this);
-        subject = new Subject();
         saveDestination = filePath;
         editingDate = false;
         editingName = false;
@@ -202,19 +200,15 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
 
         actTool = new ActTool(this, show.getActs());
         topToolRow.add(actTool, BorderLayout.WEST);
-        subject.addObserver(actTool);
 
         employeeTool = new EmployeeTool(this, show.getEmployees());
         topToolRow.add(employeeTool, BorderLayout.EAST);
-        subject.addObserver(employeeTool);
 
         barTool = new BarTool(this, show.getBar());
         middleToolRow.add(barTool, BorderLayout.WEST);
-        subject.addObserver(barTool);
 
         showDetailTool = new ShowDetailTool(this, show);
         middleToolRow.add(showDetailTool, BorderLayout.EAST);
-        subject.addObserver(showDetailTool);
 
         toolPanel.add(topToolRow);
         toolPanel.add(middleToolRow);

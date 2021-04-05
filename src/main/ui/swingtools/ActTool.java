@@ -189,9 +189,4 @@ public class ActTool extends EditingTool {
                 createAndAddAct();
         }
     }
-
-    // was supposed to be used for Observer pattern, but wound up not being useful
-    @Override
-    public void update(String actionCommand) {
-    }
 }

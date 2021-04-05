@@ -1,4 +1,4 @@
-package ui.texttools;
+package persistence;
 
 import model.Schedule;
 import persistence.JsonReader;

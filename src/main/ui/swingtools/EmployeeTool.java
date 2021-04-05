@@ -221,9 +221,4 @@ public class EmployeeTool extends EditingTool {
                 createAndAddEmployee();
         }
     }
-
-    // was supposed to be used for Observer pattern, but wound up not being useful
-    @Override
-    public void update(String actionCommand) {
-    }
 }
