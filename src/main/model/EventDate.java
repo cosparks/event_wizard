@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DateFormatException;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -18,9 +19,11 @@ public class EventDate implements Writable {
 
     }
 
-    // REQUIRES: day [1, 31], month [1, 12], year [1000, 9999], hour [0, 23], minute [0, 59]
-    // EFFECTS: Constructs a new date with assigned fields
-    public EventDate(int day, int month, int year, int hour, int minute) {
+    // EFFECTS: checks validity of input date, then constructs a new date with assigned fields
+    //          throws DateFormatException if date is invalid
+    public EventDate(int day, int month, int year, int hour, int minute) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
+
         this.day = day;
         this.month = month;
         this.year = year;
@@ -39,9 +42,12 @@ public class EventDate implements Writable {
         return json;
     }
 
-    // REQUIRES: day [1, 31], month [1, 12], year [1000, 9999], hour [0, 23], minute [0, 59]
-    // EFFECTS: erases date and replaces with new values
-    public void setDate(int day, int month, int year, int hour, int minute) {
+    // MODIFIES: this
+    // EFFECTS: checks validity of new date values, then updates according to those values;
+    //          throws DateFormatException if date is invalid
+    public void setDate(int day, int month, int year, int hour, int minute) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
+
         this.day = day;
         this.month = month;
         this.year = year;
@@ -72,11 +78,35 @@ public class EventDate implements Writable {
         return  insertA + day + insertB + month + "/" + year;
     }
 
+    // EFFECTS: checks validity of all parameters--throws DateFormatException if day is >31 or <1, month
+    //          is >12 or <1, year is >3000 or <1900, hour is >23 or <0, or if minute is >59 or <1
+    private void verifyDateValues(int day, int month, int year, int hour, int minute) throws DateFormatException {
+        boolean throwException = false;
+        if (day > 31 || day < 1) {
+            throwException = true;
+        } else if (month > 12 || month < 1) {
+            throwException = true;
+        } else if (year < 1900 || year > 3000) {
+            throwException = true;
+        } else if (hour < 0 || hour > 23) {
+            throwException = true;
+        } else if (minute < 0 || minute > 59) {
+            throwException = true;
+        }
+
+        if (throwException) {
+            throw new DateFormatException();
+        }
+    }
+
     public int getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    // MODIFIES: this
+    // EFFECT: sets day of this, throws DateFormatException if day is not valid
+    public void setDay(int day) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
         this.day = day;
     }
 
@@ -84,7 +114,10 @@ public class EventDate implements Writable {
         return month;
     }
 
-    public void setMonth(int month) {
+    // MODIFIES: this
+    // EFFECT: sets month of this, throws DateFormatException if day is not valid
+    public void setMonth(int month) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
         this.month = month;
     }
 
@@ -92,7 +125,10 @@ public class EventDate implements Writable {
         return year;
     }
 
-    public void setYear(int year) {
+    // MODIFIES: this
+    // EFFECT: sets year of this, throws DateFormatException if day is not valid
+    public void setYear(int year) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
         this.year = year;
     }
 
@@ -100,7 +136,10 @@ public class EventDate implements Writable {
         return hour;
     }
 
-    public void setHour(int hour) {
+    // MODIFIES: this
+    // EFFECT: sets hour of this, throws DateFormatException if day is not valid
+    public void setHour(int hour) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
         this.hour = hour;
     }
 
@@ -108,7 +147,10 @@ public class EventDate implements Writable {
         return minute;
     }
 
-    public void setMinute(int minute) {
+    // MODIFIES: this
+    // EFFECT: sets minute of this, throws DateFormatException if day is not valid
+    public void setMinute(int minute) throws DateFormatException {
+        verifyDateValues(day, month, year, hour, minute);
         this.minute = minute;
     }
 }

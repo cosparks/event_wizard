@@ -1,5 +1,6 @@
 package ui.swingtools;
 
+import exceptions.DateFormatException;
 import exceptions.InvalidNameException;
 import model.*;
 import ui.MainFrame;
@@ -131,7 +132,7 @@ public class EventCreator extends JFrame implements ActionListener {
 
     // EFFECTS: creates and returns new EventDate with values specified in date and time fields
     //          throws NumberFormatException if jfield text cannot be converted to int
-    private EventDate getEventDate() throws NumberFormatException {
+    private EventDate getEventDate() throws NumberFormatException, DateFormatException {
         String dateText = dateField.getText();
         int day = Integer.parseInt(dateText.substring(0, 2));
         int month = Integer.parseInt(dateText.substring(3, 5));
@@ -168,6 +169,8 @@ public class EventCreator extends JFrame implements ActionListener {
             mainFrame.displayErrorMessage("date and time must be in format DD/MM/YYYY HH:MM");
         } catch (InvalidNameException ine) {
             mainFrame.displayErrorMessage("please enter event name");
+        } catch (DateFormatException dfe) {
+            mainFrame.displayErrorMessage("please enter valid date");
         }
     }
 
@@ -175,7 +178,7 @@ public class EventCreator extends JFrame implements ActionListener {
     // EFFECTS: creates new Show or SimpleEvent (depending on radio button selected) with name, start date and location
     //          specified in JFields; if date input is invalid, throws NumberFormatException, and throws
     //          InvalidNameException if name field is empty
-    private void createAndAddEvent() throws NumberFormatException, InvalidNameException {
+    private void createAndAddEvent() throws NumberFormatException, InvalidNameException, DateFormatException {
         String name = nameField.getText();
         String location = locationField.getText();
 
@@ -183,7 +186,6 @@ public class EventCreator extends JFrame implements ActionListener {
         if (name.equals("")) {
             throw new InvalidNameException();
         }
-
         if (radioA.isSelected()) {
             event = new Show(name);
         } else if (radioB.isSelected()) {

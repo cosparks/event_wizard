@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidNameException;
 import model.show.Act;
 import model.show.Drink;
 import model.show.Employee;
@@ -22,7 +23,7 @@ public class Show extends ScheduleEvent implements Writable {
 
     // EFFECTS: constructs a new show with name--instantiates arrays for bar, employees and acts
     public Show(String name) {
-        this.name = name;
+        super(name);
         acts = new ArrayList<>();
         employees = new ArrayList<>();
         bar = new ArrayList<>();

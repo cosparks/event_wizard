@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.DateFormatException;
 import model.*;
 import model.show.*;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.stream.Stream;
 
 import model.show.Employee;
 import org.json.*;
+import ui.texttools.TextColors;
 
 // Represents a reader that reads schedule from JSON data stored in file
 // CITATION: code copied and modified from JsonReader class in JsonSerializationDemo
@@ -168,15 +170,18 @@ public class JsonReader {
     private void addBasicEventDetails(ScheduleEvent event, JSONObject jsonObject) {
         int importance = jsonObject.getInt("importance");
         String location = jsonObject.getString("location");
-        EventDate startDate = getDate(jsonObject.get("start date"));
-
+        try {
+            EventDate startDate = getDate(jsonObject.get("start date"));
+            event.setStartDate(startDate);
+        } catch (DateFormatException dfe) {
+            System.out.println(TextColors.QUIT + "Error: DateFormatException. " + event.getName() + "'s date unreadable");
+        }
         event.setImportance(importance);
         event.setLocation(location);
-        event.setStartDate(startDate);
     }
 
     // EFFECTS: returns EventDate parsed from json object
-    private EventDate getDate(Object json) {
+    private EventDate getDate(Object json) throws DateFormatException {
         JSONObject jsonDate = (JSONObject) json;
         int day = jsonDate.getInt("day");
         int month = jsonDate.getInt("month");

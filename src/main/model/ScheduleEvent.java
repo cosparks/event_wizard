@@ -1,7 +1,12 @@
 package model;
 
+import exceptions.DateFormatException;
+import exceptions.InvalidNameException;
 import persistence.*;
 import org.json.JSONObject;
+import ui.texttools.TextColors;
+
+import java.util.Objects;
 
 
 // abstract representation of an event with date, start/end time and location
@@ -12,8 +17,9 @@ public abstract class ScheduleEvent implements Writable {
     protected int importance;
     // protected EventDate endDate;
 
-    // Default constructor
-    public ScheduleEvent() {
+    // EFFECTS: sets name and startDate, and initializes importance and location
+    public ScheduleEvent(String name) {
+        this.name = name;
         startDate = new EventDate();
         importance = 0;
         location = "";
@@ -27,17 +33,19 @@ public abstract class ScheduleEvent implements Writable {
 
     // MODIFIES: this
     // EFFECTS: changes the start time of event to new hour/minute and sets endDate to one hour later
-    public void changeStartTime(int hour, int minute) {
+    public void changeStartTime(int hour, int minute) throws DateFormatException {
         startDate.setHour(hour);
         startDate.setMinute(minute);
+
     }
 
     // MODIFIES: this
     // EFFECTS: changes the start date of event to new DD/MM/YYYY and end to one hour after start time
-    public void changeStartDate(int day, int month, int year) {
+    public void changeStartDate(int day, int month, int year) throws DateFormatException {
         startDate.setDay(day);
         startDate.setMonth(month);
         startDate.setYear(year);
+
     }
 
     @Override

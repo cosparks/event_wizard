@@ -1,7 +1,9 @@
 package model;
 
+import exceptions.DateFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.texttools.TextColors;
 
 import java.util.ArrayList;
 
@@ -21,24 +23,28 @@ class ScheduleTest {
     void runBefore() {
         schedule = new Schedule();
         testEventList = new ArrayList<>();
-        eventA = new SimpleEvent("A");  // event A
-        EventDate dateA = new EventDate(16, 02, 2021, 15, 30);
-        eventA.setStartDate(dateA);
-        eventB = new SimpleEvent("B");  // event B
-        EventDate dateB = new EventDate(15, 02, 2021, 15, 30);
-        eventB.setStartDate(dateB);
-        eventC = new SimpleEvent("C");  // event C
-        EventDate dateC = new EventDate(01, 01, 2022, 15, 30);
-        eventC.setStartDate(dateC);
-        eventD = new SimpleEvent("D");  // event D
-        EventDate dateD = new EventDate(15, 02, 2021, 14, 30);
-        eventD.setStartDate(dateD);
-        eventE = new SimpleEvent("E");  // event E
-        EventDate dateE = new EventDate(15, 01, 2021, 15, 30);
-        eventE.setStartDate(dateE);
-        eventF = new SimpleEvent("F");  // event F
-        EventDate dateF = new EventDate(15, 02, 2021, 14, 15);
-        eventF.setStartDate(dateF);
+        try {
+            eventA = new SimpleEvent("A");  // event A
+            EventDate dateA = new EventDate(16, 02, 2021, 15, 30);
+            eventA.setStartDate(dateA);
+            eventB = new SimpleEvent("B");  // event B
+            EventDate dateB = new EventDate(15, 02, 2021, 15, 30);
+            eventB.setStartDate(dateB);
+            eventC = new SimpleEvent("C");  // event C
+            EventDate dateC = new EventDate(01, 01, 2022, 15, 30);
+            eventC.setStartDate(dateC);
+            eventD = new SimpleEvent("D");  // event D
+            EventDate dateD = new EventDate(15, 02, 2021, 14, 30);
+            eventD.setStartDate(dateD);
+            eventE = new SimpleEvent("E");  // event E
+            EventDate dateE = new EventDate(15, 01, 2021, 15, 30);
+            eventE.setStartDate(dateE);
+            eventF = new SimpleEvent("F");  // event F
+            EventDate dateF = new EventDate(15, 02, 2021, 14, 15);
+            eventF.setStartDate(dateF);
+        } catch (DateFormatException dfe) {
+            System.out.println(TextColors.QUIT + "DateFormatException: unable to run @BeforeEach method");
+        }
     }
 
     @Test
@@ -123,7 +129,12 @@ class ScheduleTest {
         testEventList.add(eventB);
         testEventList.add(eventA);
 
-        eventC.changeStartDate(01, 01, 2021);
+        try {
+            eventC.changeStartDate(01, 01, 2021);
+        } catch (DateFormatException e) {
+            fail("DateFormatException not expected");
+        }
+
         schedule.sortEvents();
 
         for (int i = 0; i < schedule.getSize(); i++) {
@@ -153,9 +164,12 @@ class ScheduleTest {
     @Test
     void testSortShows() {
         Show showA = new Show("A");
-        EventDate dateA = new EventDate(1, 1, 2021, 18, 30);
-        showA.setStartDate(dateA);
-
+        try {
+            EventDate dateA = new EventDate(1, 1, 2021, 18, 30);
+            showA.setStartDate(dateA);
+        } catch (DateFormatException dfe) {
+            fail("DateFormatException not expected");
+        }
         schedule.addEvent(showA);
         schedule.addEvent(eventB);
         testEventList.add(showA);

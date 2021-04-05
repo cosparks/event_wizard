@@ -44,3 +44,9 @@ alcohol, cost of any rentals needed for the show, etc.
 - I want the software to tally expenses and compute projected revenue for a concert
 - I want to edit events: change dates or any other information stored in an event
 - I want to be able to save my shows so I can come back and edit them at a later time
+
+
+Phase 4: Task 2
+EventDate class is now robust.  Any method in this class involved with setting or modifying a date will now
+throw DateFormatException if any of the new date values are invalid (if user tries to set the month value to 13 
+or day to 0 etc..).  This is achieved using the method verifyDateValues in the EventDate class.

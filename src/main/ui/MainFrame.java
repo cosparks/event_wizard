@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.DateFormatException;
 import exceptions.InvalidSourceException;
 import model.*;
 import ui.audio.SoundObject;
@@ -341,6 +342,8 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
                 updateDate();
             } catch (NumberFormatException nfe) {
                 displayErrorMessage("please enter date as DD/MM/YYYY");
+            } catch (DateFormatException dfe) {
+                displayErrorMessage("please enter valid values for date");
             }
         } else if ((editingName || editingLocation) && e.getKeyCode() == 10) {
             updateNameAndLocation();
@@ -350,7 +353,7 @@ public class MainFrame extends JFrame implements ActionListener, MouseListener, 
     // MODIFIES: this
     // EFFECTS: updates date in header with new date entered in text field and sets editingDate to false
     //          if date string isn't in acceptable format, throws NumberFormatException
-    private void updateDate() throws NumberFormatException {
+    private void updateDate() throws NumberFormatException, DateFormatException {
         String dateText = headerTextField.getText();
         int day = Integer.parseInt(dateText.substring(0, 2));
         int month = Integer.parseInt(dateText.substring(3, 5));

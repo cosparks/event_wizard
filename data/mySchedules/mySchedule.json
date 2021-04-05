@@ -3,6 +3,23 @@
     "events": [
         {
             "start date": {
+                "month": 4,
+                "hour": 19,
+                "year": 2021,
+                "day": 7,
+                "minute": 30
+            },
+            "importance": 0,
+            "name": "Phase 3 of project due",
+            "location": "CPSC 210",
+            "details": [
+                "there is a room underneath the house where everyone lives",
+                "where all the people live"
+            ],
+            "type": "simple event"
+        },
+        {
+            "start date": {
                 "month": 6,
                 "hour": 19,
                 "year": 2021,
@@ -35,19 +52,13 @@
                     "cost": 2,
                     "name": "pabst tall cans",
                     "sale price": 6
-                },
-                {
-                    "amount": 20,
-                    "cost": 15,
-                    "name": "wine",
-                    "sale price": 35
                 }
             ],
             "projected sales": 115,
-            "ticket price": 20,
+            "ticket price": 33,
             "importance": 8,
             "name": "The Happening",
-            "location": "Good ol' KW Studios ",
+            "location": "Squamish, BC",
             "type": "show",
             "employees": [
                 {
@@ -56,14 +67,9 @@
                     "job": "sound"
                 },
                 {
-                    "name": "Julie Leeeee",
-                    "pay": 200,
+                    "name": "Sara",
+                    "pay": 150,
                     "job": "lighting"
-                },
-                {
-                    "name": "Leafy Adams",
-                    "pay": 115,
-                    "job": "bar"
                 }
             ],
             "acts": [
@@ -82,12 +88,26 @@
                 {
                     "stage plot": "",
                     "name": "Melancholy Roy",
-                    "pay": 0,
+                    "pay": 200,
                     "rider": ""
                 }
             ],
             "additional cost": 150,
             "capacity": 300
+        },
+        {
+            "start date": {
+                "month": 12,
+                "hour": 12,
+                "year": 2021,
+                "day": 12,
+                "minute": 0
+            },
+            "importance": 0,
+            "name": "Doctor's Appointment",
+            "location": "the place",
+            "details": ["something happening here"],
+            "type": "simple event"
         },
         {
             "start date": {
@@ -112,23 +132,6 @@
             "acts": [],
             "additional cost": 0,
             "capacity": 0
-        },
-        {
-            "start date": {
-                "month": 4,
-                "hour": 19,
-                "year": 2021,
-                "day": 7,
-                "minute": 30
-            },
-            "importance": 0,
-            "name": "Phase 3 of project due",
-            "location": "CPSC 210",
-            "details": [
-                "there is a room underneath the house where everyone lives",
-                "where all the people live"
-            ],
-            "type": "simple event"
         }
     ]
 }

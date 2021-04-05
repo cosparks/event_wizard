@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import exceptions.InvalidNameException;
 import persistence.Writable;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -12,7 +13,7 @@ public class SimpleEvent extends ScheduleEvent implements Writable {
 
     // EFFECTS: constructs simple event with name--instantiates detail list
     public SimpleEvent(String name) {
-        this.name = name;
+        super(name);
         importance = 0;
         details = new ArrayList<>();
     }

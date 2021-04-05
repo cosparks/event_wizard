@@ -1,8 +1,11 @@
 package ui.texttools;
 
 import java.util.Scanner;
+
+import exceptions.DateFormatException;
 import model.EventDate;
 import model.ScheduleEvent;
+import sun.jvm.hotspot.debugger.cdbg.TemplateType;
 
 // Abstract class for constructing events
 public abstract class EventBuilder {
@@ -74,8 +77,12 @@ public abstract class EventBuilder {
         int year = Integer.parseInt(date.substring(4));
         int hour = Integer.parseInt(time.substring(0,2));
         int minute = Integer.parseInt(time.substring(2));
+        try {
+            eventDate = new EventDate(day, month, year, hour, minute);
+        } catch (DateFormatException dfe) {
+            System.out.println(TextColors.QUIT + "Please enter valid date");
+        }
 
-        eventDate = new EventDate(day, month, year, hour, minute);
         String dateDisplay = eventDate.getDateForDisplay();
         String timeDisplay = eventDate.getTimeForDisplay();
 

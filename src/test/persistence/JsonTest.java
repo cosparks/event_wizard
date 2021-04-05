@@ -1,10 +1,13 @@
 package persistence;
 
+import exceptions.DateFormatException;
 import model.*;
 
 import model.show.Act;
 import model.show.Drink;
 import model.show.Employee;
+import ui.texttools.TextColors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class JsonTest {
@@ -52,11 +55,17 @@ public abstract class JsonTest {
 
     protected SimpleEvent createEventA() {
         SimpleEvent event = new SimpleEvent("Appointment 52");
-        EventDate startDate = new EventDate(15, 5, 2021, 9, 0);
+        try {
+            EventDate startDate = new EventDate(15, 5, 2021, 9, 0);
+            event.setStartDate(startDate);
+        } catch (DateFormatException e) {
+            System.out.println(TextColors.QUIT + "Error: Unable to set date due to DateFormatException");
+        }
+
         for (int i = 1; i <= 3; i++) {
             event.addDetail("detail " + i);
         }
-        event.setStartDate(startDate);
+
         event.setLocation("250 fatcat lane");
         event.setImportance(5);
         return event;
@@ -64,11 +73,17 @@ public abstract class JsonTest {
 
     protected SimpleEvent createEventB() {
         SimpleEvent event = new SimpleEvent("Surfing in Tofino");
-        EventDate startDate = new EventDate(17, 7, 2021, 15, 30);
+        try {
+            EventDate startDate = new EventDate(17, 7, 2021, 15, 30);
+            event.setStartDate(startDate);
+        } catch (DateFormatException e) {
+            System.out.println(TextColors.QUIT + "Error: Unable to set date due to DateFormatException");
+        }
+
         for (int i = 1; i <= 3; i++) {
             event.addDetail("surfing detail " + i);
         }
-        event.setStartDate(startDate);
+
         event.setLocation("333 Beach Avenue");
         event.setImportance(9);
         return event;
@@ -76,8 +91,13 @@ public abstract class JsonTest {
 
     protected Show createShowA() {
         Show show = new Show("Chad VanGaalen with guests");
-        EventDate startDate = new EventDate(21, 3, 2021, 21, 25);
-        show.setStartDate(startDate);
+        try {
+            EventDate startDate = new EventDate(21, 3, 2021, 21, 25);
+            show.setStartDate(startDate);
+        } catch (DateFormatException e) {
+            System.out.println(TextColors.QUIT + "Error: Unable to set date due to DateFormatException");
+        }
+
         show.setLocation("The Rio Theatre");
         show.setCapacity(300);
         show.setTicketPrice(22);
@@ -108,8 +128,13 @@ public abstract class JsonTest {
 
     protected Show createShowB() {
         Show show = new Show("Last run of the Decepticons");
-        EventDate startDate = new EventDate(07, 9, 2021, 19, 15);
-        show.setStartDate(startDate);
+        try {
+            EventDate startDate = new EventDate(07, 9, 2021, 19, 15);
+            show.setStartDate(startDate);
+        } catch (DateFormatException e) {
+            System.out.println(TextColors.QUIT + "Error: Unable to set date due to DateFormatException");
+        }
+
         show.setLocation("Pacific Spirit Park");
         show.setCapacity(1000);
         show.setTicketPrice(19);

@@ -1,5 +1,6 @@
 package ui.texttools;
 
+import exceptions.InvalidNameException;
 import model.SimpleEvent;
 
 // UI tool for building simple events

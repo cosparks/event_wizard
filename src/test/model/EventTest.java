@@ -1,7 +1,10 @@
 package model;
 
+import exceptions.DateFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.texttools.TextColors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventTest {
@@ -11,8 +14,12 @@ public class EventTest {
     @BeforeEach
     void runBefore() {
         eventA = new SimpleEvent("A");
-        date1 = new EventDate(02, 11, 2021, 23, 30);
-        eventA.setStartDate(date1);
+        try {
+            date1 = new EventDate(02, 11, 2021, 23, 30);
+            eventA.setStartDate(date1);
+        } catch (DateFormatException dfe) {
+            System.out.println(TextColors.QUIT + "DateFormatException: unable to run @BeforeEach method");
+        }
     }
 
     @Test
@@ -28,8 +35,11 @@ public class EventTest {
 
     @Test
     void testChangeStartDate() {
-        eventA.changeStartDate(03, 11, 2021);
-
+        try {
+            eventA.changeStartDate(03, 11, 2021);
+        } catch (DateFormatException e) {
+            fail("DateFormatException not expected");
+        }
         assertEquals(3, eventA.getStartDate().getDay());
         // assertEquals(4, eventA.getEndDate().getDay());
         // assertEquals(0, eventA.getEndDate().getHour());
@@ -37,8 +47,11 @@ public class EventTest {
 
     @Test
     void testChangeStartTime() {
-        eventA.changeStartTime(18, 25);
-
+        try {
+            eventA.changeStartTime(18, 25);
+        } catch (DateFormatException e) {
+            fail("DateFormatException not expected");
+        }
         assertEquals(18, eventA.getStartDate().getHour());
         assertEquals(25, eventA.getStartDate().getMinute());
         // assertEquals(19, eventA.getEndDate().getHour());
