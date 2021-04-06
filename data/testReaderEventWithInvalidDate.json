@@ -1,0 +1,23 @@
+{
+    "name": "My Schedule",
+    "events": [
+        {
+            "start date": {
+                "month": 13,
+                "hour": 9,
+                "year": 2021,
+                "day": 31,
+                "minute": 0
+            },
+            "importance": 5,
+            "name": "Appointment 52",
+            "location": "250 fatcat lane",
+            "details": [
+                "detail 1",
+                "detail 2",
+                "detail 3"
+            ],
+            "type": "simple event"
+        }
+    ]
+}

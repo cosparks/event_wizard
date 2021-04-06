@@ -16,7 +16,11 @@ public class EventDate implements Writable {
 
     // EFFECTS: Constructs a new date with empty fields
     public EventDate() {
-
+        day = 1;
+        month = 1;
+        year = 2000;
+        hour = 0;
+        minute = 0;
     }
 
     // EFFECTS: checks validity of input date, then constructs a new date with assigned fields

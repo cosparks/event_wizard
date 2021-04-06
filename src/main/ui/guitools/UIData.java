@@ -1,4 +1,4 @@
-package ui.swingtools;
+package ui.guitools;
 
 import java.awt.*;
 

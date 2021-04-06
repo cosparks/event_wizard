@@ -93,4 +93,20 @@ public class JsonReaderTest extends JsonTest {
             fail("IOException not expected");
         }
     }
+
+    // this program state is unreachable, but in case someone corrupts their json data and an event is saved
+    // with an impossible date, the EventDate will automatically set itself to the first day of new millennium
+    @Test
+    void testReaderEventWithInvalidDate() {
+        try {
+            JsonReader reader = new JsonReader("./data/testReaderEventWithInvalidDate.json");
+            Schedule testSchedule = reader.read();
+            assertEquals(1, testSchedule.getSize());
+
+            ScheduleEvent event = testSchedule.getEvent(0);
+            assertEquals("2000-01-01-00:00", event.getStartDate().getDateAsString());
+        } catch (IOException e) {
+            fail("IOException not expected");
+        }
+    }
 }

@@ -4,8 +4,8 @@ import exceptions.DateFormatException;
 import exceptions.InvalidSourceException;
 import model.*;
 import ui.audio.SoundObject;
-import ui.swingtools.*;
-import persistence.PersistenceTool;
+import ui.guitools.*;
+import ui.guitools.PersistenceTool;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;

@@ -3,9 +3,9 @@ package ui;
 import exceptions.SameNameException;
 import model.Schedule;
 import ui.audio.SoundObject;
-import ui.swingtools.SwingTool;
-import persistence.PersistenceTool;
-import ui.swingtools.UIData;
+import ui.guitools.SwingTool;
+import ui.guitools.PersistenceTool;
+import ui.guitools.UIData;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;

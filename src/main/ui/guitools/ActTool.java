@@ -1,4 +1,4 @@
-package ui.swingtools;
+package ui.guitools;
 
 import exceptions.InvalidSourceException;
 import model.show.*;
