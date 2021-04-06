@@ -5,7 +5,6 @@ import java.util.Scanner;
 import exceptions.DateFormatException;
 import model.EventDate;
 import model.ScheduleEvent;
-import sun.jvm.hotspot.debugger.cdbg.TemplateType;
 
 // Abstract class for constructing events
 public abstract class EventBuilder {
@@ -103,7 +102,6 @@ public abstract class EventBuilder {
     // EFFECTS: returns time as string after checking to make sure it is a valid input
     private String timePrompt() {
         String time = "";
-
         String hour = getTimeValue("hour [0, 23]", 0, 23);
         String minute = getTimeValue("minute [0, 59]", 0, 59);
 

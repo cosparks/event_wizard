@@ -1,0 +1,23 @@
+{
+    "name": "boonglaow",
+    "events": [{
+        "start date": {
+            "month": 12,
+            "hour": 12,
+            "year": 2021,
+            "day": 19,
+            "minute": 0
+        },
+        "bar": [],
+        "projected sales": 0,
+        "ticket price": 0,
+        "importance": 8,
+        "name": "Big show",
+        "location": "santa's haus",
+        "type": "show",
+        "employees": [],
+        "acts": [],
+        "additional cost": 0,
+        "capacity": 0
+    }]
+}
