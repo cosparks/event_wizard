@@ -35,17 +35,6 @@ public class EventDate implements Writable {
         this.minute = minute;
     }
 
-    @Override
-    public JSONObject toJson() {
-        JSONObject json = new JSONObject();
-        json.put("day", day);
-        json.put("month", month);
-        json.put("year", year);
-        json.put("hour", hour);
-        json.put("minute", minute);
-        return json;
-    }
-
     // MODIFIES: this
     // EFFECTS: checks validity of new date values, then updates according to those values;
     //          throws DateFormatException if date is invalid
@@ -156,5 +145,16 @@ public class EventDate implements Writable {
     public void setMinute(int minute) throws DateFormatException {
         verifyDateValues(day, month, year, hour, minute);
         this.minute = minute;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("day", day);
+        json.put("month", month);
+        json.put("year", year);
+        json.put("hour", hour);
+        json.put("minute", minute);
+        return json;
     }
 }

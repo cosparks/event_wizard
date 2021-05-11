@@ -117,24 +117,64 @@
                 "day": 19,
                 "minute": 0
             },
-            "bar": [],
+            "bar": [
+                {
+                    "amount": 200,
+                    "cost": 2,
+                    "name": "craft beer",
+                    "sale price": 5
+                },
+                {
+                    "amount": 2,
+                    "cost": 250,
+                    "name": "nudes",
+                    "sale price": 5
+                },
+                {
+                    "amount": 200,
+                    "cost": 3,
+                    "name": "pabst tall cans",
+                    "sale price": 6
+                }
+            ],
             "projected sales": 225,
-            "ticket price": 15,
+            "ticket price": 21,
             "importance": 8,
             "name": "Beseiged Astronauticus w/ Guests",
             "location": "The Lido",
             "type": "show",
-            "employees": [{
-                "name": "John",
-                "pay": 300,
-                "job": "sound"
-            }],
-            "acts": [{
-                "stage plot": "",
-                "name": "Beseiged Astronauticus",
-                "pay": 500,
-                "rider": ""
-            }],
+            "employees": [
+                {
+                    "name": "John",
+                    "pay": 300,
+                    "job": "sound"
+                },
+                {
+                    "name": "Sara",
+                    "pay": 177,
+                    "job": "bar"
+                }
+            ],
+            "acts": [
+                {
+                    "stage plot": "",
+                    "name": "Beseiged Astronauticus (headliner)",
+                    "pay": 500,
+                    "rider": ""
+                },
+                {
+                    "stage plot": "",
+                    "name": "DJ Cactus",
+                    "pay": 177,
+                    "rider": ""
+                },
+                {
+                    "stage plot": "",
+                    "name": "Lost Astronimica",
+                    "pay": 177,
+                    "rider": ""
+                }
+            ],
             "additional cost": 500,
             "capacity": 300
         }
